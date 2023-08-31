@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- !FORM -->
+    <h1>SIDE DECK MANAGER</h1>
+    <form id="uploadForm" enctype="multipart/form-data">
+      <input type="file" id="fileInput" name="ydkFile" />
+      <input type="submit" value="Upload" />
+    </form>
+    <!-- !SELECT DECKS -->
+    <label for="decksSelect">Your saved Decks:</label>
+    <select id="decksSelect">
+      <option value="" selected disabled>Select a deck...</option>
+    </select>
+
+    <!-- !(demo) DECK DIV -->
+    <div id="demo">
+      <div id="mainDeckDiv"></div>
+      <div id="sideDeckDiv">SIDE DECK</div>
+      <div id="extraDeckDiv">EXTRA DECK</div>
+    </div>
+    <button id="createSide">Create Side Deck Table</button>
+
+    <!-- !(demo2) TABLES FOR SIDECKING-->
+    <div id="demo2"></div>
+
+    <script src="1_upload_ydk_file.js"></script>
+    <script src="2_script.js"></script>
+
+  </body>
+</html>

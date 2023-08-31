@@ -1,0 +1,72 @@
+/* !demo */
+#demo {
+    border: red solid 5px;
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+}
+
+#mainDeckDiv {
+    border: purple solid 10px;
+    display: flex;
+    flex-direction: column;
+    width: 100%
+}
+
+.rigaMain {
+    border: rgb(255, 230, 0) solid 5px;
+    display: flex;
+}
+
+#sideDeckDiv,
+#extraDeckDiv {
+    border: green solid 5px;
+    display: flex;
+    width: fit-content;
+
+}
+
+
+.card {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: rgb(0, 255, 225) solid 5px;
+    height: 80px
+}
+
+img {
+    width: 100%;
+    height: 100%;
+}
+
+/* !demo2 */
+#tables {
+    border: cadetblue solid 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 70%;
+
+}
+
+#sideIn,
+#sideOut {
+    border: blue solid 5px;
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+
+.tableCard {
+    border: red solid 5px;
+    display: flex;
+    align-items: center;
+    /* Add spacing between cards */
+}
+
+.btnMinus {
+    width: 10%;
+    margin-right: 10px;
+    /* Add spacing between button and paragraph */
+}
