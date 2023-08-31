@@ -82,20 +82,29 @@ decksSelect.addEventListener("change", () => {
 //! CREO TABELLE PER SIDECKING
 createSide.addEventListener("click", () => {
   //const userInput = prompt("Insert the name of the deck you're siding against");
+  //devo aggiungere un numero a side in/side out
+
+  console.log("clicked");
 
   demo2.innerHTML += `
-                    <h2 id="deckSidingVs">You are now siding against:</h2>
-                    <div id="tables">
-
-                      <div id="sideOut">
-                        <h3 id="head3Out"><span></span>SIDE OUT:</h3>
+                      <h2 id="deckSidingVs">You are now siding against:</h2>
+                      <div id="tables">
+  
+                        <div id="sideOut">
+                          <h3 id="head3Out"><span></span>SIDE OUT:</h3>
+                          <div id="monsters"><span></span>MONSTERS</div>
+                          <div id="spells"><span></span>SPELLS</div>
+                          <div id="traps"><span></span>TRAPS</div>
+                        </div>
+  
+                        <div id="sideIn">
+                        <h3 id="head3In"><span></span>SIDE IN:</h3>
+                        <div id="monsters"><span></span>MONSTERS</div>
+                        <div id="spells"><span></span>SPELLS</div>
+                        <div id="traps"><span></span>TRAPS</div>
+                        </div>
                       </div>
-
-                      <div id="sideIn">
-                      <h3 id="head3In"><span></span>SIDE IN:</h3>
-                      </div>
-                    </div>
-                    `;
+                      `;
 });
 
 // 🤯(1st layer) FUNCTIONS
@@ -175,51 +184,73 @@ function insertCardIntoSideTable(colonnaSide, matchedDecksubDeck, cardName, card
 
 // 🤯🤯🤯(3rd layer) FUNCTIONS
 function inseriscoCardinColonna(colonnaSide, matchedDecksubDeck, cardName, cardType, h3) {
-
+  console.log("test cardType", cardName);
+  console.log("test cardType", cardType);
+  // COLONNA
   let colonna = document.getElementById(colonnaSide);
   // SPAN COLONNA
   let h3SpanSide = Number(document.getElementById(h3).querySelector("span").textContent);
+  let typeDiv = "";
 
-  // SE CARD DIV CON ID "cardName" ESISTE, LA AGGIORNO
-  if (document.getElementById(cardName)) {
-    console.log("card aggiornata");
-
-    // AGGIORNO SPAN CARD
-    let spanCardToNumber = Number(document.getElementById(cardName).querySelector("span").textContent)
-
-    if (spanCardToNumber < 3) {
-      // AGGIORNO TESTO SPAN HEADER
-      document.getElementById(h3).querySelector("span").innerHTML = h3SpanSide + 1 + " ";
-      document.getElementById(cardName).innerHTML = `
-                                                    <div class="tableCard" id="${cardName}">
-                                                    <button class="btnMinus">-</button>
-                                                    <p><span>${spanCardToNumber + 1}</span>
-                                                    ${cardName}</p>
-                                                    </div>
-                                                    `;
+  // CARD QUANTITY
+  let cardQuantity = 0;
+  for (let i = 0; i < matchedDecksubDeck.length; i++) {
+    if (cardName == matchedDecksubDeck[i].name) {
+      cardQuantity++
     }
-  } else {
-    console.log("card creata");
-    // AGGIORNO TESTO SPAN COLONNA
-    document.getElementById(h3).querySelector("span").innerHTML = h3SpanSide + 1 + " ";
-    // SE CARD DIV CON ID "cardName" NON ESISTE LO CREO E INSERISCO
-    let card = document.createElement("div");
-    card.innerHTML = `
+  }
+
+  const QUANTITA_MAX_CARTE_SIDEABILI = 15;
+  if (h3SpanSide < QUANTITA_MAX_CARTE_SIDEABILI) {
+
+    // SE CARD DIV CON ID "cardName" ESISTE, LA AGGIORNO
+    if (document.getElementById(cardName)) {
+      let cardSpan = Number(document.getElementById(cardName).querySelector("span").textContent)
+      if (cardSpan < cardQuantity) {
+        console.log("card aggiornata");
+        // AGGIORNO SPAN HEADER
+        document.getElementById(h3).querySelector("span").innerHTML = h3SpanSide + 1 + " ";
+        // AGGIORNO SPAN CARD
+        document.getElementById(cardName).querySelector("span").innerHTML = cardSpan + 1;
+      }
+    } else {
+      console.log("card creata");
+      // AGGIORNO SPAN HEADER
+      document.getElementById(h3).querySelector("span").innerHTML = h3SpanSide + 1 + " ";
+      // SE CARD DIV CON ID "cardName" NON ESISTE LO CREO E INSERISCO
+      let card = document.createElement("div");
+      card.innerHTML = `
                       <div class="tableCard" id="${cardName}">
                       <button class="btnMinus">-</button>
                       <p><span>1</span>
                       ${cardName}</p>
                       </div>
                       `;
-    card.addEventListener("click", () => {
-      removeCard(colonna, card, cardName, h3);
-    });
-    colonna.append(card);
+      // DIV TIPO DI CARTA (MONSTERS, SPELLS, TRAPS)
+      if (cardType == "Effect Monster" ||
+        cardType == "Normal Monster" ||
+        cardType == "Tuner Monster" ||
+        cardType == "Ritual Monster") {
+        typeDiv = "monsters";
+      } else if (cardType == "Spell Card") {
+        typeDiv = "spells";
+      } else {
+        typeDiv = "traps";
+      }
+      // APPEND 
+      colonna.querySelector("#" + typeDiv).append(card);
+      // EVENT LISTENER
+      card.addEventListener("click", () => {
+        removeCard(colonna, card, cardName, h3, typeDiv);
+      });
+    }
+
+
   }
 }
 
 // 🤯🤯🤯🤯(4th layer) FUNCTIONS
-function removeCard(colonna, card, cardName, h3) {
+function removeCard(colonna, card, cardName, h3, typeDiv) {
   let cardSpan = Number(card.querySelector("span").textContent);
   let h3Span = Number(document.getElementById(h3).querySelector("span").textContent);
 
@@ -236,6 +267,40 @@ function removeCard(colonna, card, cardName, h3) {
                       </div>
                     `;
   } else {
-    colonna.removeChild(card);
+    colonna.querySelector("#" + typeDiv).removeChild(card);
   }
 }
+
+function orderAlphabetically(params) {
+  // //! NOT WORKING!!! ORDINARE IN ORDINE ALFABETICO E QUANTITA LE CARD !!!
+  // console.log("test type div alphabeti", typeDiv);
+  // // Get all div elements in the document
+  // const divElements = colonna.querySelector("#" + typeDiv).querySelectorAll(".tableCard");
+
+  // // Convert NodeList to an array for sorting
+  // const divArray = Array.from(divElements);
+
+  // // Sort the array based on the div IDs
+  // divArray.sort((divA, divB) => {
+  //   const idA = divA.id.toLowerCase();
+  //   const idB = divB.id.toLowerCase();
+  //   return idA.localeCompare(idB);
+  // });
+
+  // // Remove existing divs from their parent
+  // divArray.forEach(div => {
+  //   div.parentNode.removeChild(div);
+  // });
+
+  // // Append the sorted divs back to their parent
+  // divArray.forEach(div => {
+  //   colonna.querySelector("#" + typeDiv).append(div);
+  //   // EVENT LISTENER
+  //   div.addEventListener("click", () => {
+  //     removeCard(colonna, card, cardName, h3, typeDiv);
+  //   });
+  // });
+  // //! ORDINARE IN ORDINE ALFABETICO E QUANTITA LE CARD !!!
+}
+
+
