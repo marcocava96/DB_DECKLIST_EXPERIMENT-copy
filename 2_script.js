@@ -23,9 +23,7 @@ decksSelect.addEventListener("click", () => {
       arrDecksNames.sort((a, b) => a.localeCompare(b));
 
       // ARR OF OPTIONS VALUES
-      let optionsValues = [...decksSelect.options].map(
-        (option) => option.value
-      );
+      let optionsValues = [...decksSelect.options].map((option) => option.value);
 
       if (arrDecksNames.length > optionsValues.length) {
         // CREA OPTIONS DINAMICAMENTE E POPOLO SELECT
@@ -64,17 +62,12 @@ decksSelect.addEventListener("change", () => {
 
       // GUARDA TUTTI I DECK
       for (let i = 0; i < DECKS.length; i++) {
-
         // SE OPTION è UGUALE A NOME DI UN DECK, PRENDI QUEL DECK
-        console.log(DECKS[i]);
         if (DECKS[i].deckName == optionValue) {
-          console.log("bau");
           matchedDeck = DECKS[i];
           break;
         }
       }
-
-      console.log("Il deck matchato è ", matchedDeck);
 
       populateDiv(matchedDeck, "main", mainDeckDiv);
       populateDiv(matchedDeck, "side", sideDeckDiv);
@@ -114,7 +107,6 @@ function populateDiv(matchedDeck, subdeck, deckDiv) {
   if (subdeck == "side" || subdeck == "extra") {
     // POPOLO SIDE/EXTRA DIV CON IMG CARDS
     matchedDeck[subdeck].forEach((card) => {
-
       // CREO CARD
       let cardDiv = document.createElement("div");
       cardDiv.setAttribute("class", "cardDiv");
@@ -183,32 +175,33 @@ function insertCardIntoSideTable(colonnaSide, matchedDecksubDeck, cardName, card
 
 // 🤯🤯🤯(3rd layer) FUNCTIONS
 function inseriscoCardinColonna(colonnaSide, matchedDecksubDeck, cardName, cardType, h3) {
-  // SPAN SIDE
+
+  let colonna = document.getElementById(colonnaSide);
+  // SPAN COLONNA
   let h3SpanSide = Number(document.getElementById(h3).querySelector("span").textContent);
 
+  // SE CARD DIV CON ID "cardName" ESISTE, LA AGGIORNO
   if (document.getElementById(cardName)) {
     console.log("card aggiornata");
 
     // AGGIORNO SPAN CARD
-    let testoSpan = document.getElementById(cardName)
-      .querySelector("span").textContent;
-    console.log("test testo span", testoSpan);
-    let testoSpanToNumber = Number(testoSpan);
+    let spanCardToNumber = Number(document.getElementById(cardName).querySelector("span").textContent)
 
-    if (testoSpanToNumber < 3) {
+    if (spanCardToNumber < 3) {
       // AGGIORNO TESTO SPAN HEADER
       document.getElementById(h3).querySelector("span").innerHTML = h3SpanSide + 1 + " ";
       document.getElementById(cardName).innerHTML = `
                                                     <div class="tableCard" id="${cardName}">
                                                     <button class="btnMinus">-</button>
-                                                    <p><span>${testoSpanToNumber + 1}</span>
+                                                    <p><span>${spanCardToNumber + 1}</span>
                                                     ${cardName}</p>
                                                     </div>
                                                     `;
     }
   } else {
-    // CREO TESTO SPAN HEADER
-    document.getElementById(h3).querySelector("span").innerHTML += 1 + " ";
+    console.log("card creata");
+    // AGGIORNO TESTO SPAN COLONNA
+    document.getElementById(h3).querySelector("span").innerHTML = h3SpanSide + 1 + " ";
     // SE CARD DIV CON ID "cardName" NON ESISTE LO CREO E INSERISCO
     let card = document.createElement("div");
     card.innerHTML = `
@@ -219,9 +212,9 @@ function inseriscoCardinColonna(colonnaSide, matchedDecksubDeck, cardName, cardT
                       </div>
                       `;
     card.addEventListener("click", () => {
-      removeCard(colonnaSide, card, cardName, h3);
+      removeCard(colonna, card, cardName, h3);
     });
-    colonnaSide.append(card);
+    colonna.append(card);
   }
 }
 
