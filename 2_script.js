@@ -64,7 +64,7 @@ decksSelect.addEventListener("change", async () => {
   }
 
   // SALVO MATCHED DECK NELLA LOCAL STORAGE
-  localStorage.setItem("matchedDeckObject", matchedDeckObject);
+  localStorage.setItem("matchedDeckObject", JSON.stringify(matchedDeckObject));
 
   // POPOLO I DIV CON MAIN/SIDE/EXTRA
   populateMainDiv(matchedDeckObject);
@@ -78,8 +78,9 @@ createSideBtn.addEventListener("click", () => {
 
   // CREO DIV TABELLA UNICO BASED ON USER INPUT
   let divTabella = document.createElement("div");
+  divTabella.setAttribute("class", "tables")
+  divTabella.setAttribute("id", userInput)
   divTabella.innerHTML = `
-    <div class="tables" id="vs_${userInput}">
       <button class="editTableBtn_${userInput}">Edit Table</button>
       <h2 id="deckSidingVs">You are now siding against: ${userInput}</h2>
       <div class="colonne">
@@ -97,19 +98,21 @@ createSideBtn.addEventListener("click", () => {
       <div id="traps"><span></span>TRAPS</div>
       </div>
       </div>
-    </div>
     `;
   // APPENDO TABELLA A CONTENITORE TABELLE
   divContenitoreTabelle.append(divTabella)
+  console.log("test bau div tabella", divTabella);
+  console.log("test bau 2222 div tabella id", divTabella.id);
+  let divTabellaId = divTabella.id;
 
   // EVENT LISTENER TASTO EDIT
   document.querySelector(`.editTableBtn_${userInput}`).addEventListener("click", () => {
     console.log("clicked edit button " + userInput);
-    addEventListenerToCards(divTabella);
+    addEventListenerToCards(divTabellaId);
   })
 });
 
-//! NEW FUNCTIONS LIST
+//* NEW FUNCTIONS LIST
 async function getDecksFromDb(URL) {
   try {
     const response = await fetch(URL);
@@ -131,14 +134,11 @@ function populateMainDiv(matchedDeckObject) {
   mainDeckDiv.innerHTML = "";
 
   let mainDeck = matchedDeckObject.main
-  let cardsInfoObject = {
-    card: {
-      cardName,
-      cardType
-    }
-  };
   let numeroRigheDiv = mainDeck.length / 10;
   let counter = 0;
+
+  // // CREO ARRAY DI OGGETTI CONTENENTI INFO CARTA (NOME, TIPO)
+  // let arrCardsInfoObject = [];
 
   for (let i = 0; i < numeroRigheDiv; i++) {
     if (i > 0) {
@@ -154,27 +154,33 @@ function populateMainDiv(matchedDeckObject) {
       if (j >= counter && j <= counter + 9) {
         // CREO CARD
         let card = document.createElement("div");
-        card.setAttribute("class", `cards ${mainDeck[j].name} ${mainDeck[j].type}`);
+        card.setAttribute("class", "cards");
         card.innerHTML = `
           <img src=${mainDeck[j].img} alt="">`;
         // APPENDO CARD A DIV RIGA
         divRiga.append(card);
 
-        // SALVO IN cardsInfoObject LE INFO DELLA CARTA
-        cardsInfoObject[mainDeck[j].name] = mainDeck[j].type;
+        // // SALVO IN arrCardsInfoObject LE INFO DELLA CARTA
+        // arrCardsInfoObject.push({
+        //   [mainDeck[j].name]: mainDeck[j].type
+        // })
+
       }
     } // fine loop j
     // 3. APPEND RIGA A MAINDECK DIV
     mainDeckDiv.append(divRiga);
   } //fine loop i
-  // SALVO IN LOCAL STORAGE cardsInfoObject
-  localStorage.setItem("cardsInfoObject", cardsInfoObject);
-  console.log(cardsInfoObject);
+  // // SALVO IN LOCAL STORAGE cardsInfoObject
+  // localStorage.setItem("cardsInfoObject", arrCardsInfoObject);
+  // console.log(arrCardsInfoObject);
 }
 
 function populateSideDivOrExtraDiv(matchedDeckObject, subDeckName, deckDiv) {
   // PULISCO DIV
   deckDiv.innerHTML = "";
+
+  // // CREO ARRAY DI OGGETTI CONTENENTI INFO CARTA (NOME, TIPO)
+  // let arrCardsInfoObject = [];
 
   let subDeck = matchedDeckObject[subDeckName];
 
@@ -187,7 +193,15 @@ function populateSideDivOrExtraDiv(matchedDeckObject, subDeckName, deckDiv) {
       cardDiv.innerHTML = `<img src=${card.img} alt="">`;
       // APPEND CARD
       deckDiv.append(cardDiv);
+
+      // // SALVO IN arrCardsInfoObject LE INFO DELLA CARTA
+      // arrCardsInfoObject.push({
+      //   [card.name]: card.type
+      // })
     });
+    // // SALVO IN LOCAL STORAGE cardsInfoObject
+    // localStorage.setItem("cardsInfoObject", arrCardsInfoObject);
+    // console.log(arrCardsInfoObject);
   }
 }
 
@@ -195,27 +209,76 @@ function addEventListenerToCards(divTabella) {
 
   console.log("firing insertCardIntoSideTable");
 
-  // recupero tutte le carte di main/side/extra dai rispettivi Divs!
+  // recupero tutte le cardDiv di main/side/extra dai rispettivi Divs!
   let arrMainDeckCards = Array.from(mainDeckDiv.querySelectorAll(".cards"))
-  console.log("test main", arrMainDeckCards);
-
-  let arrSideDeckCards = Array.from(sideDeckDiv.querySelectorAll(".cards"))
-  console.log("test side", arrSideDeckCards);
-
-  let arrExtraDeckCards = Array.from(extraDeckDiv.querySelectorAll(".cards"))
-  console.log("test extra", arrExtraDeckCards);
 
   // aggiungo event listener a ogni carta
   arrMainDeckCards.forEach(cardDiv => {
     cardDiv.addEventListener("click", () => {
-      console.log("test event listener cards");
-      localStorage.getItem("cardsInfoObject");
-      cardsInfoObject.
+      let cardDivImgUrl = cardDiv.querySelector("img").getAttribute("src");
+      console.log("test card img url", cardDivImgUrl);
+      inseriscoCardinColonna(divTabella, cardDivImgUrl)
     })
   })
+}
 
-  // se la carta appartiene al main deve andare in colonna SIDE OUT
-  // se la carta appartiene al side/extra deve andare in colonna SIDE IN
+// 🤯🤯🤯(3rd layer) FUNCTIONS
+function inseriscoCardinColonna(divTabellaId, cardDivImgUrl) {
 
-  // la funzione dentro event listener mette le carte nelle colonne di divTabella
+  // MATCHED DECK
+  let matchedDeck = JSON.parse(localStorage.getItem("matchedDeckObject"));
+  console.log("test matchedDeck");
+  console.log(matchedDeck);
+
+  // TABELLA
+  let tabellaId = divTabellaId;
+  console.log("test tabella id inserisco card", tabellaId);
+  
+  let tabellaDiv = document.getElementById(tabellaId)
+  console.log("test tabella DIV inserisco card", tabellaDiv);
+  // SPAN colonnaSide
+  // let h3SpanSide = Number(tabella.querySelector("h3").querySelector("span").textContent);
+  // let cardTypeDiv = "";
+
+  let cardName = "";
+  let cardType = "";
+  // CARD QUANTITY
+  let cardQuantity = 0;
+  for (let i = 0; i < matchedDeck.main.length; i++) {
+    if (cardDivImgUrl == matchedDeck.main[i].img) {
+      cardQuantity++
+      cardName = matchedDeck.main[i].name;
+      cardType = matchedDeck.main[i].type;
+    }
+  }
+  console.log("test cardQuantit", cardQuantity);
+
+  const QUANTITA_MAX_CARTE_SIDEABILI = 15;
+
+  // SE CARD DIV CON ID "cardName" NON ESISTE LO CREO E INSERISCO
+  let cardDiv = document.createElement("div");
+  cardDiv.innerHTML = `
+                        <div class="tableCard">
+                        <button class="btnMinus">-</button>
+                        <p><span>1</span>
+                        ${cardName}</p>
+                        </div>
+                        `;
+  // // DIV TIPO DI CARTA (MONSTERS, SPELLS, TRAPS)
+  // if (cardType == "Effect Monster" ||
+  //   cardType == "Normal Monster" ||
+  //   cardType == "Tuner Monster" ||
+  //   cardType == "Ritual Monster") {
+  //   cardTypeDiv = "monsters";
+  // } else if (cardType == "Spell Card") {
+  //   cardTypeDiv = "spells";
+  // } else {
+  //   cardTypeDiv = "traps";
+  // }
+  // APPEND 
+  tabellaDiv.querySelector("#sideOut").append(cardDiv);
+  // EVENT LISTENER
+  cardDiv.addEventListener("click", () => {
+    console.log("inserire removecard function");
+  });
 }
