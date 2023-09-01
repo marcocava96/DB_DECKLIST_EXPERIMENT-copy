@@ -2697,6 +2697,393 @@
           "name": "Leviair the Sea Dragon"
         }
       ]
+    },
+    {
+      "id": 7,
+      "deckName": "201109 TP NORELLAS 2.ydk",
+      "main": [
+        {
+          "card_id": "92719314",
+          "img": "https://images.ygoprodeck.com/images/cards_small/92719314.jpg",
+          "type": "Effect Monster",
+          "desc": "Cannot be Normal Summoned/Set. Must first be Special Summoned (from your hand) by having 5 or more DARK monsters in your Graveyard while you control no monsters. Once per turn: You can banish 1 DARK monster from your Graveyard to target 1 DARK monster in your Graveyard; Special Summon that target.",
+          "name": "The Dark Creator"
+        },
+        {
+          "card_id": "92719314",
+          "img": "https://images.ygoprodeck.com/images/cards_small/92719314.jpg",
+          "type": "Effect Monster",
+          "desc": "Cannot be Normal Summoned/Set. Must first be Special Summoned (from your hand) by having 5 or more DARK monsters in your Graveyard while you control no monsters. Once per turn: You can banish 1 DARK monster from your Graveyard to target 1 DARK monster in your Graveyard; Special Summon that target.",
+          "name": "The Dark Creator"
+        },
+        {
+          "card_id": "92719314",
+          "img": "https://images.ygoprodeck.com/images/cards_small/92719314.jpg",
+          "type": "Effect Monster",
+          "desc": "Cannot be Normal Summoned/Set. Must first be Special Summoned (from your hand) by having 5 or more DARK monsters in your Graveyard while you control no monsters. Once per turn: You can banish 1 DARK monster from your Graveyard to target 1 DARK monster in your Graveyard; Special Summon that target.",
+          "name": "The Dark Creator"
+        },
+        {
+          "card_id": "65192027",
+          "img": "https://images.ygoprodeck.com/images/cards_small/65192027.jpg",
+          "type": "Effect Monster",
+          "desc": "Cannot be Normal Summoned/Set. Must be Special Summoned (from your hand) by having exactly 3 DARK monsters in your GY. You can banish 1 DARK monster from your GY, then target 1 card on the field; destroy that target.",
+          "name": "Dark Armed Dragon"
+        },
+        {
+          "card_id": "48453776",
+          "img": "https://images.ygoprodeck.com/images/cards_small/48453776.jpg",
+          "type": "Effect Monster",
+          "desc": "This card cannot be Normal Summoned or Set. This card cannot be Special Summoned except by removing from play 1 LIGHT Fairy-Type monster and 3 DARK Fiend-Type monsters in your Graveyard. You can pay 1000 Life Points to send all cards on the field and in both players' hands to the Graveyard, then you draw 1 card.",
+          "name": "Sky Scourge Norleras"
+        },
+        {
+          "card_id": "48453776",
+          "img": "https://images.ygoprodeck.com/images/cards_small/48453776.jpg",
+          "type": "Effect Monster",
+          "desc": "This card cannot be Normal Summoned or Set. This card cannot be Special Summoned except by removing from play 1 LIGHT Fairy-Type monster and 3 DARK Fiend-Type monsters in your Graveyard. You can pay 1000 Life Points to send all cards on the field and in both players' hands to the Graveyard, then you draw 1 card.",
+          "name": "Sky Scourge Norleras"
+        },
+        {
+          "card_id": "48453776",
+          "img": "https://images.ygoprodeck.com/images/cards_small/48453776.jpg",
+          "type": "Effect Monster",
+          "desc": "This card cannot be Normal Summoned or Set. This card cannot be Special Summoned except by removing from play 1 LIGHT Fairy-Type monster and 3 DARK Fiend-Type monsters in your Graveyard. You can pay 1000 Life Points to send all cards on the field and in both players' hands to the Graveyard, then you draw 1 card.",
+          "name": "Sky Scourge Norleras"
+        },
+        {
+          "card_id": "30312361",
+          "img": "https://images.ygoprodeck.com/images/cards_small/30312361.jpg",
+          "type": "Effect Monster",
+          "desc": "Your opponent takes no battle damage from attacks involving this card. Once per turn: You can target 1 Effect Monster in your GY; banish that target, and if you do, until the End Phase, this card's name and original ATK become that monster's name and original ATK, and replace this effect with that monster's original effects. You must control this face-up card to activate and to resolve this effect.",
+          "name": "Phantom of Chaos"
+        },
+        {
+          "card_id": "30312361",
+          "img": "https://images.ygoprodeck.com/images/cards_small/30312361.jpg",
+          "type": "Effect Monster",
+          "desc": "Your opponent takes no battle damage from attacks involving this card. Once per turn: You can target 1 Effect Monster in your GY; banish that target, and if you do, until the End Phase, this card's name and original ATK become that monster's name and original ATK, and replace this effect with that monster's original effects. You must control this face-up card to activate and to resolve this effect.",
+          "name": "Phantom of Chaos"
+        },
+        {
+          "card_id": "30312361",
+          "img": "https://images.ygoprodeck.com/images/cards_small/30312361.jpg",
+          "type": "Effect Monster",
+          "desc": "Your opponent takes no battle damage from attacks involving this card. Once per turn: You can target 1 Effect Monster in your GY; banish that target, and if you do, until the End Phase, this card's name and original ATK become that monster's name and original ATK, and replace this effect with that monster's original effects. You must control this face-up card to activate and to resolve this effect.",
+          "name": "Phantom of Chaos"
+        },
+        {
+          "card_id": "75498415",
+          "img": "https://images.ygoprodeck.com/images/cards_small/75498415.jpg",
+          "type": "Effect Monster",
+          "desc": "If your opponent controls a monster and you control no monsters, you can Normal Summon/Set this card without Tributing. Once per turn, during your Main Phase 1: You can target 1 \"Blackwing\" monster you control; until the end of this turn, it gains ATK equal to the total ATK of all \"Blackwing\" monsters currently on the field, except itself. Monsters other than the targeted monster cannot attack during the turn you activate this effect.",
+          "name": "Blackwing - Sirocco the Dawn"
+        },
+        {
+          "card_id": "75498415",
+          "img": "https://images.ygoprodeck.com/images/cards_small/75498415.jpg",
+          "type": "Effect Monster",
+          "desc": "If your opponent controls a monster and you control no monsters, you can Normal Summon/Set this card without Tributing. Once per turn, during your Main Phase 1: You can target 1 \"Blackwing\" monster you control; until the end of this turn, it gains ATK equal to the total ATK of all \"Blackwing\" monsters currently on the field, except itself. Monsters other than the targeted monster cannot attack during the turn you activate this effect.",
+          "name": "Blackwing - Sirocco the Dawn"
+        },
+        {
+          "card_id": "75498415",
+          "img": "https://images.ygoprodeck.com/images/cards_small/75498415.jpg",
+          "type": "Effect Monster",
+          "desc": "If your opponent controls a monster and you control no monsters, you can Normal Summon/Set this card without Tributing. Once per turn, during your Main Phase 1: You can target 1 \"Blackwing\" monster you control; until the end of this turn, it gains ATK equal to the total ATK of all \"Blackwing\" monsters currently on the field, except itself. Monsters other than the targeted monster cannot attack during the turn you activate this effect.",
+          "name": "Blackwing - Sirocco the Dawn"
+        },
+        {
+          "card_id": "72714392",
+          "img": "https://images.ygoprodeck.com/images/cards_small/72714392.jpg",
+          "type": "Tuner Monster",
+          "desc": "This face-up card on the field cannot be used as a Synchro Material. If this card is in the Graveyard: You can target 1 non-Tuner \"Blackwing\" monster in your Graveyard; banish both this card and that target, and if you do, Special Summon 1 \"Blackwing\" Synchro Monster from your Extra Deck whose Level equals the total Levels of the banished monsters, but its effects are negated.",
+          "name": "Blackwing - Vayu the Emblem of Honor"
+        },
+        {
+          "card_id": "72714392",
+          "img": "https://images.ygoprodeck.com/images/cards_small/72714392.jpg",
+          "type": "Tuner Monster",
+          "desc": "This face-up card on the field cannot be used as a Synchro Material. If this card is in the Graveyard: You can target 1 non-Tuner \"Blackwing\" monster in your Graveyard; banish both this card and that target, and if you do, Special Summon 1 \"Blackwing\" Synchro Monster from your Extra Deck whose Level equals the total Levels of the banished monsters, but its effects are negated.",
+          "name": "Blackwing - Vayu the Emblem of Honor"
+        },
+        {
+          "card_id": "72714392",
+          "img": "https://images.ygoprodeck.com/images/cards_small/72714392.jpg",
+          "type": "Tuner Monster",
+          "desc": "This face-up card on the field cannot be used as a Synchro Material. If this card is in the Graveyard: You can target 1 non-Tuner \"Blackwing\" monster in your Graveyard; banish both this card and that target, and if you do, Special Summon 1 \"Blackwing\" Synchro Monster from your Extra Deck whose Level equals the total Levels of the banished monsters, but its effects are negated.",
+          "name": "Blackwing - Vayu the Emblem of Honor"
+        },
+        {
+          "card_id": "14536035",
+          "img": "https://images.ygoprodeck.com/images/cards_small/14536035.jpg",
+          "type": "Effect Monster",
+          "desc": "You can Special Summon this card (from your hand) by discarding 1 Level 5 or higher DARK monster. Once per turn: You can discard 1 DARK monster; send 1 DARK monster from your Deck to the GY.",
+          "name": "Dark Grepher"
+        },
+        {
+          "card_id": "14536035",
+          "img": "https://images.ygoprodeck.com/images/cards_small/14536035.jpg",
+          "type": "Effect Monster",
+          "desc": "You can Special Summon this card (from your hand) by discarding 1 Level 5 or higher DARK monster. Once per turn: You can discard 1 DARK monster; send 1 DARK monster from your Deck to the GY.",
+          "name": "Dark Grepher"
+        },
+        {
+          "card_id": "14536035",
+          "img": "https://images.ygoprodeck.com/images/cards_small/14536035.jpg",
+          "type": "Effect Monster",
+          "desc": "You can Special Summon this card (from your hand) by discarding 1 Level 5 or higher DARK monster. Once per turn: You can discard 1 DARK monster; send 1 DARK monster from your Deck to the GY.",
+          "name": "Dark Grepher"
+        },
+        {
+          "card_id": "10802915",
+          "img": "https://images.ygoprodeck.com/images/cards_small/10802915.jpg",
+          "type": "Effect Monster",
+          "desc": "When this card is Normal Summoned: You can Special Summon 1 Level 3 Fiend monster from your hand or Deck, but negate its effects, also it cannot be used as Synchro Material.",
+          "name": "Tour Guide From the Underworld"
+        },
+        {
+          "card_id": "10802915",
+          "img": "https://images.ygoprodeck.com/images/cards_small/10802915.jpg",
+          "type": "Effect Monster",
+          "desc": "When this card is Normal Summoned: You can Special Summon 1 Level 3 Fiend monster from your hand or Deck, but negate its effects, also it cannot be used as Synchro Material.",
+          "name": "Tour Guide From the Underworld"
+        },
+        {
+          "card_id": "10802915",
+          "img": "https://images.ygoprodeck.com/images/cards_small/10802915.jpg",
+          "type": "Effect Monster",
+          "desc": "When this card is Normal Summoned: You can Special Summon 1 Level 3 Fiend monster from your hand or Deck, but negate its effects, also it cannot be used as Synchro Material.",
+          "name": "Tour Guide From the Underworld"
+        },
+        {
+          "card_id": "26202165",
+          "img": "https://images.ygoprodeck.com/images/cards_small/26202165.jpg",
+          "type": "Effect Monster",
+          "desc": "If this card is sent from the field to the GY: Add 1 monster with 1500 or less ATK from your Deck to your hand, but you cannot activate cards, or the effects of cards, with that name for the rest of this turn. You can only use this effect of \"Sangan\" once per turn.",
+          "name": "Sangan"
+        },
+        {
+          "card_id": "33420078",
+          "img": "https://images.ygoprodeck.com/images/cards_small/33420078.jpg",
+          "type": "Tuner Monster",
+          "desc": "If this card is in your GY: You can place 1 card from your hand on the top of the Deck; Special Summon this card, but banish it when it leaves the field.",
+          "name": "Plaguespreader Zombie"
+        },
+        {
+          "card_id": "85087012",
+          "img": "https://images.ygoprodeck.com/images/cards_small/85087012.jpg",
+          "type": "Effect Monster",
+          "desc": "Once per turn: You can choose a number from 1 to 3, then send that many cards from the top of your Deck to the GY; this card gains 500 ATK for each card sent to the GY this way, until the end of this turn. If this card you control is destroyed and sent to your GY: Draw 1 card.",
+          "name": "Card Trooper"
+        },
+        {
+          "card_id": "85087012",
+          "img": "https://images.ygoprodeck.com/images/cards_small/85087012.jpg",
+          "type": "Effect Monster",
+          "desc": "Once per turn: You can choose a number from 1 to 3, then send that many cards from the top of your Deck to the GY; this card gains 500 ATK for each card sent to the GY this way, until the end of this turn. If this card you control is destroyed and sent to your GY: Draw 1 card.",
+          "name": "Card Trooper"
+        },
+        {
+          "card_id": "44330098",
+          "img": "https://images.ygoprodeck.com/images/cards_small/44330098.jpg",
+          "type": "Effect Monster",
+          "desc": "When you take damage from a card in your opponent's possession: You can Special Summon this card from your hand. You must control no cards to activate and to resolve this effect. If Summoned this way, activate the appropriate effect, based on the type of damage:\r\n● Battle damage: Special Summon 1 \"Emissary of Darkness Token\" (Fairy-Type/LIGHT/Level 7/ATK ?/DEF ?). Its ATK and DEF are each equal to the amount of battle damage you took.\r\n● Effect damage: Inflict damage to your opponent equal to the amount of damage you took.",
+          "name": "Gorz the Emissary of Darkness"
+        },
+        {
+          "card_id": "98777036",
+          "img": "https://images.ygoprodeck.com/images/cards_small/98777036.jpg",
+          "type": "Effect Monster",
+          "desc": "When you take battle damage: You can Special Summon this card from your hand. Gains 600 ATK/DEF for each card in your hand. Once per turn: You can send 1 monster from your hand to the GY, then target 1 face-up monster your opponent controls with the same Level the sent monster had in the hand; take control of that face-up monster. Once per turn: You can target 1 monster in your GY; this card's Level becomes the same as that target's, until the end of this turn.",
+          "name": "Tragoedia"
+        },
+        {
+          "card_id": "98777036",
+          "img": "https://images.ygoprodeck.com/images/cards_small/98777036.jpg",
+          "type": "Effect Monster",
+          "desc": "When you take battle damage: You can Special Summon this card from your hand. Gains 600 ATK/DEF for each card in your hand. Once per turn: You can send 1 monster from your hand to the GY, then target 1 face-up monster your opponent controls with the same Level the sent monster had in the hand; take control of that face-up monster. Once per turn: You can target 1 monster in your GY; this card's Level becomes the same as that target's, until the end of this turn.",
+          "name": "Tragoedia"
+        },
+        {
+          "card_id": "19665973",
+          "img": "https://images.ygoprodeck.com/images/cards_small/19665973.jpg",
+          "type": "Effect Monster",
+          "desc": "When an opponent's monster declares a direct attack: You can Special Summon this card from your hand, then end the Battle Phase. If Summoned this way, banish it when it leaves the field.",
+          "name": "Battle Fader"
+        },
+        {
+          "card_id": "19665973",
+          "img": "https://images.ygoprodeck.com/images/cards_small/19665973.jpg",
+          "type": "Effect Monster",
+          "desc": "When an opponent's monster declares a direct attack: You can Special Summon this card from your hand, then end the Battle Phase. If Summoned this way, banish it when it leaves the field.",
+          "name": "Battle Fader"
+        },
+        {
+          "card_id": "19665973",
+          "img": "https://images.ygoprodeck.com/images/cards_small/19665973.jpg",
+          "type": "Effect Monster",
+          "desc": "When an opponent's monster declares a direct attack: You can Special Summon this card from your hand, then end the Battle Phase. If Summoned this way, banish it when it leaves the field.",
+          "name": "Battle Fader"
+        },
+        {
+          "card_id": "83764719",
+          "img": "https://images.ygoprodeck.com/images/cards_small/83764719.jpg",
+          "type": "Spell Card",
+          "desc": "Target 1 monster in either GY; Special Summon it.",
+          "name": "Monster Reborn"
+        },
+        {
+          "card_id": "53129443",
+          "img": "https://images.ygoprodeck.com/images/cards_small/53129443.jpg",
+          "type": "Spell Card",
+          "desc": "Destroy all monsters on the field.",
+          "name": "Dark Hole"
+        },
+        {
+          "card_id": "19613556",
+          "img": "https://images.ygoprodeck.com/images/cards_small/19613556.jpg",
+          "type": "Spell Card",
+          "desc": "Destroy all Spell and Trap Cards on the field.",
+          "name": "Heavy Storm"
+        },
+        {
+          "card_id": "72892473",
+          "img": "https://images.ygoprodeck.com/images/cards_small/72892473.jpg",
+          "type": "Spell Card",
+          "desc": "Both players discard as many cards as possible from their hands, then each player draws the same number of cards they discarded.",
+          "name": "Card Destruction"
+        },
+        {
+          "card_id": "01475311",
+          "img": "https://images.ygoprodeck.com/images/cards_small/1475311.jpg",
+          "type": "Spell Card",
+          "desc": "Draw 2 cards, then banish 1 DARK monster from your hand, or, if you do not have any in your hand, send your entire hand to the GY.",
+          "name": "Allure of Darkness"
+        },
+        {
+          "card_id": "81439173",
+          "img": "https://images.ygoprodeck.com/images/cards_small/81439173.jpg",
+          "type": "Spell Card",
+          "desc": "Send 1 monster from your Deck to the GY.",
+          "name": "Foolish Burial"
+        },
+        {
+          "card_id": "32807846",
+          "img": "https://images.ygoprodeck.com/images/cards_small/32807846.jpg",
+          "type": "Spell Card",
+          "desc": "Add 1 Level 4 or lower Warrior monster from your Deck to your hand.",
+          "name": "Reinforcement of the Army"
+        }
+      ],
+      "side": [],
+      "extra": [
+        {
+          "card_id": "79229522",
+          "img": "https://images.ygoprodeck.com/images/cards_small/79229522.jpg",
+          "type": "Fusion Monster",
+          "desc": "\"Cyber Dragon\" + 1+ Machine monsters\r\nCannot be used as Fusion Material. Must first be Special Summoned (from your Extra Deck) by sending the above cards from either field to the GY. (You do not use \"Polymerization\".) The original ATK of this card becomes 1000 x the number of Fusion Materials used for its Special Summon.",
+          "name": "Chimeratech Fortress Dragon"
+        },
+        {
+          "card_id": "26593852",
+          "img": "https://images.ygoprodeck.com/images/cards_small/26593852.jpg",
+          "type": "Synchro Monster",
+          "desc": "1 Tuner + 1+ non-Tuner monsters\nAt the start of the Damage Step, if this card battles a face-up non-DARK monster: Destroy that monster.",
+          "name": "Ally of Justice Catastor"
+        },
+        {
+          "card_id": "29071332",
+          "img": "https://images.ygoprodeck.com/images/cards_small/29071332.jpg",
+          "type": "Synchro Monster",
+          "desc": "1 Tuner + 1 or more non-Tuner monsters\nOnce per turn, you can either: Target 1 monster on the field; equip this card to that target, OR: Unequip this card and Special Summon it in Attack Position. While equipped by this effect, that target gains 1000 ATK. If that target destroys a monster by battle and sends it to the Graveyard: Inflict damage to your opponent equal to the ATK of the destroyed monster in the Graveyard.",
+          "name": "Armory Arm"
+        },
+        {
+          "card_id": "73580471",
+          "img": "https://images.ygoprodeck.com/images/cards_small/73580471.jpg",
+          "type": "Synchro Monster",
+          "desc": "1 Tuner + 1+ non-Tuner monsters\r\nWhen this card is Synchro Summoned: You can destroy all cards on the field. Once per turn: You can banish 1 Plant monster from your GY, then target 1 Defense Position monster your opponent controls; change that target to face-up Attack Position, and if you do, its ATK becomes 0 until the end of this turn.",
+          "name": "Black Rose Dragon"
+        },
+        {
+          "card_id": "33236860",
+          "img": "https://images.ygoprodeck.com/images/cards_small/33236860.jpg",
+          "type": "Synchro Monster",
+          "desc": "1 \"Blackwing\" Tuner + 2 or more non-Tuner monsters\nWhen this card is Synchro Summoned: You can target up to 2 face-up monsters on the field with DEF lower than this card's ATK; destroy those targets. You cannot conduct your Battle Phase the turn you activate this effect. During each of your opponent's turns, the first \"Blackwing\" monster you control that would be destroyed by battle, is not destroyed.",
+          "name": "Blackwing - Silverwind the Ascendant"
+        },
+        {
+          "card_id": "76913983",
+          "img": "https://images.ygoprodeck.com/images/cards_small/76913983.jpg",
+          "type": "Synchro Monster",
+          "desc": "1 \"Blackwing\" Tuner + 1 or more non-Tuner monsters\nIf this card attacks a Defense Position monster, it gains 500 ATK during the Damage Step only, also inflict piercing battle damage to your opponent.",
+          "name": "Blackwing Armed Wing"
+        },
+        {
+          "card_id": "76913983",
+          "img": "https://images.ygoprodeck.com/images/cards_small/76913983.jpg",
+          "type": "Synchro Monster",
+          "desc": "1 \"Blackwing\" Tuner + 1 or more non-Tuner monsters\nIf this card attacks a Defense Position monster, it gains 500 ATK during the Damage Step only, also inflict piercing battle damage to your opponent.",
+          "name": "Blackwing Armed Wing"
+        },
+        {
+          "card_id": "76913983",
+          "img": "https://images.ygoprodeck.com/images/cards_small/76913983.jpg",
+          "type": "Synchro Monster",
+          "desc": "1 \"Blackwing\" Tuner + 1 or more non-Tuner monsters\nIf this card attacks a Defense Position monster, it gains 500 ATK during the Damage Step only, also inflict piercing battle damage to your opponent.",
+          "name": "Blackwing Armed Wing"
+        },
+        {
+          "card_id": "69031175",
+          "img": "https://images.ygoprodeck.com/images/cards_small/69031175.jpg",
+          "type": "Synchro Monster",
+          "desc": "1 \"Blackwing\" Tuner + 1 or more non-Tuner monsters\nCannot be destroyed by battle, and you take no battle damage from attacks involving this card. At the end of the Damage Step, if this card attacked a monster: You can place 1 Wedge Counter on that monster (max. 1). You can remove all Wedge Counters from your opponent's monsters; the ATK and DEF of those monsters that had Wedge Counters become 0 until the end of this turn.",
+          "name": "Blackwing Armor Master"
+        },
+        {
+          "card_id": "69031175",
+          "img": "https://images.ygoprodeck.com/images/cards_small/69031175.jpg",
+          "type": "Synchro Monster",
+          "desc": "1 \"Blackwing\" Tuner + 1 or more non-Tuner monsters\nCannot be destroyed by battle, and you take no battle damage from attacks involving this card. At the end of the Damage Step, if this card attacked a monster: You can place 1 Wedge Counter on that monster (max. 1). You can remove all Wedge Counters from your opponent's monsters; the ATK and DEF of those monsters that had Wedge Counters become 0 until the end of this turn.",
+          "name": "Blackwing Armor Master"
+        },
+        {
+          "card_id": "50321796",
+          "img": "https://images.ygoprodeck.com/images/cards_small/50321796.jpg",
+          "type": "Synchro Monster",
+          "desc": "1 Tuner + 1+ non-Tuner monsters\nYou can discard any number of cards to the GY, then target the same number of cards your opponent controls; return those cards to the hand. You can only use this effect of \"Brionac, Dragon of the Ice Barrier\" once per turn.",
+          "name": "Brionac, Dragon of the Ice Barrier"
+        },
+        {
+          "card_id": "23693634",
+          "img": "https://images.ygoprodeck.com/images/cards_small/23693634.jpg",
+          "type": "Synchro Monster",
+          "desc": "1 Tuner + 1 or more non-Tuner monsters\nThis card gains 100 ATK for every Warrior-Type monster in any Graveyard. When this card is destroyed by battle and sent to the Graveyard: You can target 1 Warrior-Type monster in either Graveyard; Special Summon that target.",
+          "name": "Colossal Fighter"
+        },
+        {
+          "card_id": "88643579",
+          "img": "https://images.ygoprodeck.com/images/cards_small/88643579.jpg",
+          "type": "Synchro Monster",
+          "desc": "1 Tuner + 1 or more non-Tuner DARK monsters\nOnce per turn: You can target 1 monster your opponent controls; this card loses 500 ATK and DEF, and you send that target to the Graveyard.",
+          "name": "Dark End Dragon"
+        },
+        {
+          "card_id": "07391448",
+          "img": "https://images.ygoprodeck.com/images/cards_small/7391448.jpg",
+          "type": "Synchro Monster",
+          "desc": "1 EARTH Tuner + 1 or more non-Tuner monsters\nWhen this card destroys an opponent's monster by battle and sends it to the Graveyard: You can Special Summon that monster to your field in Defense Position.",
+          "name": "Goyo Guardian"
+        },
+        {
+          "card_id": "44508094",
+          "img": "https://images.ygoprodeck.com/images/cards_small/44508094.jpg",
+          "type": "Synchro Monster",
+          "desc": "1 Tuner + 1+ non-Tuner monsters\r\nWhen a card or effect is activated that would destroy a card(s) on the field (Quick Effect): You can Tribute this card; negate the activation, and if you do, destroy it. During the End Phase, if this effect was activated this turn (and was not negated): You can Special Summon this card from your GY.",
+          "name": "Stardust Dragon"
+        }
+      ]
     }
   ]
 }
