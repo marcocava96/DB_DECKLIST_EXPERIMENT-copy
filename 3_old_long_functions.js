@@ -183,3 +183,22 @@ function populateDiv(matchedDeck, subDeckName, deckDiv) {
       colonnaSide.querySelector("#" + cardTypeDiv).removeChild(card);
     }
   }
+
+//   <button class="editTableBtn_${userInput}">Edit Table</button>
+//   <h2 id="deckSidingVs">You are now siding against: ${userInput}</h2>
+//   <div class="colonne">
+//   <div id="sideOut">
+//     <h3 id="head3Out"><span></span>SIDE OUT:</h3>
+//     <div id="monsters"><span></span>MONSTERS</div>
+//     <div id="spells"><span></span>SPELLS</div>
+//     <div id="traps"><span></span>TRAPS</div>
+//   </div>
+
+//   <div id="sideIn">
+//   <h3 id="head3In"><span></span>SIDE IN:</h3>
+//   <div id="monsters"><span></span>MONSTERS</div>
+//   <div id="spells"><span></span>SPELLS</div>
+//   <div id="traps"><span></span>TRAPS</div>
+//   </div>
+//   </div>
+// `;
