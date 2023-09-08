@@ -13,6 +13,8 @@ let divContenitoreTabelle = document.querySelector("#divContenitoreTabelle");
 // URL FETCH
 let URL = "http://localhost:3000/decks";
 
+
+
 //! SELECT DINAMICA
 decksSelect.addEventListener("click", async () => {
   // FETCH DECKS SALVATI SU DB
@@ -74,41 +76,62 @@ decksSelect.addEventListener("change", async () => {
 
 //! CREO TABELLE PER SIDECKING
 createSideBtn.addEventListener("click", () => {
-  const userInput = prompt("Insert the name of the deck you're siding against");
+  // PRENDO MATCHED DECK DALLA LOCAL STORAGE
+  let currentDeck = JSON.parse(localStorage.getItem("matchedDeckObject"));
 
-  // CREO DIV TABELLA UNICO BASED ON USER INPUT
+  // POPOLO I DIV CON MAIN/SIDE/EXTRA (in modo che gli event listener delle card si resettino)
+  populateSubDeckDiv(currentDeck, "main", mainDeckDiv);
+  populateSubDeckDiv(currentDeck, "side", sideDeckDiv);
+  populateSubDeckDiv(currentDeck, "extra", extraDeckDiv);
+
+  // CREO DIV TABELLA con ID UNICO BASED ON USER INPUT
+  const userInput = prompt("Insert the name of the deck you're siding against");
+  const userInputWithoutSpaces = userInput.replace(/[^a-zA-Z0-9-_]/g, '');
+
   let divTabella = document.createElement("div");
   divTabella.setAttribute("class", "tables")
-  divTabella.setAttribute("id", userInput)
+  divTabella.setAttribute("id", userInputWithoutSpaces)
   divTabella.innerHTML = `
-      <button class="editTableBtn_${userInput}">Edit Table</button>
-      <h2 id="deckSidingVs">You are now siding against: ${userInput}</h2>
-      <div class="colonne">
-      <div id="sideOut">
-        <h3 id="head3Out"><span></span>SIDE OUT:</h3>
-        <div id="monsters"><span></span>MONSTERS</div>
-        <div id="spells"><span></span>SPELLS</div>
-        <div id="traps"><span></span>TRAPS</div>
-      </div>
+                          <button class="editTableBtn_${userInputWithoutSpaces}">Edit Table</button>
+                          <h2 id="deckSidingVs">You are now siding against: ${userInputWithoutSpaces}</h2>
+                          <div class="colonne">
+                            <div id="sideOut">
+                              <h3 id="head3Out"><span></span>SIDE OUT:</h3>
+                              <div id="monsters"><span></span>MONSTERS</div>
+                              <div id="spells"><span></span>SPELLS</div>
+                              <div id="traps"><span></span>TRAPS</div>
+                            </div>
 
-      <div id="sideIn">
-      <h3 id="head3In"><span></span>SIDE IN:</h3>
-      <div id="monsters"><span></span>MONSTERS</div>
-      <div id="spells"><span></span>SPELLS</div>
-      <div id="traps"><span></span>TRAPS</div>
-      </div>
-      </div>
-    `;
+                            <div id="sideIn">
+                            <h3 id="head3In"><span></span>SIDE IN:</h3>
+                            <div id="monsters"><span></span>MONSTERS</div>
+                            <div id="spells"><span></span>SPELLS</div>
+                            <div id="traps"><span></span>TRAPS</div>
+                            </div>
+                          </div>
+                        `;
   // APPENDO TABELLA A CONTENITORE TABELLE
   divContenitoreTabelle.append(divTabella)
-  console.log("test bau div tabella", divTabella);
-  console.log("test bau 2222 div tabella id", divTabella.id);
   let divTabellaId = divTabella.id;
 
+  // AGGIUNGO EL ALLE CARTE DI QUESTA TABELLA
+  addEventListenerToCards(divTabellaId, mainDeckDiv, "sideOut", "main");
+  addEventListenerToCards(divTabellaId, sideDeckDiv, "sideIn", "side");
+  addEventListenerToCards(divTabellaId, extraDeckDiv, "sideIn", "extra");
+
   // EVENT LISTENER TASTO EDIT
-  document.querySelector(`.editTableBtn_${userInput}`).addEventListener("click", () => {
-    console.log("clicked edit button " + userInput);
-    addEventListenerToCards(divTabellaId);
+  document.querySelector(`.editTableBtn_${userInputWithoutSpaces}`).addEventListener("click", function () {
+    // RISCARICO MATCHED DECK DALLA LOCAL STORAGE
+    let currentDeck = JSON.parse(localStorage.getItem("matchedDeckObject"));
+    console.log("sto RISCARICANDO il deck");
+    // RIPOPOLO I DIV CON MAIN/SIDE/EXTRA
+    populateSubDeckDiv(currentDeck, "main", mainDeckDiv);
+    populateSubDeckDiv(currentDeck, "side", sideDeckDiv);
+    populateSubDeckDiv(currentDeck, "extra", extraDeckDiv);
+    // AGGIUNGO EL ALLE CARTE DI QUESTA TABELLA
+    addEventListenerToCards(divTabellaId, mainDeckDiv, "sideOut", "main");
+    addEventListenerToCards(divTabellaId, sideDeckDiv, "sideIn", "side");
+    addEventListenerToCards(divTabellaId, extraDeckDiv, "sideIn", "extra");
   })
 });
 
@@ -162,7 +185,6 @@ function populateSubDeckDiv(matchedDeckObject, subDeckName, deckDiv) {
 
       // 2. RIEMPIO RIGA
       for (let j = 0; j < mainDeck.length; j++) {
-        console.log("sono counter", counter);
         if (j >= counter && j <= counter + 9) {
           // CREO CARD
           let cardDiv = document.createElement("div");
@@ -179,63 +201,40 @@ function populateSubDeckDiv(matchedDeckObject, subDeckName, deckDiv) {
   }
 }
 
-function addEventListenerToCards(divTabellaId) {
-
-  // recupero tutte le cardDiv da Main Div!
-  let arrMainDeckCards = Array.from(mainDeckDiv.querySelectorAll(".cardDiv"))
-  // aggiungo event listener a ogni carta
-  arrMainDeckCards.forEach(cardDiv => {
-    cardDiv.addEventListener("click", () => {
+function addEventListenerToCards(divTabellaId, subDeckDiv, colonnaSide, subDeck) {
+  // recupero tutte le cardDiv da subDeckDiv
+  let arrSubDeckCards = Array.from(subDeckDiv.querySelectorAll(".cardDiv"))
+  // aggiungo event listener a ogni cardDiv
+  arrSubDeckCards.forEach(cardDiv => {
+    cardDiv.addEventListener("click", function test() {
       let cardDivImgUrl = cardDiv.querySelector("img").getAttribute("src");
-      console.log("test card img url", cardDivImgUrl);
-      inseriscoCardinColonna(divTabellaId, "sideOut", "main", cardDivImgUrl)
-    })
-  })
-
-  // recupero tutte le cardDiv da Side Div!
-  let arrSideDeckCards = Array.from(sideDeckDiv.querySelectorAll(".cardDiv"))
-  // aggiungo event listener a ogni carta
-  arrSideDeckCards.forEach(cardDiv => {
-    cardDiv.addEventListener("click", () => {
-      let cardDivImgUrl = cardDiv.querySelector("img").getAttribute("src");
-      console.log("test card img url", cardDivImgUrl);
-      inseriscoCardinColonna(divTabellaId, "sideIn", "side", cardDivImgUrl)
-    })
-  })
-
-  // recupero tutte le cardDiv da Extra Div!
-  let arrExtraDeckDiv = Array.from(extraDeckDiv.querySelectorAll(".cardDiv"))
-  // aggiungo event listener a ogni carta
-  arrExtraDeckDiv.forEach(cardDiv => {
-    cardDiv.addEventListener("click", () => {
-      let cardDivImgUrl = cardDiv.querySelector("img").getAttribute("src");
-      console.log("test card img url", cardDivImgUrl);
-      inseriscoCardinColonna(divTabellaId, "sideIn", "extra", cardDivImgUrl)
+      inseriscoCardinColonna(divTabellaId, colonnaSide, subDeck, cardDivImgUrl)
     })
   })
 }
 
 function inseriscoCardinColonna(divTabellaId, colonnaSide, subDeck, cardDivImgUrl) {
-
   // RECUPERO MATCHED DECK DA LOCAL STORAGE
   let matchedDeck = JSON.parse(localStorage.getItem("matchedDeckObject"));
   let matchedDeckSubDeck = matchedDeck[subDeck];
-  console.log("test matchdeck subeckd", matchedDeckSubDeck);
 
   // RECUPERO TABELLA
   let tabellaDiv = document.getElementById(divTabellaId)
+  console.log("test tabella div inner function", tabellaDiv);
 
   // RECUPERO SPAN H3 colonnaSide
   let h3SpanSide = Number(tabellaDiv.querySelector("#" + colonnaSide).querySelector("h3").querySelector("span").textContent);
 
   // CARD INFO
   let cardName = "";
+  let cardNameNoSpecialCharacters = "";
   let cardType = "";
   let cardQuantity = 0;
   for (let i = 0; i < matchedDeckSubDeck.length; i++) {
     if (cardDivImgUrl == matchedDeckSubDeck[i].img) {
       cardQuantity++
       cardName = matchedDeckSubDeck[i].name;
+      cardNameNoSpecialCharacters = cardName.replace(/[^a-zA-Z0-9-_]/g, '');
       cardType = matchedDeckSubDeck[i].type;
     }
   }
@@ -243,26 +242,25 @@ function inseriscoCardinColonna(divTabellaId, colonnaSide, subDeck, cardDivImgUr
   const QUANTITA_MAX_CARTE_SIDEABILI = 15;
   if (h3SpanSide < QUANTITA_MAX_CARTE_SIDEABILI) {
     // SE CARD DIV CON ID "cardName" ESISTE, LA AGGIORNO
-    if (document.getElementById(cardName)) {
-
+    if (tabellaDiv.querySelector("." + cardNameNoSpecialCharacters)) {
       console.log("card aggiornata");
-      let cardSpan = Number(document.getElementById(cardName).querySelector("span").textContent)
+      let cardSpan = Number(tabellaDiv.querySelector("." + cardNameNoSpecialCharacters).querySelector("span").textContent)
       if (cardSpan < cardQuantity) {
         console.log("card aggiornata");
         // AGGIORNO SPAN HEADER
         tabellaDiv.querySelector("#" + colonnaSide).querySelector("h3").querySelector("span").innerHTML = h3SpanSide + 1 + " ";
         // AGGIORNO SPAN CARD
-        document.getElementById(cardName).querySelector("span").innerHTML = cardSpan + 1 + " ";
+        tabellaDiv.querySelector("." + cardNameNoSpecialCharacters).querySelector("span").innerHTML = cardSpan + 1 + " ";
       }
-    } else {// SE CARD DIV CON ID "cardName" NON ESISTE LO CREO E INSERISCO
-
+    } else {// SE CARD DIV CON ID "cardNameNoSpecialCharacters" NON ESISTE LO CREO E INSERISCO
       console.log("card creata");
       // AGGIORNO SPAN HEADER
       tabellaDiv.querySelector("#" + colonnaSide).querySelector("h3").querySelector("span").innerHTML = h3SpanSide + 1 + " ";
       // CREO CARTA
       let cardDiv = document.createElement("div");
+      cardDiv.setAttribute("class", cardNameNoSpecialCharacters)
       cardDiv.innerHTML = `
-                        <div class="tableCard" id="${cardName}">
+                        <div class="tableCard">
                         <button class="btnMinus">-</button><p><span>1 </span>${cardName}</p>
                         </div>
                         `;
@@ -280,16 +278,16 @@ function inseriscoCardinColonna(divTabellaId, colonnaSide, subDeck, cardDivImgUr
       }
       // APPEND A CARD TYPE DIV DI TABELLA
       tabellaDiv.querySelector("#" + colonnaSide).querySelector("#" + cardTypeDiv).append(cardDiv);
+      console.log("mostro cardDiv", cardDiv);
       // EVENT LISTENER
       cardDiv.addEventListener("click", () => {
-        removeCard(tabellaDiv, colonnaSide, cardDiv, cardName, cardTypeDiv)
+        removeCard(tabellaDiv, colonnaSide, cardDiv, cardNameNoSpecialCharacters, cardTypeDiv)
       });
     }
   }
 }
 
-function removeCard(tabellaDiv, colonnaSide, cardDiv, cardName, cardTypeDiv) {
-
+function removeCard(tabellaDiv, colonnaSide, cardDiv, cardNameNoSpecialCharacters, cardTypeDiv) {
   // RECUPERO SPAN H3 colonnaSide
   let h3SpanSide = Number(tabellaDiv.querySelector("#" + colonnaSide).querySelector("h3").querySelector("span").textContent);
   // RECUPERO SPAN cardDiv
@@ -300,12 +298,49 @@ function removeCard(tabellaDiv, colonnaSide, cardDiv, cardName, cardTypeDiv) {
 
   if (cardSpan > 1) {
     // RIDUCO DI 1 SPAN CARD
-    document.getElementById(cardName).querySelector("span").innerHTML = cardSpan - 1 + " ";
+    tabellaDiv.querySelector("." + cardNameNoSpecialCharacters).querySelector("span").innerHTML = cardSpan - 1 + " ";
   } else {
     // RIMUOVO CARD DIV
     tabellaDiv.querySelector("#" + colonnaSide).querySelector("#" + cardTypeDiv).removeChild(cardDiv);
   }
 }
+
+// // NEED TO FIX IT
+// function removeColorFrameFromCard(cardDiv) {
+//   if (cardDiv.classList.contains("colorGreen")) {
+//     cardDiv.classList.remove("colorGreen");
+//   }
+//   if (cardDiv.classList.contains("colorRed")) {
+//     cardDiv.classList.remove("colorRed");
+//   }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

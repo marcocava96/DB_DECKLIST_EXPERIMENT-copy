@@ -57,8 +57,9 @@ img {
     border: purple dotted 5px;
     display: flex;
     flex-direction: row;
-    
+
 }
+
 #sideIn,
 #sideOut {
     border: blue solid 5px;
@@ -72,8 +73,17 @@ img {
 #traps {
     border: black solid 2px;
 }
+
 .btnMinus {
     width: 10%;
     margin-right: 10px;
     /* Add spacing between button and paragraph */
+}
+
+.colorRed {
+    border: red solid 2px;
+}
+
+.colorGreen {
+    border: greenyellow solid 2px;
 }

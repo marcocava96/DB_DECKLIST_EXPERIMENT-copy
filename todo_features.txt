@@ -1,9 +1,9 @@
 ✅ 1. Popolare select dinamicamente in base ai decks salvati su db.
 
 ✅ 2. In base alla option selezionata nella select popolare main/side/extra Divs.
-    2a. 
 
 ✅ 3. Al click del bottone "Crea tabella" generare tabella univoca per il deck contro cui sidare (e.g tabella vs ACQUA, FUOCO, ERBA ecc...)
+    3a. qui aggiungere event listener alle carte del deck???
 
 ✅4. Al click, le carte del main deck devono andare nella colonna "SIDE OUT" della tabella side.
     ✅4a. Le carte della side/extra devono andare nella colonna "SIDE IN" della tabella side.
@@ -11,3 +11,5 @@
 
 
 
+AL CREATE DELLA TABELLA VOGLIO CHE LE CARTE VADANO IN QUELLA TABELLA
+SE INVECE CLICCLO SU EDIT DI UN'ALTRA TABELLA VOGLIO CHE VADANO IN QUELLA
