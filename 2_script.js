@@ -12,7 +12,7 @@ let generatePdfButton = document.querySelector("#generatePdfButton")
 
 
 
-//! SELECT DINAMICA
+// SELECT DINAMICA
 decksSelect.addEventListener("click", async () => {
   // FETCH DECKS SALVATI SU DB
   let DECKS = await getDecksFromDb(URL);
@@ -40,7 +40,7 @@ decksSelect.addEventListener("click", async () => {
   }
 });
 
-//! EVENT LISTENER OPTIONS FROM SELECT
+// EVENT LISTENER OPTIONS FROM SELECT
 decksSelect.addEventListener("change", async () => {
   // PULISCO DIV
   divContenitoreTabelle.innerHTML = "";
@@ -71,17 +71,22 @@ decksSelect.addEventListener("change", async () => {
   populateSubDeckDiv(matchedDeckObject, "extra", extraDeckDiv);
 });
 
-//! CREO TABELLE PER SIDECKING
+
+
+// createSideBtn (POPOLO I DIV CON MAIN/SIDE/EXTRA
 createSideBtn.addEventListener("click", () => {
   // PRENDO MATCHED DECK DALLA LOCAL STORAGE
   let currentDeck = JSON.parse(localStorage.getItem("matchedDeckObject"));
 
-  // POPOLO I DIV CON MAIN/SIDE/EXTRA (in modo che gli event listener delle card si resettino)
+  // POPOLO I DIV CON MAIN/SIDE/EXTRA
   populateSubDeckDiv(currentDeck, "main", mainDeckDiv);
   populateSubDeckDiv(currentDeck, "side", sideDeckDiv);
   populateSubDeckDiv(currentDeck, "extra", extraDeckDiv);
+})
 
-  // CREO DIV TABELLA con ID UNICO BASED ON USER INPUT
+// createSideBtn (CREO DIV TABELLA con ID UNICO BASED ON USER INPUT)
+createSideBtn.addEventListener("click", () => {
+
   const userInput = prompt("Insert the name of the deck you're siding against");
   const userInputWithoutSpaces = userInput.replace(/[^a-zA-Z0-9-_]/g, '');
 
@@ -112,33 +117,6 @@ createSideBtn.addEventListener("click", () => {
   divContenitoreTabelle.append(divTabella)
   let divTabellaId = divTabella.id;
 
-  // ORDINO ALFABETICAMENTE
-  let arrTablesNames = [];
-
-  // recupero tutte le tabelle e i loro nomi
-  let arrTables = Array.from(divContenitoreTabelle.querySelectorAll(".tables"));
-  console.log(arrTables);
-  arrTables.forEach(table => {
-    console.log(table.id);
-    arrTablesNames.push(table.id)
-  });
-
-  // sorto array di nomi
-  arrTablesNames.sort()
-  console.log(arrTablesNames);
-  divContenitoreTabelle.innerHTML = "";
-
-  // itero array nomi
-  for (let i = 0; i < arrTablesNames.length; i++) {
-    console.log(arrTablesNames[i]);
-    // per ogni nome, cerco il suo div e lo appendo
-    for (let j = 0; j < arrTables.length; j++) {
-      if (arrTablesNames[i] == arrTables[j].id) {
-        divContenitoreTabelle.append(arrTables[j])
-      }
-    }
-  }
-
   // AGGIUNGO EL ALLE CARTE DI QUESTA TABELLA
   addEventListenerToCards(divTabellaId, mainDeckDiv, "sideOut", "main");
   addEventListenerToCards(divTabellaId, sideDeckDiv, "sideIn", "side");
@@ -149,7 +127,7 @@ createSideBtn.addEventListener("click", () => {
     // RISCARICO MATCHED DECK DALLA LOCAL STORAGE
     let currentDeck = JSON.parse(localStorage.getItem("matchedDeckObject"));
     console.log("sto RISCARICANDO il deck");
-    // RIPOPOLO I DIV CON MAIN/SIDE/EXTRA
+    // RIPOPOLO I DIV CON MAIN/SIDE/EXTRA in modo che gli event listener delle card si resettino dato che sto proprio creando nuovi Carddiv da zero)
     populateSubDeckDiv(currentDeck, "main", mainDeckDiv);
     populateSubDeckDiv(currentDeck, "side", sideDeckDiv);
     populateSubDeckDiv(currentDeck, "extra", extraDeckDiv);
@@ -163,15 +141,50 @@ createSideBtn.addEventListener("click", () => {
   document.querySelector(`.deleteTableBtn_${userInputWithoutSpaces}`).addEventListener("click", () => {
     divContenitoreTabelle.removeChild(divTabella);
   })
+})
+
+// createSideBtn (ORDINO TABELLE ALFABETICAMENTE)
+createSideBtn.addEventListener("click", () => {
+  // RACCOLGO NOMI TABELLE
+  let arrTablesNames = [];
+
+  // recupero tutte le tabelle e i loro nomi
+  let arrTables = Array.from(divContenitoreTabelle.querySelectorAll(".tables"));
+  console.log(arrTables);
+  arrTables.forEach(table => {
+    console.log(table.id);
+    arrTablesNames.push(table.id)
+  });
+
+  // sorto array di nomi
+  arrTablesNames.sort()
+  console.log(arrTablesNames);
+  // svuoto contenitore tabelle
+  divContenitoreTabelle.innerHTML = "";
+
+  // itero array nomi
+  for (let i = 0; i < arrTablesNames.length; i++) {
+    console.log(arrTablesNames[i]);
+    // per ogni nome, cerco il suo divContenitoreTabelle e lo appendo divContenitoreTabelle
+    for (let j = 0; j < arrTables.length; j++) {
+      if (arrTablesNames[i] == arrTables[j].id) {
+        divContenitoreTabelle.append(arrTables[j])
+      }
+    }
+  }
 });
 
-//! CANCELLO TUTTE LE TABELLE
+
+
+
+
+// CANCELLO TUTTE LE TABELLE
 deleteAllTablesBtn.addEventListener("click", () => {
   console.log("clicked delete all button");
   divContenitoreTabelle.innerHTML = "";
 })
 
-//! PRINT TABELLE (DA FIXARE)
+// PRINT TABELLE (DA FIXARE)
 generatePdfButton.addEventListener("click", () => {
 
   let element = divContenitoreTabelle;
@@ -187,8 +200,7 @@ generatePdfButton.addEventListener("click", () => {
   html2pdf().set(opt).from(element).save();
 })
 
-
-//* NEW FUNCTIONS LIST
+//!FUNCTIONS LIST
 async function getDecksFromDb(URL) {
   try {
     const response = await fetch(URL);
@@ -312,11 +324,8 @@ function inseriscoCardinColonna(divTabellaId, colonnaSide, subDeck, cardDivImgUr
       // CREO CARTA
       let cardDiv = document.createElement("div");
       cardDiv.setAttribute("class", cardNameNoSpecialCharacters)
-      cardDiv.innerHTML = `
-                        <div class="tableCard">
-                        <button class="btnMinus">-</button><p><span>1 </span>${cardName}</p>
-                        </div>
-                        `;
+      cardDiv.classList.add("tableCard");
+      cardDiv.innerHTML = `<button class="btnMinus">-</button><span>1 </span><p>${cardName}</p>`;
       // DIV TIPO DI CARTA (MONSTERS, SPELLS, TRAPS)
       let cardTypeDiv = "";
       if (cardType == "Effect Monster" ||
@@ -335,6 +344,34 @@ function inseriscoCardinColonna(divTabellaId, colonnaSide, subDeck, cardDivImgUr
       cardDiv.addEventListener("click", () => {
         removeCard(tabellaDiv, colonnaSide, cardDiv, cardNameNoSpecialCharacters, cardTypeDiv)
       });
+
+      // ORDINO CARTE IN ORDINE ALFABETICO
+      // RACCOLGO NOMI TABELLE
+      let arrCardNames = [];
+
+      // recupero tutte le carte e i loro nomi
+      let arrCardDivs = Array.from(tabellaDiv.querySelector("#" + colonnaSide).querySelector("#" + cardTypeDiv).querySelectorAll(".tableCard"));
+      arrCardDivs.forEach(cardElement => {
+        console.log(cardElement.querySelector("p").textContent);
+        arrCardNames.push(cardElement.querySelector("p").textContent);
+      });
+
+      // sorto array di nomi
+      arrCardNames.sort()
+      console.log("test arrCardDivs", arrCardNames);
+      // svuoto contenitore tabelle
+      cardTypeDiv.innerHTML = "";
+
+      // itero array nomi
+      for (let i = 0; i < arrCardNames.length; i++) {
+        console.log(arrCardNames[i]);
+        // per ogni nome, cerco il suo divContenitoreTabelle e lo appendo divContenitoreTabelle
+        for (let j = 0; j < arrCardDivs.length; j++) {
+          if (arrCardNames[i] == arrCardDivs[j].querySelector("p").textContent) {
+            tabellaDiv.querySelector("#" + colonnaSide).querySelector("#" + cardTypeDiv).append(arrCardDivs[j]);
+          }
+        }
+      }
     }
   }
 }
@@ -356,30 +393,6 @@ function removeCard(tabellaDiv, colonnaSide, cardDiv, cardNameNoSpecialCharacter
     tabellaDiv.querySelector("#" + colonnaSide).querySelector("#" + cardTypeDiv).removeChild(cardDiv);
   }
 }
-
-// // NEED TO FIX IT
-// function removeColorFrameFromCard(cardDiv) {
-//   if (cardDiv.classList.contains("colorGreen")) {
-//     cardDiv.classList.remove("colorGreen");
-//   }
-//   if (cardDiv.classList.contains("colorRed")) {
-//     cardDiv.classList.remove("colorRed");
-//   }
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

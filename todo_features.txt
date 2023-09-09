@@ -6,4 +6,4 @@ features i want to implement:
 4. highlight selected cardDiv
 ✅ 5. create a button to delete a certain Table
 ✅ 6. create a button to delete all TABLES
-7. sort cards alphabetically
+✅ 7. sort cards alphabetically
