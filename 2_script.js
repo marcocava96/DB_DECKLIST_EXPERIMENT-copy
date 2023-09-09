@@ -1,17 +1,14 @@
 //!ELEMENTI HTML
-// SELECT DECKS
 let decksSelect = document.querySelector("#decksSelect");
-// DIV USERDECK
 let divUserDeck = document.querySelector("#divUserDeck");
 let mainDeckDiv = document.querySelector("#mainDeckDiv");
 let sideDeckDiv = document.querySelector("#sideDeckDiv");
 let extraDeckDiv = document.querySelector("#extraDeckDiv");
-// BOTTONE CREA TABELLA
 let createSideBtn = document.querySelector("#createSideBtn");
-// DIV CONTENITORE TABELLE
+let deleteAllTablesBtn = document.querySelector("#deleteAllTablesBtn");
 let divContenitoreTabelle = document.querySelector("#divContenitoreTabelle");
-// URL FETCH
 let URL = "http://localhost:3000/decks";
+let generatePdfButton = document.querySelector("#generatePdfButton")
 
 
 
@@ -93,6 +90,7 @@ createSideBtn.addEventListener("click", () => {
   divTabella.setAttribute("id", userInputWithoutSpaces)
   divTabella.innerHTML = `
                           <button class="editTableBtn_${userInputWithoutSpaces}">Edit Table</button>
+                          <button class="deleteTableBtn_${userInputWithoutSpaces}">Delete Table</button>
                           <h2 id="deckSidingVs">You are now siding against: ${userInputWithoutSpaces}</h2>
                           <div class="colonne">
                             <div id="sideOut">
@@ -114,6 +112,33 @@ createSideBtn.addEventListener("click", () => {
   divContenitoreTabelle.append(divTabella)
   let divTabellaId = divTabella.id;
 
+  // ORDINO ALFABETICAMENTE
+  let arrTablesNames = [];
+
+  // recupero tutte le tabelle e i loro nomi
+  let arrTables = Array.from(divContenitoreTabelle.querySelectorAll(".tables"));
+  console.log(arrTables);
+  arrTables.forEach(table => {
+    console.log(table.id);
+    arrTablesNames.push(table.id)
+  });
+
+  // sorto array di nomi
+  arrTablesNames.sort()
+  console.log(arrTablesNames);
+  divContenitoreTabelle.innerHTML = "";
+
+  // itero array nomi
+  for (let i = 0; i < arrTablesNames.length; i++) {
+    console.log(arrTablesNames[i]);
+    // per ogni nome, cerco il suo div e lo appendo
+    for (let j = 0; j < arrTables.length; j++) {
+      if (arrTablesNames[i] == arrTables[j].id) {
+        divContenitoreTabelle.append(arrTables[j])
+      }
+    }
+  }
+
   // AGGIUNGO EL ALLE CARTE DI QUESTA TABELLA
   addEventListenerToCards(divTabellaId, mainDeckDiv, "sideOut", "main");
   addEventListenerToCards(divTabellaId, sideDeckDiv, "sideIn", "side");
@@ -133,7 +158,35 @@ createSideBtn.addEventListener("click", () => {
     addEventListenerToCards(divTabellaId, sideDeckDiv, "sideIn", "side");
     addEventListenerToCards(divTabellaId, extraDeckDiv, "sideIn", "extra");
   })
+
+  // EVENT LISTENER TASTO DELETE
+  document.querySelector(`.deleteTableBtn_${userInputWithoutSpaces}`).addEventListener("click", () => {
+    divContenitoreTabelle.removeChild(divTabella);
+  })
 });
+
+//! CANCELLO TUTTE LE TABELLE
+deleteAllTablesBtn.addEventListener("click", () => {
+  console.log("clicked delete all button");
+  divContenitoreTabelle.innerHTML = "";
+})
+
+//! PRINT TABELLE (DA FIXARE)
+generatePdfButton.addEventListener("click", () => {
+
+  let element = divContenitoreTabelle;
+  let opt = {
+    margin: 0,
+    filename: 'mySideDeck.pdf',
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 1, scrollY: 0 },
+    jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+  };
+
+  // New Promise-based usage:
+  html2pdf().set(opt).from(element).save();
+})
+
 
 //* NEW FUNCTIONS LIST
 async function getDecksFromDb(URL) {
@@ -278,7 +331,6 @@ function inseriscoCardinColonna(divTabellaId, colonnaSide, subDeck, cardDivImgUr
       }
       // APPEND A CARD TYPE DIV DI TABELLA
       tabellaDiv.querySelector("#" + colonnaSide).querySelector("#" + cardTypeDiv).append(cardDiv);
-      console.log("mostro cardDiv", cardDiv);
       // EVENT LISTENER
       cardDiv.addEventListener("click", () => {
         removeCard(tabellaDiv, colonnaSide, cardDiv, cardNameNoSpecialCharacters, cardTypeDiv)
@@ -314,8 +366,6 @@ function removeCard(tabellaDiv, colonnaSide, cardDiv, cardNameNoSpecialCharacter
 //     cardDiv.classList.remove("colorRed");
 //   }
 // }
-
-
 
 
 

@@ -1,15 +1,9 @@
-✅ 1. Popolare select dinamicamente in base ai decks salvati su db.
+features i want to implement:
 
-✅ 2. In base alla option selezionata nella select popolare main/side/extra Divs.
-
-✅ 3. Al click del bottone "Crea tabella" generare tabella univoca per il deck contro cui sidare (e.g tabella vs ACQUA, FUOCO, ERBA ecc...)
-    3a. qui aggiungere event listener alle carte del deck???
-
-✅4. Al click, le carte del main deck devono andare nella colonna "SIDE OUT" della tabella side.
-    ✅4a. Le carte della side/extra devono andare nella colonna "SIDE IN" della tabella side.
-        ❌4.b Se creo più tabelle, devo fare in modo che le carte capiscano in quale tabella side andare (vuoi che vada nella colonna "SIDE OUT" di quale tabella? ACQUA o FUOCO?)
-
-
-
-AL CREATE DELLA TABELLA VOGLIO CHE LE CARTE VADANO IN QUELLA TABELLA
-SE INVECE CLICCLO SU EDIT DI UN'ALTRA TABELLA VOGLIO CHE VADANO IN QUELLA
+✅ 1. sort tables alphabetically
+🟡 2. create a button to print all tables
+3. connect the tables you create to the current deck in use so that when you switch back to it you still have all the tables previously created
+4. highlight selected cardDiv
+✅ 5. create a button to delete a certain Table
+✅ 6. create a button to delete all TABLES
+7. sort cards alphabetically
