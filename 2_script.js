@@ -12,6 +12,8 @@ let generatePdfButton = document.querySelector("#generatePdfButton")
 
 
 
+
+
 // SELECT DINAMICA
 decksSelect.addEventListener("click", async () => {
   // FETCH DECKS SALVATI SU DB
@@ -65,84 +67,53 @@ decksSelect.addEventListener("change", async () => {
   // SALVO MATCHED DECK NELLA LOCAL STORAGE
   localStorage.setItem("matchedDeckObject", JSON.stringify(matchedDeckObject));
 
-  // POPOLO I DIV CON MAIN/SIDE/EXTRA
-  populateSubDeckDiv(matchedDeckObject, "main", mainDeckDiv);
-  populateSubDeckDiv(matchedDeckObject, "side", sideDeckDiv);
-  populateSubDeckDiv(matchedDeckObject, "extra", extraDeckDiv);
+  // POPOLO SUBDECKS
+  popoloSubdecks();
 });
-
-// createSideBtn (POPOLO I DIV CON MAIN/SIDE/EXTRA
-createSideBtn.addEventListener("click", () => {
-  // PRENDO MATCHED DECK DALLA LOCAL STORAGE
-  let currentDeck = JSON.parse(localStorage.getItem("matchedDeckObject"));
-
-  // POPOLO I DIV CON MAIN/SIDE/EXTRA
-  populateSubDeckDiv(currentDeck, "main", mainDeckDiv);
-  populateSubDeckDiv(currentDeck, "side", sideDeckDiv);
-  populateSubDeckDiv(currentDeck, "extra", extraDeckDiv);
-})
 
 // createSideBtn (CREO DIV TABELLA con ID UNICO BASED ON USER INPUT)
 createSideBtn.addEventListener("click", () => {
+  // RISCARICO IL DECK PER "RESETTARE" LE CARTE DAI VARI EVENT LISTENERS
+  popoloSubdecks();
 
+  // CREO TABELLA
   const userInput = prompt("Insert the name of the deck you're siding against");
   const userInputWithoutSpaces = userInput.replace(/[^a-zA-Z0-9-_]/g, '');
+  let divTabella = creaDivTabella(userInputWithoutSpaces);
 
-  let divTabella = document.createElement("div");
-  divTabella.setAttribute("class", "tables table")
-  divTabella.setAttribute("id", userInputWithoutSpaces)
-  divTabella.innerHTML = `
-                          <div id="inline-elements">
-                            <h2 id="deckSidingVs">Siding VS: ${userInputWithoutSpaces}</h2>
-                            <div id="inline-buttons">
-                              <button class="editTableBtn_${userInputWithoutSpaces} button">Edit Table</button>
-                              <button class="deleteTableBtn_${userInputWithoutSpaces} button">Delete Table</button>
-                            </div>
-                          </div>
-
-
-
-
-
-
-                          <div class="colonne">
-                            <div id="sideOut">
-                              <h3 id="head3Out"><span></span>SIDE OUT:</h3>
-                              <div id="monsters"><span></span></div>
-                              <div id="spells"><span></span></div>
-                              <div id="traps"><span></span></div>
-                            </div>
-
-                            <div id="sideIn">
-                            <h3 id="head3In"><span></span>SIDE IN:</h3>
-                            <div id="monsters"><span></span></div>
-                            <div id="spells"><span></span></div>
-                            <div id="traps"><span></span></div>
-                            </div>
-                          </div>
-                        `;
   // APPENDO TABELLA A CONTENITORE TABELLE
   divContenitoreTabelle.append(divTabella)
   let divTabellaId = divTabella.id;
+
+  // ORDINO TABELLE IN ALFABETICO
+  ordinoTabelleInAlfabetico();
 
   // AGGIUNGO EL ALLE CARTE DI QUESTA TABELLA
   addEventListenerToCards(divTabellaId, mainDeckDiv, "sideOut", "main");
   addEventListenerToCards(divTabellaId, sideDeckDiv, "sideIn", "side");
   addEventListenerToCards(divTabellaId, extraDeckDiv, "sideIn", "extra");
 
-  // EVENT LISTENER TASTO EDIT
+  // EVENT LISTENER TASTO EDIT TABLE NAME
+  document.querySelector(`.editTableNameBtn_${userInputWithoutSpaces}`).addEventListener("click", () => {
+    console.log("clicked edit table name btn");
+  })
+
+  // EVENT LISTENER TASTO EDIT table
   document.querySelector(`.editTableBtn_${userInputWithoutSpaces}`).addEventListener("click", function () {
-    // RISCARICO MATCHED DECK DALLA LOCAL STORAGE
-    let currentDeck = JSON.parse(localStorage.getItem("matchedDeckObject"));
-    console.log("sto RISCARICANDO il deck");
     // RIPOPOLO I DIV CON MAIN/SIDE/EXTRA in modo che gli event listener delle card si resettino dato che sto proprio creando nuovi Carddiv da zero)
-    populateSubDeckDiv(currentDeck, "main", mainDeckDiv);
-    populateSubDeckDiv(currentDeck, "side", sideDeckDiv);
-    populateSubDeckDiv(currentDeck, "extra", extraDeckDiv);
+    popoloSubdecks();
     // AGGIUNGO EL ALLE CARTE DI QUESTA TABELLA
     addEventListenerToCards(divTabellaId, mainDeckDiv, "sideOut", "main");
     addEventListenerToCards(divTabellaId, sideDeckDiv, "sideIn", "side");
     addEventListenerToCards(divTabellaId, extraDeckDiv, "sideIn", "extra");
+  })
+
+  // EVENT LISTENER TASTO DUPLICATE (da fixare, la tabella clonata non ha gli event listener)
+  document.querySelector(`.duplicateTableBtn_${userInputWithoutSpaces}`).addEventListener("click", () => {
+    let originalTable = document.getElementById(divTabellaId);
+    let clonedTable = originalTable.cloneNode(true);
+    // divContenitoreTabelle.appendChild(clonedTable);
+    originalTable.parentElement.appendChild(clonedTable);
   })
 
   // EVENT LISTENER TASTO DELETE
@@ -150,37 +121,6 @@ createSideBtn.addEventListener("click", () => {
     divContenitoreTabelle.removeChild(divTabella);
   })
 })
-
-// createSideBtn (ORDINO TABELLE ALFABETICAMENTE)
-createSideBtn.addEventListener("click", () => {
-  // RACCOLGO NOMI TABELLE
-  let arrTablesNames = [];
-
-  // recupero tutte le tabelle e i loro nomi
-  let arrTables = Array.from(divContenitoreTabelle.querySelectorAll(".tables"));
-  console.log(arrTables);
-  arrTables.forEach(table => {
-    console.log(table.id);
-    arrTablesNames.push(table.id)
-  });
-
-  // sorto array di nomi
-  arrTablesNames.sort()
-  console.log(arrTablesNames);
-  // svuoto contenitore tabelle
-  divContenitoreTabelle.innerHTML = "";
-
-  // itero array nomi
-  for (let i = 0; i < arrTablesNames.length; i++) {
-    console.log(arrTablesNames[i]);
-    // per ogni nome, cerco il suo divContenitoreTabelle e lo appendo divContenitoreTabelle
-    for (let j = 0; j < arrTables.length; j++) {
-      if (arrTablesNames[i] == arrTables[j].id) {
-        divContenitoreTabelle.append(arrTables[j])
-      }
-    }
-  }
-});
 
 // CANCELLO TUTTE LE TABELLE
 deleteAllTablesBtn.addEventListener("click", () => {
@@ -203,6 +143,10 @@ generatePdfButton.addEventListener("click", () => {
   // New Promise-based usage:
   html2pdf().set(opt).from(element).save();
 })
+
+
+
+
 
 //!FUNCTIONS LIST
 async function getDecksFromDb(URL) {
@@ -337,18 +281,24 @@ function inseriscoCardinColonna(divTabellaId, colonnaSide, subDeck, cardDivImgUr
       cardNameDiv.innerHTML = `<div class="nomiCarte"><button class="btnMinus">-</button><span>1 </span><p>${cardName}</p></div>`;
       // DIV TIPO DI CARTA (MONSTERS, SPELLS, TRAPS)
       let cardTypeDiv = "";
-      if (cardType == "Effect Monster" ||
-        cardType == "Normal Monster" ||
-        cardType == "Tuner Monster" ||
-        cardType == "Ritual Monster") {
+      if (cardType == "Effect Monster" || cardType == "Normal Monster" || cardType == "Tuner Monster" || cardType == "Ritual Monster") {
         cardTypeDiv = "monsters";
         cardNameDiv.classList.add("orangeBackground");
       } else if (cardType == "Spell Card") {
         cardTypeDiv = "spells";
         cardNameDiv.classList.add("greenBackground");
-      } else {
+      } else if (cardType == "Trap Card") {
         cardTypeDiv = "traps";
-        cardNameDiv.classList.add("purpleBackground");
+        cardNameDiv.classList.add("purpleBackground")
+      } else if (cardType == "Fusion Monster") {
+        cardTypeDiv = "extra_fusion";
+        cardNameDiv.classList.add("darkPurpleBackground")
+      } else if (cardType == "Synchro Monster") {
+        cardTypeDiv = "extra_synchro";
+        cardNameDiv.classList.add("whiteBackground")
+      } else if (cardType == "XYZ Monster") {
+        cardTypeDiv = "extra_xyz";
+        cardNameDiv.classList.add("blackBackground")
       }
       // APPEND A CARD TYPE DIV DI TABELLA
       tabellaDiv.querySelector("#" + colonnaSide).querySelector("#" + cardTypeDiv).append(cardNameDiv);
@@ -357,32 +307,37 @@ function inseriscoCardinColonna(divTabellaId, colonnaSide, subDeck, cardDivImgUr
         removeCard(tabellaDiv, colonnaSide, cardNameDiv, cardNameNoSpecialCharacters, cardTypeDiv, cardDiv)
       });
 
-      // ORDINO CARTE IN ORDINE ALFABETICO (provare a mettere in funzione a parte)
-      // RACCOLGO NOMI TABELLE
-      let arrCardNames = [];
+      // ORDINO CARTE IN ORDINE ALFABETICO
+      ordinaNomiCarteNellaTabella(tabellaDiv, colonnaSide, cardTypeDiv)
+    }
+  }
+}
 
-      // recupero tutte le carte e i loro nomi
-      let arrCardDivs = Array.from(tabellaDiv.querySelector("#" + colonnaSide).querySelector("#" + cardTypeDiv).querySelectorAll(".tableCard"));
-      arrCardDivs.forEach(cardElement => {
-        console.log(cardElement.querySelector("p").textContent);
-        arrCardNames.push(cardElement.querySelector("p").textContent);
-      });
+function ordinaNomiCarteNellaTabella(tabellaDiv, colonnaSide, cardTypeDiv) {
+  // ORDINO CARTE IN ORDINE ALFABETICO (provare a mettere in funzione a parte)
+  // RACCOLGO NOMI TABELLE
+  let arrCardNames = [];
 
-      // sorto array di nomi
-      arrCardNames.sort()
-      console.log("test arrCardDivs", arrCardNames);
-      // svuoto contenitore tabelle
-      cardTypeDiv.innerHTML = "";
+  // recupero tutte le carte e i loro nomi
+  let arrCardDivs = Array.from(tabellaDiv.querySelector("#" + colonnaSide).querySelector("#" + cardTypeDiv).querySelectorAll(".tableCard"));
+  arrCardDivs.forEach(cardElement => {
+    console.log(cardElement.querySelector("p").textContent);
+    arrCardNames.push(cardElement.querySelector("p").textContent);
+  });
 
-      // itero array nomi
-      for (let i = 0; i < arrCardNames.length; i++) {
-        console.log(arrCardNames[i]);
-        // per ogni nome, cerco il suo divContenitoreTabelle e lo appendo divContenitoreTabelle
-        for (let j = 0; j < arrCardDivs.length; j++) {
-          if (arrCardNames[i] == arrCardDivs[j].querySelector("p").textContent) {
-            tabellaDiv.querySelector("#" + colonnaSide).querySelector("#" + cardTypeDiv).append(arrCardDivs[j]);
-          }
-        }
+  // sorto array di nomi
+  arrCardNames.sort()
+  console.log("test arrCardDivs", arrCardNames);
+  // svuoto contenitore tabelle
+  cardTypeDiv.innerHTML = "";
+
+  // itero array nomi
+  for (let i = 0; i < arrCardNames.length; i++) {
+    console.log(arrCardNames[i]);
+    // per ogni nome, cerco il suo divContenitoreTabelle e lo appendo divContenitoreTabelle
+    for (let j = 0; j < arrCardDivs.length; j++) {
+      if (arrCardNames[i] == arrCardDivs[j].querySelector("p").textContent) {
+        tabellaDiv.querySelector("#" + colonnaSide).querySelector("#" + cardTypeDiv).append(arrCardDivs[j]);
       }
     }
   }
@@ -407,13 +362,87 @@ function removeCard(tabellaDiv, colonnaSide, cardNameDiv, cardNameNoSpecialChara
   }
 }
 
+function ordinoTabelleInAlfabetico() {
+  // RACCOLGO NOMI TABELLE
+  let arrTablesNames = [];
 
+  // recupero tutte le tabelle e i loro nomi
+  let arrTables = Array.from(divContenitoreTabelle.querySelectorAll(".tables"));
+  console.log(arrTables);
+  arrTables.forEach(table => {
+    console.log(table.id);
+    arrTablesNames.push(table.id)
+  });
 
+  // sorto array di nomi
+  arrTablesNames.sort()
+  console.log(arrTablesNames);
+  // svuoto contenitore tabelle
+  divContenitoreTabelle.innerHTML = "";
 
+  // itero array nomi
+  for (let i = 0; i < arrTablesNames.length; i++) {
+    console.log(arrTablesNames[i]);
+    // per ogni nome, cerco divTabella e la appendo divContenitoreTabelle
+    for (let j = 0; j < arrTables.length; j++) {
+      if (arrTablesNames[i] == arrTables[j].id) {
+        divContenitoreTabelle.append(arrTables[j])
+      }
+    }
+  }
 
+}
 
+function popoloSubdecks() {
+  // PRENDO MATCHED DECK DALLA LOCAL STORAGE
+  let matchedDeckObject = JSON.parse(localStorage.getItem("matchedDeckObject"));
 
+  // POPOLO I DIV CON MAIN/SIDE/EXTRA
+  populateSubDeckDiv(matchedDeckObject, "main", mainDeckDiv);
+  populateSubDeckDiv(matchedDeckObject, "side", sideDeckDiv);
+  populateSubDeckDiv(matchedDeckObject, "extra", extraDeckDiv);
+}
 
+function creaDivTabella(userInputWithoutSpaces) {
+  let divTabella = document.createElement("div");
+  divTabella.setAttribute("class", "tables table")
+  divTabella.setAttribute("id", userInputWithoutSpaces)
+  divTabella.innerHTML = `
+                            <div id="inline-elements">
+                              <h2 id="deckSidingVs">Siding VS: ${userInputWithoutSpaces}</h2>
+                              <div id="inline-buttons">
+                                <button class="editTableNameBtn_${userInputWithoutSpaces} button">Edit Table Name</button>
+                                <button class="editTableBtn_${userInputWithoutSpaces} button">Edit Table</button>
+                                <button class="duplicateTableBtn_${userInputWithoutSpaces} button">Duplicate Table</button>
+                                <button class="deleteTableBtn_${userInputWithoutSpaces} button">Delete Table</button>
+                              </div>
+                            </div>
+  
+                            <div class="colonne">
+                              <div id="sideOut">
+                                <h3 id="head3Out"><span></span>SIDE OUT:</h3>
+                                <div id="monsters"><span></span></div>
+                                <div id="spells"><span></span></div>
+                                <div id="traps"><span></span></div>
+                                <div id="extra_fusion"><span></span></div>
+                                <div id="extra_synchro"><span></span></div>
+                                <div id="extra_xyz"><span></span></div>
+                              </div>
+  
+                              <div id="sideIn">
+                                <h3 id="head3In"><span></span>SIDE IN:</h3>
+                                <div id="monsters"><span></span></div>
+                                <div id="spells"><span></span></div>
+                                <div id="traps"><span></span></div>
+                                <div id="extra_fusion"><span></span></div>
+                                <div id="extra_synchro"><span></span></div>
+                                <div id="extra_xyz"><span></span></div>
+                              </div>
+                            </div>
+                          `;
+
+  return divTabella;
+}
 
 
 

@@ -10,5 +10,5 @@ features i want to implement:
 7a. sort cards alphabetically AND by quantity
 8. style my webpage because it is awful right now LMAO
 9. Duplica tabella
-10. Edita nome tabella
+🟡 10. Edita nome tabella
 
