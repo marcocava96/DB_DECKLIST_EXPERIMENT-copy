@@ -77,49 +77,10 @@ createSideBtn.addEventListener("click", () => {
   popoloSubdecks();
 
   // CREO TABELLA
-  const userInput = prompt("Insert the name of the deck you're siding against");
-  const userInputWithoutSpaces = userInput.replace(/[^a-zA-Z0-9-_]/g, '');
-  let divTabella = creaDivTabella(userInputWithoutSpaces);
-
-  // APPENDO TABELLA A CONTENITORE TABELLE
-  divContenitoreTabelle.append(divTabella)
-  let divTabellaId = divTabella.id;
+  creaDivTabella();
 
   // ORDINO TABELLE IN ALFABETICO
   ordinoTabelleInAlfabetico();
-
-  // AGGIUNGO EL ALLE CARTE DI QUESTA TABELLA
-  addEventListenerToCards(divTabellaId, mainDeckDiv, "sideOut", "main");
-  addEventListenerToCards(divTabellaId, sideDeckDiv, "sideIn", "side");
-  addEventListenerToCards(divTabellaId, extraDeckDiv, "sideIn", "extra");
-
-  // EVENT LISTENER TASTO EDIT TABLE NAME
-  document.querySelector(`.editTableNameBtn_${userInputWithoutSpaces}`).addEventListener("click", () => {
-    console.log("clicked edit table name btn");
-  })
-
-  // EVENT LISTENER TASTO EDIT table
-  document.querySelector(`.editTableBtn_${userInputWithoutSpaces}`).addEventListener("click", function () {
-    // RIPOPOLO I DIV CON MAIN/SIDE/EXTRA in modo che gli event listener delle card si resettino dato che sto proprio creando nuovi Carddiv da zero)
-    popoloSubdecks();
-    // AGGIUNGO EL ALLE CARTE DI QUESTA TABELLA
-    addEventListenerToCards(divTabellaId, mainDeckDiv, "sideOut", "main");
-    addEventListenerToCards(divTabellaId, sideDeckDiv, "sideIn", "side");
-    addEventListenerToCards(divTabellaId, extraDeckDiv, "sideIn", "extra");
-  })
-
-  // EVENT LISTENER TASTO DUPLICATE (da fixare, la tabella clonata non ha gli event listener)
-  document.querySelector(`.duplicateTableBtn_${userInputWithoutSpaces}`).addEventListener("click", () => {
-    let originalTable = document.getElementById(divTabellaId);
-    let clonedTable = originalTable.cloneNode(true);
-    // divContenitoreTabelle.appendChild(clonedTable);
-    originalTable.parentElement.appendChild(clonedTable);
-  })
-
-  // EVENT LISTENER TASTO DELETE
-  document.querySelector(`.deleteTableBtn_${userInputWithoutSpaces}`).addEventListener("click", () => {
-    divContenitoreTabelle.removeChild(divTabella);
-  })
 })
 
 // CANCELLO TUTTE LE TABELLE
@@ -163,6 +124,16 @@ async function getDecksFromDb(URL) {
     console.error("Error:", error);
     throw error; // Re-throw the error to propagate it further if needed
   }
+}
+
+function popoloSubdecks() {
+  // PRENDO MATCHED DECK DALLA LOCAL STORAGE
+  let matchedDeckObject = JSON.parse(localStorage.getItem("matchedDeckObject"));
+
+  // POPOLO I DIV CON MAIN/SIDE/EXTRA
+  populateSubDeckDiv(matchedDeckObject, "main", mainDeckDiv);
+  populateSubDeckDiv(matchedDeckObject, "side", sideDeckDiv);
+  populateSubDeckDiv(matchedDeckObject, "extra", extraDeckDiv);
 }
 
 function populateSubDeckDiv(matchedDeckObject, subDeckName, deckDiv) {
@@ -212,6 +183,70 @@ function populateSubDeckDiv(matchedDeckObject, subDeckName, deckDiv) {
       deckDiv.append(divRiga);
     } //fine loop i
   }
+}
+
+function creaDivTabella() {
+  const userInput = prompt("Insert the name of the deck you're siding against");
+  const userInputWithoutSpaces = userInput.replace(/[^a-zA-Z0-9-_]/g, '');
+
+  let divTabella = document.createElement("div");
+  divTabella.setAttribute("class", "tables table")
+  divTabella.setAttribute("id", userInputWithoutSpaces)
+  divTabella.innerHTML = `
+                            <div id="inline-elements">
+                              <h2 id="deckSidingVs">Siding VS: ${userInputWithoutSpaces}</h2>
+                              <div id="inline-buttons">
+                                <button class="editTableNameBtn_${userInputWithoutSpaces} button">Edit Table Name</button>
+                                <button class="editTableBtn_${userInputWithoutSpaces} button">Edit Table</button>
+                                <button class="duplicateTableBtn_${userInputWithoutSpaces} button">Duplicate Table</button>
+                                <button class="deleteTableBtn_${userInputWithoutSpaces} button">Delete Table</button>
+                              </div>
+                            </div>
+  
+                            <div class="colonne">
+                              <div id="sideOut">
+                                <h3 id="head3Out"><span></span>SIDE OUT:</h3>
+                                <div id="monsters"><span></span></div>
+                                <div id="spells"><span></span></div>
+                                <div id="traps"><span></span></div>
+                                <div id="extra_fusion"><span></span></div>
+                                <div id="extra_synchro"><span></span></div>
+                                <div id="extra_xyz"><span></span></div>
+                              </div>
+  
+                              <div id="sideIn">
+                                <h3 id="head3In"><span></span>SIDE IN:</h3>
+                                <div id="monsters"><span></span></div>
+                                <div id="spells"><span></span></div>
+                                <div id="traps"><span></span></div>
+                                <div id="extra_fusion"><span></span></div>
+                                <div id="extra_synchro"><span></span></div>
+                                <div id="extra_xyz"><span></span></div>
+                              </div>
+                            </div>
+                          `;
+
+  // APPENDO TABELLA A CONTENITORE TABELLE
+  divContenitoreTabelle.append(divTabella)
+  let divTabellaId = divTabella.id;
+
+  // AGGIUNGO EL ALLE CARTE DI QUESTA TABELLA
+  addEventListenerToCards(divTabellaId, mainDeckDiv, "sideOut", "main");
+  addEventListenerToCards(divTabellaId, sideDeckDiv, "sideIn", "side");
+  addEventListenerToCards(divTabellaId, extraDeckDiv, "sideIn", "extra");
+
+  // EVENT LISTENER TASTO EDIT TABLE NAME
+  aggiungoEltoEditTableNameBtn(userInputWithoutSpaces);
+
+  // EVENT LISTENER TASTO EDIT table
+  aggiungoEltoEditTableBtn(userInputWithoutSpaces, divTabellaId);
+
+  // // EVENT LISTENER TASTO DUPLICATE (da fixare, la tabella clonata non ha gli event listener)
+  // aggiungoEltoDuplicateTableBtn(userInputWithoutSpaces, divTabellaId, divTabella)
+
+  // EVENT LISTENER TASTO DELETE
+  aggiungoEltoDeleteTableBtn(userInputWithoutSpaces, divTabella)
+
 }
 
 function addEventListenerToCards(divTabellaId, subDeckDiv, colonnaSide, subDeck) {
@@ -313,6 +348,79 @@ function inseriscoCardinColonna(divTabellaId, colonnaSide, subDeck, cardDivImgUr
   }
 }
 
+function aggiungoEltoEditTableNameBtn(userInputWithoutSpaces) {
+  // EVENT LISTENER TASTO EDIT TABLE NAME
+  document.querySelector(`.editTableNameBtn_${userInputWithoutSpaces}`).addEventListener("click", () => {
+    console.log("clicked edit table name btn");
+  })
+}
+
+function aggiungoEltoEditTableBtn(userInputWithoutSpaces, divTabellaId) {
+  document.querySelector(`.editTableBtn_${userInputWithoutSpaces}`).addEventListener("click", function () {
+    // RIPOPOLO I DIV CON MAIN/SIDE/EXTRA in modo che gli event listener delle card si resettino dato che sto proprio creando nuovi Carddiv da zero)
+    popoloSubdecks();
+    // AGGIUNGO EL ALLE CARTE DI QUESTA TABELLA
+    addEventListenerToCards(divTabellaId, mainDeckDiv, "sideOut", "main");
+    addEventListenerToCards(divTabellaId, sideDeckDiv, "sideIn", "side");
+    addEventListenerToCards(divTabellaId, extraDeckDiv, "sideIn", "extra");
+  })
+}
+
+// function aggiungoEltoDuplicateTableBtn(userInputWithoutSpaces, divTabellaId, divTabella) {
+//   // EVENT LISTENER TASTO DUPLICATE
+//   document.querySelector(`.duplicateTableBtn_${userInputWithoutSpaces}`).addEventListener("click", () => {
+//     let originalTable = document.getElementById(divTabellaId);
+//     let clonedTable = originalTable.cloneNode(true);
+//     const userInputNewTable = prompt("Insert the name of the deck you're siding against");
+//     const userInputNewTableNoSpaces = userInputNewTable.replace(/[^a-zA-Z0-9-_]/g, '');
+//     // divContenitoreTabelle.appendChild(clonedTable);
+//     clonedTable.setAttribute("class", "tables table")
+//     clonedTable.setAttribute("id", userInputNewTableNoSpaces)
+//     originalTable.parentElement.appendChild(clonedTable);
+//     aggiungoEltoEditTableNameBtn(userInputNewTableNoSpaces);
+//     aggiungoEltoEditTableBtn(userInputNewTableNoSpaces, clonedTable.id);
+//     aggiungoEltoDeleteTableBtn(userInputNewTableNoSpaces, clonedTable);
+//   })
+// }
+
+function aggiungoEltoDeleteTableBtn(userInputWithoutSpaces, divTabella) {
+  // EVENT LISTENER TASTO DELETE
+  document.querySelector(`.deleteTableBtn_${userInputWithoutSpaces}`).addEventListener("click", () => {
+    divContenitoreTabelle.removeChild(divTabella);
+  })
+}
+
+function ordinoTabelleInAlfabetico() {
+  // RACCOLGO NOMI TABELLE
+  let arrTablesNames = [];
+
+  // recupero tutte le tabelle e i loro nomi
+  let arrTables = Array.from(divContenitoreTabelle.querySelectorAll(".tables"));
+  console.log(arrTables);
+  arrTables.forEach(table => {
+    console.log(table.id);
+    arrTablesNames.push(table.id)
+  });
+
+  // sorto array di nomi
+  arrTablesNames.sort()
+  console.log(arrTablesNames);
+  // svuoto contenitore tabelle
+  divContenitoreTabelle.innerHTML = "";
+
+  // itero array nomi
+  for (let i = 0; i < arrTablesNames.length; i++) {
+    console.log(arrTablesNames[i]);
+    // per ogni nome, cerco divTabella e la appendo divContenitoreTabelle
+    for (let j = 0; j < arrTables.length; j++) {
+      if (arrTablesNames[i] == arrTables[j].id) {
+        divContenitoreTabelle.append(arrTables[j])
+      }
+    }
+  }
+
+}
+
 function ordinaNomiCarteNellaTabella(tabellaDiv, colonnaSide, cardTypeDiv) {
   // ORDINO CARTE IN ORDINE ALFABETICO (provare a mettere in funzione a parte)
   // RACCOLGO NOMI TABELLE
@@ -362,87 +470,7 @@ function removeCard(tabellaDiv, colonnaSide, cardNameDiv, cardNameNoSpecialChara
   }
 }
 
-function ordinoTabelleInAlfabetico() {
-  // RACCOLGO NOMI TABELLE
-  let arrTablesNames = [];
 
-  // recupero tutte le tabelle e i loro nomi
-  let arrTables = Array.from(divContenitoreTabelle.querySelectorAll(".tables"));
-  console.log(arrTables);
-  arrTables.forEach(table => {
-    console.log(table.id);
-    arrTablesNames.push(table.id)
-  });
-
-  // sorto array di nomi
-  arrTablesNames.sort()
-  console.log(arrTablesNames);
-  // svuoto contenitore tabelle
-  divContenitoreTabelle.innerHTML = "";
-
-  // itero array nomi
-  for (let i = 0; i < arrTablesNames.length; i++) {
-    console.log(arrTablesNames[i]);
-    // per ogni nome, cerco divTabella e la appendo divContenitoreTabelle
-    for (let j = 0; j < arrTables.length; j++) {
-      if (arrTablesNames[i] == arrTables[j].id) {
-        divContenitoreTabelle.append(arrTables[j])
-      }
-    }
-  }
-
-}
-
-function popoloSubdecks() {
-  // PRENDO MATCHED DECK DALLA LOCAL STORAGE
-  let matchedDeckObject = JSON.parse(localStorage.getItem("matchedDeckObject"));
-
-  // POPOLO I DIV CON MAIN/SIDE/EXTRA
-  populateSubDeckDiv(matchedDeckObject, "main", mainDeckDiv);
-  populateSubDeckDiv(matchedDeckObject, "side", sideDeckDiv);
-  populateSubDeckDiv(matchedDeckObject, "extra", extraDeckDiv);
-}
-
-function creaDivTabella(userInputWithoutSpaces) {
-  let divTabella = document.createElement("div");
-  divTabella.setAttribute("class", "tables table")
-  divTabella.setAttribute("id", userInputWithoutSpaces)
-  divTabella.innerHTML = `
-                            <div id="inline-elements">
-                              <h2 id="deckSidingVs">Siding VS: ${userInputWithoutSpaces}</h2>
-                              <div id="inline-buttons">
-                                <button class="editTableNameBtn_${userInputWithoutSpaces} button">Edit Table Name</button>
-                                <button class="editTableBtn_${userInputWithoutSpaces} button">Edit Table</button>
-                                <button class="duplicateTableBtn_${userInputWithoutSpaces} button">Duplicate Table</button>
-                                <button class="deleteTableBtn_${userInputWithoutSpaces} button">Delete Table</button>
-                              </div>
-                            </div>
-  
-                            <div class="colonne">
-                              <div id="sideOut">
-                                <h3 id="head3Out"><span></span>SIDE OUT:</h3>
-                                <div id="monsters"><span></span></div>
-                                <div id="spells"><span></span></div>
-                                <div id="traps"><span></span></div>
-                                <div id="extra_fusion"><span></span></div>
-                                <div id="extra_synchro"><span></span></div>
-                                <div id="extra_xyz"><span></span></div>
-                              </div>
-  
-                              <div id="sideIn">
-                                <h3 id="head3In"><span></span>SIDE IN:</h3>
-                                <div id="monsters"><span></span></div>
-                                <div id="spells"><span></span></div>
-                                <div id="traps"><span></span></div>
-                                <div id="extra_fusion"><span></span></div>
-                                <div id="extra_synchro"><span></span></div>
-                                <div id="extra_xyz"><span></span></div>
-                              </div>
-                            </div>
-                          `;
-
-  return divTabella;
-}
 
 
 
