@@ -1,18 +1,31 @@
+body {
+    width: 80%;
+    margin: 0 auto;
+}
+
+
+#formDiv {
+    border: red solid 3px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 #main {
     display: flex;
 }
 
-
 /* !divUserDeck */
 #divUserDeck {
-    border: blue solid 5px;
+    /* border: red solid 3px; */
     display: flex;
     flex-direction: column;
     width: 50%;
 }
 
 #mainDeckDiv {
-    border: black solid 10px;
+    border: black solid 5px;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -25,11 +38,10 @@
 
 #sideDeckDiv,
 #extraDeckDiv {
-    border: black solid 10px;
+    border: black solid 5px;
     border-radius: 10px;
     display: flex;
     width: fit-content;
-
 }
 
 .cardDiv {
@@ -47,40 +59,73 @@ img {
 /* !divContenitoreTabelle */
 
 #sideDeck {
-    border: rgb(0, 255, 21) solid 4px;
+    /* border: rgb(0, 255, 21) solid 4px; */
     width: 50%;
-
-}
-#divContenitoreTabelle {
+    /* border: red solid 3px; */
     display: flex;
     flex-direction: column;
 
-    border: rgb(255, 0, 51) solid 4px;
+}
+
+#buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+#divContenitoreTabelle {
+    /* border: solid red 2px; */
+    display: flex;
+    flex-direction: column;
+    max-height: 100vh;
+    padding-bottom: 20px;
+    overflow-y: auto;
+    box-sizing: border-box;
 }
 
 .tables {
-    align-items: center;
-    border: rgb(0, 0, 0) solid 10px;
+    border: blue solid 3px;
     border-radius: 10px;
-    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
 }
 
+#inline-elements {
+    /* border: green dotted 5px; */
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+#inline-buttons {
+    /* border: green solid 5px; */
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
 .colonne {
     align-items: center;
     border-radius: 10px;
     display: flex;
-    flex-direction: row;
-
+    align-items: self-start;
+    height: 100%;
+    width: 100%;
 }
 
 #sideIn,
 #sideOut {
     align-items: center;
-    border: black solid 10px;
+    /* border: black solid 5px; */
     border-radius: 10px;
     display: flex;
     flex-direction: column;
-    width: 50%;
+    border: green solid 3px;
+    flex: 1;
+    min-height: fit-content;
+    height: 100%;
 }
 
 #monsters,
@@ -88,23 +133,34 @@ img {
 #traps {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    width: 100%;
 }
 
 .nomiCarte {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    padding-left: 30px;
+    border-radius: 30px;
 }
+
+.nomiCarte span {
+    padding-right: 10px;
+}
+
 
 .orangeBackground {
     background-color: rgba(255, 217, 0, 0.805);
+    border-radius: 30px;
 }
+
 .greenBackground {
     background-color: rgba(0, 255, 157, 0.543);
+    border-radius: 30px;
 }
+
 .purpleBackground {
     background-color: rgba(254, 10, 254, 0.725);
+    border-radius: 30px;
 }
 
 .btnMinus {

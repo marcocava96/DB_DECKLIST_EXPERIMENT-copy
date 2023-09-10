@@ -5,29 +5,30 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Document</title>
-  <link rel="stylesheet" type="text/css" href="https://unpkg.com/neomorphism" />
   <link rel="stylesheet" href="style.css" />
 
 
 </head>
 
 <body>
+  <!-- !FORM -->
+  <div id="formDiv">
+    <h1>SIDE DECK MANAGER</h1>
+    <form id="uploadForm" enctype="multipart/form-data">
+      <input type="file" id="fileInput" name="ydkFile" class="button" />
+      <input type="submit" value="Upload" class="button" />
+    </form>
+    <!-- !SELECT DECKS -->
+    <label for="decksSelect">Your saved Decks:</label>
+    <select id="decksSelect">
+      <option value="" selected disabled>Select a deck...</option>
+    </select>
+  </div>
+
+
   <div id="main">
     <!-- ! 1. DIV -->
     <div id="divUserDeck">
-      <h1>SIDE DECK MANAGER</h1>
-      <!-- !FORM -->
-      <form id="uploadForm" enctype="multipart/form-data">
-        <input type="file" id="fileInput" name="ydkFile" class="button" />
-        <input type="submit" value="Upload" class="button" />
-      </form>
-
-      <!-- !SELECT DECKS -->
-      <label for="decksSelect">Your saved Decks:</label>
-      <select id="decksSelect">
-        <option value="" selected disabled>Select a deck...</option>
-      </select>
-
       <!-- !DECK DIV -->
       <div id="mainDeckDiv"></div>
       <div id="sideDeckDiv"></div>
@@ -36,18 +37,20 @@
 
     <!-- !2. TABLES FOR SIDECKING-->
     <div id="sideDeck">
-      <button id="createSideBtn" class="button">Create Side Deck Table</button>
-      <button id="deleteAllTablesBtn" class="button">Delete all Tables</button>
-      <button id="generatePdfButton" class="button">Generate PDF</button>
+      <div id="buttons">
+        <button id="createSideBtn" class="button">Create Side Deck Table</button>
+        <button id="deleteAllTablesBtn" class="button">Delete all Tables</button>
+        <button id="generatePdfButton" class="button">Generate PDF</button>
+      </div>
       <div id="divContenitoreTabelle"></div>
     </div>
   </div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+    integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="1_upload_ydk_file.js"></script>
   <script src="2_script.js"></script>
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
-    integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
 </body>
 
 </html>

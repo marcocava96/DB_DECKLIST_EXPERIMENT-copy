@@ -92,7 +92,19 @@ createSideBtn.addEventListener("click", () => {
   divTabella.setAttribute("class", "tables table")
   divTabella.setAttribute("id", userInputWithoutSpaces)
   divTabella.innerHTML = `
-                          <h2 id="deckSidingVs">Siding VS: ${userInputWithoutSpaces}</h2>
+                          <div id="inline-elements">
+                            <h2 id="deckSidingVs">Siding VS: ${userInputWithoutSpaces}</h2>
+                            <div id="inline-buttons">
+                              <button class="editTableBtn_${userInputWithoutSpaces} button">Edit Table</button>
+                              <button class="deleteTableBtn_${userInputWithoutSpaces} button">Delete Table</button>
+                            </div>
+                          </div>
+
+
+
+
+
+
                           <div class="colonne">
                             <div id="sideOut">
                               <h3 id="head3Out"><span></span>SIDE OUT:</h3>
@@ -108,8 +120,6 @@ createSideBtn.addEventListener("click", () => {
                             <div id="traps"><span></span></div>
                             </div>
                           </div>
-                          <button class="editTableBtn_${userInputWithoutSpaces} button">Edit Table</button>
-                          <button class="deleteTableBtn_${userInputWithoutSpaces} button">Delete Table</button>
                         `;
   // APPENDO TABELLA A CONTENITORE TABELLE
   divContenitoreTabelle.append(divTabella)
@@ -187,7 +197,7 @@ generatePdfButton.addEventListener("click", () => {
     filename: 'mySideDeck.pdf',
     image: { type: 'jpeg', quality: 0.98 },
     html2canvas: { scale: 1, scrollY: 0 },
-    jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+    jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
   };
 
   // New Promise-based usage:
