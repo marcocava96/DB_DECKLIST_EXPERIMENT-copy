@@ -71,8 +71,6 @@ decksSelect.addEventListener("change", async () => {
   populateSubDeckDiv(matchedDeckObject, "extra", extraDeckDiv);
 });
 
-
-
 // createSideBtn (POPOLO I DIV CON MAIN/SIDE/EXTRA
 createSideBtn.addEventListener("click", () => {
   // PRENDO MATCHED DECK DALLA LOCAL STORAGE
@@ -91,27 +89,27 @@ createSideBtn.addEventListener("click", () => {
   const userInputWithoutSpaces = userInput.replace(/[^a-zA-Z0-9-_]/g, '');
 
   let divTabella = document.createElement("div");
-  divTabella.setAttribute("class", "tables")
+  divTabella.setAttribute("class", "tables table")
   divTabella.setAttribute("id", userInputWithoutSpaces)
   divTabella.innerHTML = `
-                          <button class="editTableBtn_${userInputWithoutSpaces}">Edit Table</button>
-                          <button class="deleteTableBtn_${userInputWithoutSpaces}">Delete Table</button>
-                          <h2 id="deckSidingVs">You are now siding against: ${userInputWithoutSpaces}</h2>
+                          <h2 id="deckSidingVs">Siding VS: ${userInputWithoutSpaces}</h2>
                           <div class="colonne">
                             <div id="sideOut">
                               <h3 id="head3Out"><span></span>SIDE OUT:</h3>
-                              <div id="monsters"><span></span>MONSTERS</div>
-                              <div id="spells"><span></span>SPELLS</div>
-                              <div id="traps"><span></span>TRAPS</div>
+                              <div id="monsters"><span></span></div>
+                              <div id="spells"><span></span></div>
+                              <div id="traps"><span></span></div>
                             </div>
 
                             <div id="sideIn">
                             <h3 id="head3In"><span></span>SIDE IN:</h3>
-                            <div id="monsters"><span></span>MONSTERS</div>
-                            <div id="spells"><span></span>SPELLS</div>
-                            <div id="traps"><span></span>TRAPS</div>
+                            <div id="monsters"><span></span></div>
+                            <div id="spells"><span></span></div>
+                            <div id="traps"><span></span></div>
                             </div>
                           </div>
+                          <button class="editTableBtn_${userInputWithoutSpaces} button">Edit Table</button>
+                          <button class="deleteTableBtn_${userInputWithoutSpaces} button">Delete Table</button>
                         `;
   // APPENDO TABELLA A CONTENITORE TABELLE
   divContenitoreTabelle.append(divTabella)
@@ -173,10 +171,6 @@ createSideBtn.addEventListener("click", () => {
     }
   }
 });
-
-
-
-
 
 // CANCELLO TUTTE LE TABELLE
 deleteAllTablesBtn.addEventListener("click", () => {
@@ -272,13 +266,18 @@ function addEventListenerToCards(divTabellaId, subDeckDiv, colonnaSide, subDeck)
   // aggiungo event listener a ogni cardDiv
   arrSubDeckCards.forEach(cardDiv => {
     cardDiv.addEventListener("click", function test() {
+      cardDiv.classList.add("colorGreen");
+      document.getElementById(divTabellaId).scrollIntoView({
+        behavior: "smooth", // You can use "auto" for instant scrolling
+        block: "start", // "start" will align the top of the table with the top of the viewport
+      });
       let cardDivImgUrl = cardDiv.querySelector("img").getAttribute("src");
-      inseriscoCardinColonna(divTabellaId, colonnaSide, subDeck, cardDivImgUrl)
+      inseriscoCardinColonna(divTabellaId, colonnaSide, subDeck, cardDivImgUrl, cardDiv)
     })
   })
 }
 
-function inseriscoCardinColonna(divTabellaId, colonnaSide, subDeck, cardDivImgUrl) {
+function inseriscoCardinColonna(divTabellaId, colonnaSide, subDeck, cardDivImgUrl, cardDiv) {
   // RECUPERO MATCHED DECK DA LOCAL STORAGE
   let matchedDeck = JSON.parse(localStorage.getItem("matchedDeckObject"));
   let matchedDeckSubDeck = matchedDeck[subDeck];
@@ -322,10 +321,10 @@ function inseriscoCardinColonna(divTabellaId, colonnaSide, subDeck, cardDivImgUr
       // AGGIORNO SPAN HEADER
       tabellaDiv.querySelector("#" + colonnaSide).querySelector("h3").querySelector("span").innerHTML = h3SpanSide + 1 + " ";
       // CREO CARTA
-      let cardDiv = document.createElement("div");
-      cardDiv.setAttribute("class", cardNameNoSpecialCharacters)
-      cardDiv.classList.add("tableCard");
-      cardDiv.innerHTML = `<button class="btnMinus">-</button><span>1 </span><p>${cardName}</p>`;
+      let cardNameDiv = document.createElement("div");
+      cardNameDiv.setAttribute("class", cardNameNoSpecialCharacters)
+      cardNameDiv.classList.add("tableCard");
+      cardNameDiv.innerHTML = `<div class="nomiCarte"><button class="btnMinus">-</button><span>1 </span><p>${cardName}</p></div>`;
       // DIV TIPO DI CARTA (MONSTERS, SPELLS, TRAPS)
       let cardTypeDiv = "";
       if (cardType == "Effect Monster" ||
@@ -333,19 +332,22 @@ function inseriscoCardinColonna(divTabellaId, colonnaSide, subDeck, cardDivImgUr
         cardType == "Tuner Monster" ||
         cardType == "Ritual Monster") {
         cardTypeDiv = "monsters";
+        cardNameDiv.classList.add("orangeBackground");
       } else if (cardType == "Spell Card") {
         cardTypeDiv = "spells";
+        cardNameDiv.classList.add("greenBackground");
       } else {
         cardTypeDiv = "traps";
+        cardNameDiv.classList.add("purpleBackground");
       }
       // APPEND A CARD TYPE DIV DI TABELLA
-      tabellaDiv.querySelector("#" + colonnaSide).querySelector("#" + cardTypeDiv).append(cardDiv);
+      tabellaDiv.querySelector("#" + colonnaSide).querySelector("#" + cardTypeDiv).append(cardNameDiv);
       // EVENT LISTENER
-      cardDiv.addEventListener("click", () => {
-        removeCard(tabellaDiv, colonnaSide, cardDiv, cardNameNoSpecialCharacters, cardTypeDiv)
+      cardNameDiv.addEventListener("click", () => {
+        removeCard(tabellaDiv, colonnaSide, cardNameDiv, cardNameNoSpecialCharacters, cardTypeDiv, cardDiv)
       });
 
-      // ORDINO CARTE IN ORDINE ALFABETICO
+      // ORDINO CARTE IN ORDINE ALFABETICO (provare a mettere in funzione a parte)
       // RACCOLGO NOMI TABELLE
       let arrCardNames = [];
 
@@ -376,21 +378,22 @@ function inseriscoCardinColonna(divTabellaId, colonnaSide, subDeck, cardDivImgUr
   }
 }
 
-function removeCard(tabellaDiv, colonnaSide, cardDiv, cardNameNoSpecialCharacters, cardTypeDiv) {
+function removeCard(tabellaDiv, colonnaSide, cardNameDiv, cardNameNoSpecialCharacters, cardTypeDiv, cardDiv) {
   // RECUPERO SPAN H3 colonnaSide
   let h3SpanSide = Number(tabellaDiv.querySelector("#" + colonnaSide).querySelector("h3").querySelector("span").textContent);
-  // RECUPERO SPAN cardDiv
-  let cardSpan = Number(cardDiv.querySelector("span").textContent);
+  // RECUPERO SPAN cardNameDiv
+  let cardSpan = Number(cardNameDiv.querySelector("span").textContent);
 
   // RIDUCO DI 1 IL CONTATORE COLONNA
   tabellaDiv.querySelector("#" + colonnaSide).querySelector("h3").querySelector("span").innerHTML = h3SpanSide - 1 + " ";
+  cardDiv.classList.remove("colorGreen");
 
   if (cardSpan > 1) {
     // RIDUCO DI 1 SPAN CARD
     tabellaDiv.querySelector("." + cardNameNoSpecialCharacters).querySelector("span").innerHTML = cardSpan - 1 + " ";
   } else {
     // RIMUOVO CARD DIV
-    tabellaDiv.querySelector("#" + colonnaSide).querySelector("#" + cardTypeDiv).removeChild(cardDiv);
+    tabellaDiv.querySelector("#" + colonnaSide).querySelector("#" + cardTypeDiv).removeChild(cardNameDiv);
   }
 }
 
