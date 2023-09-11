@@ -28,7 +28,6 @@ decksSelect.addEventListener("click", async () => {
 
   // ARR OF OPTIONS VALUES
   let optionsValues = [...decksSelect.options].map((option) => option.value);
-  //console.log("test options", optionsValues);
 
   if (arrDecksNames.length > optionsValues.length) {
     // CREA OPTIONS DINAMICAMENTE E POPOLO SELECT
@@ -58,7 +57,7 @@ decksSelect.addEventListener("change", async () => {
   // GUARDA TUTTI I DECK
   for (let i = 0; i < DECKS.length; i++) {
     // SE OPTION è UGUALE A NOME DI UN DECK, PRENDI QUEL DECK
-    if (DECKS[i].deckName == optionValue) {
+    if (optionValue == DECKS[i].deckName) {
       matchedDeckObject = DECKS[i];
       break;
     }
@@ -85,7 +84,6 @@ createSideBtn.addEventListener("click", () => {
 
 // CANCELLO TUTTE LE TABELLE
 deleteAllTablesBtn.addEventListener("click", () => {
-  console.log("clicked delete all button");
   divContenitoreTabelle.innerHTML = "";
 })
 
@@ -196,10 +194,10 @@ function creaDivTabella() {
                             <div id="inline-elements">
                               <h2 id="deckSidingVs">Siding VS: ${userInputWithoutSpaces}</h2>
                               <div id="inline-buttons">
-                                <button class="editTableNameBtn_${userInputWithoutSpaces} button">Edit Table Name</button>
-                                <button class="editTableBtn_${userInputWithoutSpaces} button">Edit Table</button>
-                                <button class="duplicateTableBtn_${userInputWithoutSpaces} button">Duplicate Table</button>
-                                <button class="deleteTableBtn_${userInputWithoutSpaces} button">Delete Table</button>
+                                <button class="editTableNameBtn">Edit Table Name</button>
+                                <button class="editTableBtn">Edit Table</button>
+                                <button class="duplicateTableBtn">Duplicate Table</button>
+                                <button class="deleteTableBtn">Delete Table</button>
                               </div>
                             </div>
   
@@ -233,20 +231,10 @@ function creaDivTabella() {
   // AGGIUNGO EL ALLE CARTE DI QUESTA TABELLA
   addEventListenerToCards(divTabellaId, mainDeckDiv, "sideOut", "main");
   addEventListenerToCards(divTabellaId, sideDeckDiv, "sideIn", "side");
-  addEventListenerToCards(divTabellaId, extraDeckDiv, "sideIn", "extra");
+  addEventListenerToCards(divTabellaId, extraDeckDiv, "sideOut", "extra");
 
-  // EVENT LISTENER TASTO EDIT TABLE NAME
-  aggiungoEltoEditTableNameBtn(userInputWithoutSpaces);
-
-  // EVENT LISTENER TASTO EDIT table
-  aggiungoEltoEditTableBtn(userInputWithoutSpaces, divTabellaId);
-
-  // // EVENT LISTENER TASTO DUPLICATE (da fixare, la tabella clonata non ha gli event listener)
-  // aggiungoEltoDuplicateTableBtn(userInputWithoutSpaces, divTabellaId, divTabella)
-
-  // EVENT LISTENER TASTO DELETE
-  aggiungoEltoDeleteTableBtn(userInputWithoutSpaces, divTabella)
-
+  // AGGIUNGTO EVENT LISTENERS AI BOTTONI
+  aggiungoEltoBtns(divTabellaId)
 }
 
 function addEventListenerToCards(divTabellaId, subDeckDiv, colonnaSide, subDeck) {
@@ -291,6 +279,8 @@ function inseriscoCardinColonna(divTabellaId, colonnaSide, subDeck, cardDivImgUr
       cardType = matchedDeckSubDeck[i].type;
     }
   }
+  console.log("test cardName", cardName);
+  console.log("test cardName", cardNameNoSpecialCharacters);
 
   const QUANTITA_MAX_CARTE_SIDEABILI = 15;
   if (h3SpanSide < QUANTITA_MAX_CARTE_SIDEABILI) {
@@ -328,7 +318,7 @@ function inseriscoCardinColonna(divTabellaId, colonnaSide, subDeck, cardDivImgUr
       } else if (cardType == "Fusion Monster") {
         cardTypeDiv = "extra_fusion";
         cardNameDiv.classList.add("darkPurpleBackground")
-      } else if (cardType == "Synchro Monster") {
+      } else if (cardType == "Synchro Monster" || cardType == "Synchro Tuner Monster") {
         cardTypeDiv = "extra_synchro";
         cardNameDiv.classList.add("whiteBackground")
       } else if (cardType == "XYZ Monster") {
@@ -348,15 +338,16 @@ function inseriscoCardinColonna(divTabellaId, colonnaSide, subDeck, cardDivImgUr
   }
 }
 
-function aggiungoEltoEditTableNameBtn(userInputWithoutSpaces) {
-  // EVENT LISTENER TASTO EDIT TABLE NAME
-  document.querySelector(`.editTableNameBtn_${userInputWithoutSpaces}`).addEventListener("click", () => {
-    console.log("clicked edit table name btn");
-  })
+function aggiungoEltoBtns(divTabellaId) {
+  // EVENT LISTENER TASTO EDIT table
+  aggiungoEltoEditTableBtn(divTabellaId);
+
+  // EVENT LISTENER TASTO DELETE
+  aggiungoEltoDeleteTableBtn(divTabellaId)
 }
 
-function aggiungoEltoEditTableBtn(userInputWithoutSpaces, divTabellaId) {
-  document.querySelector(`.editTableBtn_${userInputWithoutSpaces}`).addEventListener("click", function () {
+function aggiungoEltoEditTableBtn(divTabellaId) {
+  document.querySelector("#" + divTabellaId).querySelector(".editTableBtn").addEventListener("click", function () {
     // RIPOPOLO I DIV CON MAIN/SIDE/EXTRA in modo che gli event listener delle card si resettino dato che sto proprio creando nuovi Carddiv da zero)
     popoloSubdecks();
     // AGGIUNGO EL ALLE CARTE DI QUESTA TABELLA
@@ -366,27 +357,11 @@ function aggiungoEltoEditTableBtn(userInputWithoutSpaces, divTabellaId) {
   })
 }
 
-// function aggiungoEltoDuplicateTableBtn(userInputWithoutSpaces, divTabellaId, divTabella) {
-//   // EVENT LISTENER TASTO DUPLICATE
-//   document.querySelector(`.duplicateTableBtn_${userInputWithoutSpaces}`).addEventListener("click", () => {
-//     let originalTable = document.getElementById(divTabellaId);
-//     let clonedTable = originalTable.cloneNode(true);
-//     const userInputNewTable = prompt("Insert the name of the deck you're siding against");
-//     const userInputNewTableNoSpaces = userInputNewTable.replace(/[^a-zA-Z0-9-_]/g, '');
-//     // divContenitoreTabelle.appendChild(clonedTable);
-//     clonedTable.setAttribute("class", "tables table")
-//     clonedTable.setAttribute("id", userInputNewTableNoSpaces)
-//     originalTable.parentElement.appendChild(clonedTable);
-//     aggiungoEltoEditTableNameBtn(userInputNewTableNoSpaces);
-//     aggiungoEltoEditTableBtn(userInputNewTableNoSpaces, clonedTable.id);
-//     aggiungoEltoDeleteTableBtn(userInputNewTableNoSpaces, clonedTable);
-//   })
-// }
-
-function aggiungoEltoDeleteTableBtn(userInputWithoutSpaces, divTabella) {
+function aggiungoEltoDeleteTableBtn(divTabellaId) {
   // EVENT LISTENER TASTO DELETE
-  document.querySelector(`.deleteTableBtn_${userInputWithoutSpaces}`).addEventListener("click", () => {
-    divContenitoreTabelle.removeChild(divTabella);
+  document.querySelector("#" + divTabellaId).querySelector(".deleteTableBtn").addEventListener("click", () => {
+    let tableToBeDeleted = document.querySelector("#" + divTabellaId)
+    divContenitoreTabelle.removeChild(tableToBeDeleted);
   })
 }
 
