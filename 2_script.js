@@ -184,13 +184,26 @@ function populateSubDeckDiv(matchedDeckObject, subDeckName, deckDiv) {
 }
 
 function creaDivTabella() {
+  // DEVO CONTROLLARE CHE IL NUOVO NOME NON MATCHI QUELLO DI UN'ALTRA TABELLA
+  // RACCOLGO NOMI TABELLE
+  let arrTablesNames = [];
+  // recupero tutte le tabelle e i loro nomi
+  let arrTables = Array.from(divContenitoreTabelle.querySelectorAll(".tables"));
+  arrTables.forEach(table => {
+    arrTablesNames.push(table.id)
+  });
+
   const userInput = prompt("Insert the name of the deck you're siding against");
   const userInputWithoutSpaces = userInput.replace(/[^a-zA-Z0-9-_]/g, '');
 
-  let divTabella = document.createElement("div");
-  divTabella.setAttribute("class", "tables table")
-  divTabella.setAttribute("id", userInputWithoutSpaces)
-  divTabella.innerHTML = `
+  if (arrTablesNames.includes(userInputWithoutSpaces)) {
+    alert("Esiste già una tabella con questo nome!");
+    return;
+  } else {
+    let divTabella = document.createElement("div");
+    divTabella.setAttribute("class", "tables table")
+    divTabella.setAttribute("id", userInputWithoutSpaces)
+    divTabella.innerHTML = `
                             <div id="inline-elements">
                               <h2 id="deckSidingVs">Siding VS: ${userInputWithoutSpaces}</h2>
                               <div id="inline-buttons">
@@ -224,17 +237,18 @@ function creaDivTabella() {
                             </div>
                           `;
 
-  // APPENDO TABELLA A CONTENITORE TABELLE
-  divContenitoreTabelle.append(divTabella)
-  let divTabellaId = divTabella.id;
+    // APPENDO TABELLA A CONTENITORE TABELLE
+    divContenitoreTabelle.append(divTabella)
+    let divTabellaId = divTabella.id;
 
-  // AGGIUNGO EL ALLE CARTE DI QUESTA TABELLA
-  addEventListenerToCards(divTabellaId, mainDeckDiv, "sideOut", "main");
-  addEventListenerToCards(divTabellaId, sideDeckDiv, "sideIn", "side");
-  addEventListenerToCards(divTabellaId, extraDeckDiv, "sideOut", "extra");
+    // AGGIUNGO EL ALLE CARTE DI QUESTA TABELLA
+    addEventListenerToCards(divTabellaId, mainDeckDiv, "sideOut", "main");
+    addEventListenerToCards(divTabellaId, sideDeckDiv, "sideIn", "side");
+    addEventListenerToCards(divTabellaId, extraDeckDiv, "sideOut", "extra");
 
-  // AGGIUNGTO EVENT LISTENERS AI BOTTONI
-  aggiungoEltoBtns(divTabellaId)
+    // AGGIUNGTO EVENT LISTENERS AI BOTTONI
+    aggiungoEltoBtns(divTabellaId)
+  }
 }
 
 function addEventListenerToCards(divTabellaId, subDeckDiv, colonnaSide, subDeck) {
@@ -344,10 +358,17 @@ function aggiungoEltoBtns(divTabellaId) {
 
   // EVENT LISTENER TASTO DELETE
   aggiungoEltoDeleteTableBtn(divTabellaId)
+
+  // // EVENT LISTENER TASTO editTableNameBtn
+  // aggiungoEltoEditTableNameBtn(divTabellaId);
+
+  // EVENT LISTENER TASTO duplicateTableBtn
+  aggiungoEltoDuplicateTableBtn(divTabellaId)
 }
 
 function aggiungoEltoEditTableBtn(divTabellaId) {
-  document.querySelector("#" + divTabellaId).querySelector(".editTableBtn").addEventListener("click", function () {
+  document.querySelector("#" + divTabellaId).querySelector(".editTableBtn").addEventListener("click", () => {
+    console.log("HAI CLICKATO IL TASTO: editTableBtn");
     // RIPOPOLO I DIV CON MAIN/SIDE/EXTRA in modo che gli event listener delle card si resettino dato che sto proprio creando nuovi Carddiv da zero)
     popoloSubdecks();
     // AGGIUNGO EL ALLE CARTE DI QUESTA TABELLA
@@ -360,6 +381,7 @@ function aggiungoEltoEditTableBtn(divTabellaId) {
 function aggiungoEltoDeleteTableBtn(divTabellaId) {
   // EVENT LISTENER TASTO DELETE
   document.querySelector("#" + divTabellaId).querySelector(".deleteTableBtn").addEventListener("click", () => {
+    console.log("HAI CLICKATO IL TASTO: deleteTableBtn");
     let tableToBeDeleted = document.querySelector("#" + divTabellaId)
     divContenitoreTabelle.removeChild(tableToBeDeleted);
   })
@@ -371,7 +393,7 @@ function ordinoTabelleInAlfabetico() {
 
   // recupero tutte le tabelle e i loro nomi
   let arrTables = Array.from(divContenitoreTabelle.querySelectorAll(".tables"));
-  console.log(arrTables);
+  // console.log(arrTables);
   arrTables.forEach(table => {
     console.log(table.id);
     arrTablesNames.push(table.id)
@@ -379,13 +401,13 @@ function ordinoTabelleInAlfabetico() {
 
   // sorto array di nomi
   arrTablesNames.sort()
-  console.log(arrTablesNames);
+  // console.log(arrTablesNames);
   // svuoto contenitore tabelle
   divContenitoreTabelle.innerHTML = "";
 
   // itero array nomi
   for (let i = 0; i < arrTablesNames.length; i++) {
-    console.log(arrTablesNames[i]);
+    // console.log(arrTablesNames[i]);
     // per ogni nome, cerco divTabella e la appendo divContenitoreTabelle
     for (let j = 0; j < arrTables.length; j++) {
       if (arrTablesNames[i] == arrTables[j].id) {
@@ -444,11 +466,6 @@ function removeCard(tabellaDiv, colonnaSide, cardNameDiv, cardNameNoSpecialChara
     tabellaDiv.querySelector("#" + colonnaSide).querySelector("#" + cardTypeDiv).removeChild(cardNameDiv);
   }
 }
-
-
-
-
-
 
 
 

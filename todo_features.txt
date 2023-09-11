@@ -7,8 +7,7 @@ features i want to implement:
 ✅ 5. create a button to delete a certain Table
 ✅ 6. create a button to delete all TABLES
 ✅ 7. sort cards alphabetically
-7a. sort cards alphabetically AND by quantity
-8. style my webpage because it is awful right now LMAO
+❓ 7a. sort cards alphabetically AND by quantity (?)
 9. Duplica tabella
 🟡 10. Edita nome tabella
-
+11. going first, going second
