@@ -8,6 +8,6 @@ features i want to implement:
 ✅ 6. create a button to delete all TABLES
 ✅ 7. sort cards alphabetically
 ❓ 7a. sort cards alphabetically AND by quantity (?)
-9. Duplica tabella
+🟡 9. Duplica tabella
 🟡 10. Edita nome tabella
 11. going first, going second
