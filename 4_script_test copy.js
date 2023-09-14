@@ -345,6 +345,7 @@ function inseriscoCardinColonna(divTabellaId, colonnaSide, subDeck, cardDivImgUr
       let cardNameDiv = document.createElement("div");
       cardNameDiv.setAttribute("class", cardNameNoSpecialCharacters)
       cardNameDiv.classList.add("tableCard");
+      cardNameDiv.classList.add("cardNameDiv");
       cardNameDiv.innerHTML = `<div class="nomiCarte"><button class="btnMinus">-</button><span>1 </span><p>${cardName}</p></div>`;
       // DIV TIPO DI CARTA (MONSTERS, SPELLS, TRAPS)
       let cardTypeDiv = "";
@@ -473,7 +474,7 @@ function aggiungoEltoBtns(divTabellaId) {
   aggiungoEltoEditTableBtn(divTabellaId);
 
   // DUPLICATE TABLE
-  // aggiungoEltoDuplicateTableBtn(divTabellaId)
+  aggiungoEltoDuplicateTableBtn(divTabellaId)
 
   // DELETE TABLE
   aggiungoEltoDeleteTableBtn(divTabellaId)
@@ -517,6 +518,9 @@ function aggiungoEltoEditTableNameBtn(divTabellaId) {
 
     // ORDINO TABELLE IN ALFABETICO
     ordinoTabelleInAlfabetico();
+
+    // attacco alle carte della vecchia tabella event listener per rimuoverle
+    removeCardNameDivforCLonedTable(clonedTable)
   }
   )
 }
@@ -535,6 +539,51 @@ function aggiungoEltoEditTableBtn(divTabellaId) {
   })
 }
 
+// DUPLICATE TABLE
+function aggiungoEltoDuplicateTableBtn(divTabellaId) {
+  document.querySelector("#" + divTabellaId).querySelector(".duplicateTableBtn").addEventListener("click", () => {
+
+    // recupero tabella con id
+    let originalTable = document.getElementById(divTabellaId);
+
+    // chiedo e controllo USER INPUT per nuovo nome e id tabella
+    let userInputObject = controlloUserInputVsNomiTabelle(".tables");
+    let userInputObjectNoSpaces = userInputObject.noSpaces;
+
+    // clono tabella
+    let clonedTable = originalTable.cloneNode(true);
+
+    // cambio id
+    clonedTable.id = userInputObjectNoSpaces
+
+    // cambio testo h2 della tabella
+    clonedTable.querySelector("h2").textContent = `Siding VS: ${userInputObject.asInput}`
+
+    // SOSTITUISCO NEL DOM!!! IMPORTANTISSIMO!!!
+    divContenitoreTabelle.appendChild(clonedTable)
+
+    // DOPO (!!!) AVER CAMBIATO ID E INSERITO NEL DOM LA TABELLA CLONATA FACCIO LE SEGUENTI COSE:
+
+    // AGGIUNGTO EVENT LISTENERS AI BOTTONI
+    aggiungoEltoBtns(clonedTable.id)
+
+    // RISCARICO IL DECK PER "RESETTARE" LE CARTE DAI VARI EVENT LISTENERS
+    popoloSubdecks();
+
+    // COLLEGGO EVENT LISTENER A TUTTE LE CARTE 
+    addEventListenerToCardDivs(clonedTable.id, mainDeckDiv, "sideOut", "main");
+    addEventListenerToCardDivs(clonedTable.id, sideDeckDiv, "sideIn", "side");
+    addEventListenerToCardDivs(clonedTable.id, extraDeckDiv, "sideOut", "extra");
+
+    // ORDINO TABELLE IN ALFABETICO
+    ordinoTabelleInAlfabetico();
+
+    // attacco alle carte della vecchia tabella event listener per rimuoverle
+    removeCardNameDivforCLonedTable(clonedTable)
+  }
+  )
+}
+
 // DELETE TABLE
 function aggiungoEltoDeleteTableBtn(divTabellaId) {
   // EVENT LISTENER TASTO DELETE
@@ -545,13 +594,32 @@ function aggiungoEltoDeleteTableBtn(divTabellaId) {
   })
 }
 
+// simile a removeCard assegna event listener alle carte della tabella clonata per rimuoverle
+function removeCardNameDivforCLonedTable(tabellaDiv) {
 
+  arrCardNameDivs = Array.from(tabellaDiv.querySelectorAll(".cardNameDiv"));
+  console.log("test array cardivname", arrCardNameDivs);
 
+  arrCardNameDivs.forEach(cardNameDiv => {
 
+    cardNameDiv.addEventListener("click", () => {
 
+      // RECUPERO SPAN H3 colonnaSide
+      let h3SpanSide = Number(tabellaDiv.querySelector("h3").querySelector("span").textContent);
+      // RECUPERO SPAN cardNameDiv
+      let cardSpan = Number(cardNameDiv.querySelector("span").textContent);
 
+      // RIDUCO DI 1 IL CONTATORE COLONNA
+      tabellaDiv.querySelector("h3").querySelector("span").innerHTML = h3SpanSide - 1 + " ";
 
+      if (cardSpan > 1) {
+        // RIDUCO DI 1 SPAN CARD
+        cardNameDiv.querySelector("span").innerHTML = cardSpan - 1 + " ";
+      } else {
+        // RIMUOVO CARD DIV
+        cardNameDiv.parentElement.removeChild(cardNameDiv);
+      }
+    })
 
-
-
-
+  });
+}
