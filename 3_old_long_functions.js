@@ -1,241 +1,185 @@
-function creaDivTabella() {
-  const userInput = prompt("Insert the name of the deck you're siding against");
-  const userInputWithoutSpaces = userInput.replace(/[^a-zA-Z0-9-_]/g, '');
+function populateSubDeckDiv(matchedDeckObject, subDeckName, deckDiv) {
+  // PULISCO DIV
+  deckDiv.innerHTML = "";
 
-  let divTabella = document.createElement("div");
-  divTabella.setAttribute("class", "tables table")
-  divTabella.setAttribute("id", userInputWithoutSpaces)
-  divTabella.innerHTML = `
-                              <div id="inline-elements">
-                                <h2 id="deckSidingVs">Siding VS: ${userInputWithoutSpaces}</h2>
-                                <div id="inline-buttons">
-                                  <button class="editTableNameBtn">Edit Table Name</button>
-                                  <button class="editTableBtn">Edit Table</button>
-                                  <button class="duplicateTableBtn">Duplicate Table</button>
-                                  <button class="deleteTableBtn">Delete Table</button>
-                                </div>
-                              </div>
-    
-                              <div class="colonne">
-                                <div id="sideOut">
-                                  <h3 id="head3Out"><span></span>SIDE OUT:</h3>
-                                  <div id="monsters"><span></span></div>
-                                  <div id="spells"><span></span></div>
-                                  <div id="traps"><span></span></div>
-                                  <div id="extra_fusion"><span></span></div>
-                                  <div id="extra_synchro"><span></span></div>
-                                  <div id="extra_xyz"><span></span></div>
-                                </div>
-    
-                                <div id="sideIn">
-                                  <h3 id="head3In"><span></span>SIDE IN:</h3>
-                                  <div id="monsters"><span></span></div>
-                                  <div id="spells"><span></span></div>
-                                  <div id="traps"><span></span></div>
-                                  <div id="extra_fusion"><span></span></div>
-                                  <div id="extra_synchro"><span></span></div>
-                                  <div id="extra_xyz"><span></span></div>
-                                </div>
-                              </div>
-                            `;
+  let subDeck = matchedDeckObject[subDeckName];
 
-  // APPENDO TABELLA A CONTENITORE TABELLE
-  divContenitoreTabelle.append(divTabella)
-  let divTabellaId = divTabella.id;
+  if (subDeckName == "side" || subDeckName == "extra") {
 
-  // AGGIUNGO EL ALLE CARTE DI QUESTA TABELLA
-  addEventListenerToCards(divTabellaId, mainDeckDiv, "sideOut", "main");
-  addEventListenerToCards(divTabellaId, sideDeckDiv, "sideIn", "side");
-  addEventListenerToCards(divTabellaId, extraDeckDiv, "sideOut", "extra");
+    // POPOLO SIDE/EXTRA DIV CON IMG CARDS
+    subDeck.forEach((card) => {
+      // CREO CARD
+      let cardDiv = document.createElement("div");
+      cardDiv.setAttribute("class", "cardDiv");
+      cardDiv.innerHTML = `<img src=${card.img} alt="">`;
 
-  // AGGIUNGTO EVENT LISTENERS AI BOTTONI
-  aggiungoEltoBtns(divTabellaId)
+      cardDiv.dataset.name = card.name;
+      cardDiv.dataset.name = card.type;
+
+      // APPEND CARD
+      deckDiv.append(cardDiv);
+    });
+  } else if (subDeckName == "main") {
+
+    // POPOLO MAIN DECK
+    let mainDeck = subDeck;
+    let numeroRigheDiv = mainDeck.length / 10;
+    let counter = 0;
+
+    for (let i = 0; i < numeroRigheDiv; i++) {
+      if (i > 0) {
+        counter += 10;
+      }
+      // 1. CREO RIGA
+      let divRiga = document.createElement("div");
+      divRiga.setAttribute("class", "rigaMain");
+
+      // 2. RIEMPIO RIGA
+      for (let j = 0; j < mainDeck.length; j++) {
+        if (j >= counter && j <= counter + 9) {
+          // CREO CARD
+          let cardDiv = document.createElement("div");
+          cardDiv.setAttribute("class", "cardDiv");
+          cardDiv.innerHTML = `<img src=${mainDeck[j].img} alt="">`;
+          cardDiv.dataset.name = mainDeck[j].name;
+          cardDiv.dataset.name = mainDeck[j].type;
+
+          // APPEND CARD
+          divRiga.append(cardDiv);
+        }
+      } // fine loop j
+      // 3. APPEND RIGA A MAINDECK DIV
+      deckDiv.append(divRiga);
+    } //fine loop i
+  }
 }
 
 
-function aggiungoEltoEditTableNameBtn(divTabellaId) {
 
-  document.querySelector("#" + divTabellaId).querySelector(".editTableNameBtn").addEventListener("click", () => {
 
-    popoloSubdecks();
 
-    // Remove the event listener temporarily
-    document.querySelector("#" + divTabellaId).removeEventListener("click", aggiungoEltoBtns);
-    // DEVO CONTROLLARE CHE IL NUOVO NOME NON MATCHI QUELLO DI UN'ALTRA TABELLA
-    // RACCOLGO NOMI TABELLE
-    let arrTablesNames = [];
+function addEventListenerToCardDivs(divTabellaId, subDeckDiv, colonnaSide, subDeck) {
 
-    // recupero tutte le tabelle e i loro nomi
-    let arrTables = Array.from(divContenitoreTabelle.querySelectorAll(".tables"));
-    arrTables.forEach(table => {
-      arrTablesNames.push(table.id)
-    });
+  // recupero tutte le cardDiv da subDeckDiv
+  let arrSubDeckCards = Array.from(subDeckDiv.querySelectorAll(".cardDiv"))
 
-    console.log("HAI CLICKATO IL TASTO: editTableNameBtn");
-    console.log("TEST SARR TABLES", arrTablesNames);
+  // aggiungo event listener a ogni cardDiv
+  arrSubDeckCards.forEach(cardDiv => {
+    cardDiv.addEventListener("click", () => {
 
-    // NEW TABLE NAME FROM USER INPUT
-    let userInput = prompt("edit your name here");
-    let userInputWithoutSpaces = userInput.replace(/[^a-zA-Z0-9-_]/g, '');
+      // aggiungo bordo dalla carta
+      cardDiv.classList.add("greenBorder")
 
-    if (arrTablesNames.includes(userInputWithoutSpaces)) {
-      alert("Esiste già una tabella con questo nome!");
-      return;
-    } else {
-      alert("Nuovo nome accettato!");
+      // scroll into view feature
+      document.getElementById(divTabellaId).scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
 
-      // Remove existing event listeners (assuming it's a click event)
-      document.querySelector("#" + divTabellaId).removeEventListener("click", aggiungoEltoBtns);
-
-      let renamedTable = document.querySelector("#" + divTabellaId);
-
-      // AGGIORNO ID TABLE
-      renamedTable.setAttribute("id", userInputWithoutSpaces);
-      let renamedTableId = renamedTable.id;
-      console.log("test id tabella AGGIORNATO", renamedTableId);
-
-      // AGGIORNO TESTO H2
-      renamedTable.querySelector("h2").textContent = `Siding VS: ${userInput}`;
-
-      // RICOLLEGO EVENT LISTENERS 
-      aggiungoEltoBtns(renamedTableId)
-
-      // RIPOPOLO I DIV CON MAIN/SIDE/EXTRA in modo che gli event listener delle card si resettino dato che sto proprio creando nuovi Carddiv da zero)
-      popoloSubdecks();
-
-      // AGGIUNGO EL ALLE CARTE DI QUESTA TABELLA
-      addEventListenerToCards(renamedTableId, mainDeckDiv, "sideOut", "main");
-      addEventListenerToCards(renamedTableId, sideDeckDiv, "sideIn", "side");
-      addEventListenerToCards(renamedTableId, extraDeckDiv, "sideIn", "extra");
-
-      console.log("MOSTRA TABELLA RINOMINATA", renamedTable);
-      console.log("MOSTRA ID TABELLA RINOMINATA", renamedTable.id);
-
-      return;
-    }
+      //FUNZIONE CHE PARTE AL CLICK
+      inseriscoCardinColonna(divTabellaId, colonnaSide, subDeck, cardDiv)
+    })
   })
 }
 
-function aggiungoEltoDuplicateTableBtn(divTabellaId) {
-  document.querySelector("#" + divTabellaId).querySelector(".duplicateTableBtn").addEventListener("click", () => {
+function inseriscoCardinColonna(divTabellaId, colonnaSide, cardDiv) {
 
-    // popoloSubdecks();
+  // RECUPERO NOME, TIPO di cardDiv
+  let cardDivName = cardDiv.dataset.name;
+  console.log("log card Div name dataset", cardDivName);
+  let cardDivType = cardDiv.dataset.type;
+  console.log("log card Div type dataset", cardDivType);
 
-    // Remove the event listener 
-    document.querySelector("#" + divTabellaId).removeEventListener("click", aggiungoEltoBtns);
+  // RECUPERO TABELLA
+  let tabellaDiv = document.getElementById(divTabellaId)
 
-    // DEVO CONTROLLARE CHE IL NUOVO NOME NON MATCHI QUELLO DI UN'ALTRA TABELLA
-    // RACCOLGO NOMI TABELLE
-    let arrTablesNames = [];
-    // recupero tutte le tabelle e i loro nomi
-    let arrTables = Array.from(divContenitoreTabelle.querySelectorAll(".tables"));
-    arrTables.forEach(table => {
-      arrTablesNames.push(table.id)
-    });
+  // RECUPERO SPAN H3 colonnaSide di tabellaDiv
+  let h3SpanSide = Number(tabellaDiv.querySelector("#" + colonnaSide).querySelector("h3").querySelector("span").textContent);
 
-    const userInput = prompt("Insert the name of the deck you're siding against");
-    const userInputWithoutSpaces = userInput.replace(/[^a-zA-Z0-9-_]/g, '');
+  const QUANTITA_MAX_CARTE_SIDEABILI = 15;
+  if (h3SpanSide < QUANTITA_MAX_CARTE_SIDEABILI) {
 
-    if (arrTablesNames.includes(userInputWithoutSpaces)) {
-      alert("Esiste già una tabella con questo nome!");
-      return;
-    } else {
+    // SE DIV NOME CARTA CON DATA ATTRIBUTE == "cardName" ESISTE, LA AGGIORNO
+    if (tabellaDiv.querySelector("." + cardInfoObject.nameNoSpecialCharacters)) {
+      console.log("card aggiornata");
+      let cardSpan = Number(tabellaDiv.querySelector("." + cardInfoObject.nameNoSpecialCharacters).querySelector("span").textContent)
+      if (cardSpan < cardInfoObject.quantity) {
+        console.log("card aggiornata");
+        // AGGIORNO SPAN HEADER
+        tabellaDiv.querySelector("#" + colonnaSide).querySelector("h3").querySelector("span").innerHTML = h3SpanSide + 1 + " ";
+        // AGGIORNO SPAN CARD
+        tabellaDiv.querySelector("." + cardInfoObject.nameNoSpecialCharacters).querySelector("span").innerHTML = cardSpan + 1 + " ";
+      }
+    } else {// SE CARD DIV CON CON DATA ATTRIBUTE == "cardName" NON ESISTE LO CREO E INSERISCO
 
-      // Select the original element with an event listener
-      const originalTable = document.querySelector("#" + divTabellaId);
+      console.log("card creata");
 
-      // Clone the element
-      const clonedTable = originalTable.cloneNode(true);
+      // AGGIORNO SPAN HEADER
+      tabellaDiv.querySelector("#" + colonnaSide).querySelector("h3").querySelector("span").innerHTML = h3SpanSide + 1 + " ";
 
-      // Remove existing event listeners (assuming it's a click event)
-      clonedTable.removeEventListener("click", aggiungoEltoBtns);
+      // CREO DIV NOME CARTA
+      let cardNameDiv = document.createElement("div");
+      cardNameDiv.dataset.cardName = cardDivName
+      cardNameDiv.classList.add("tableCard");
+      cardNameDiv.classList.add("cardNameDiv");
+      cardNameDiv.innerHTML = `<div class="nomiCarte"><button class="btnMinus">-</button><span>1 </span><p>${cardDivName}</p></div>`;
 
-      // change id of cloned Tables
-      clonedTable.setAttribute("id", userInputWithoutSpaces)
-      let clonedTableId = clonedTable.id;
+      // DIV TIPO DI CARTA (MONSTERS, SPELLS, TRAPS)
+      let cardTypeDiv = "";
+      if (cardDivType == "Effect Monster" || cardDivType == "Normal Monster" || cardDivType == "Tuner Monster" || cardDivType == "Ritual Monster") {
+        cardTypeDiv = "monsters";
+        cardNameDiv.classList.add("orangeBackground");
+      } else if (cardDivType == "Spell Card") {
+        cardTypeDiv = "spells";
+        cardNameDiv.classList.add("greenBackground");
+      } else if (cardDivType == "Trap Card") {
+        cardTypeDiv = "traps";
+        cardNameDiv.classList.add("purpleBackground")
+      } else if (cardDivType == "Fusion Monster") {
+        cardTypeDiv = "extra_fusion";
+        cardNameDiv.classList.add("darkPurpleBackground")
+      } else if (cardDivType == "Synchro Monster" || cardDivType == "Synchro Tuner Monster") {
+        cardTypeDiv = "extra_synchro";
+        cardNameDiv.classList.add("whiteBackground")
+      } else if (cardDivType == "XYZ Monster") {
+        cardTypeDiv = "extra_xyz";
+        cardNameDiv.classList.add("blackBackground")
+      }
 
-      // AGGIUNGO EL ALLE CARTE DI QUESTA TABELLA
-      addEventListenerToCards(clonedTableId, mainDeckDiv, "sideOut", "main");
-      addEventListenerToCards(clonedTableId, sideDeckDiv, "sideIn", "side");
-      addEventListenerToCards(clonedTableId, extraDeckDiv, "sideOut", "extra");
+      // APPEND A CARD TYPE DIV DI TABELLA
+      tabellaDiv.querySelector("#" + colonnaSide).querySelector("#" + cardTypeDiv).append(cardNameDiv);
 
-      // AGGIUNGTO EVENT LISTENERS AI BOTTONI
-      aggiungoEltoBtns(clonedTableId)
+      // EVENT LISTENER
+      cardNameDiv.addEventListener("click", () => {
+        removeCard(tabellaDiv, colonnaSide, cardNameDiv, cardInfoObject.nameNoSpecialCharacters, cardTypeDiv, cardDiv, cardDivName)
+      });
 
-      // Append the cloned element to the DOM
-      divContenitoreTabelle.appendChild(clonedTable);
-
-      // AGGIORNO TESTO H2
-      clonedTable.querySelector("h2").textContent = `Siding VS: ${userInput}`;
-
-      //ordina alfabeticamente
-      ordinoTabelleInAlfabetico();
+      // ORDINO DIV NOMI CARTE IN ORDINE ALFABETICO
+      ordinaNomiCarteNellaTabella(tabellaDiv, colonnaSide, cardTypeDiv)
     }
-  })
+  }
 }
 
-document.querySelector("#" + divTabellaId).querySelector(".editTableNameBtn").addEventListener("click", () => {
-  // Remove the event listener temporarily
-  document.querySelector("#" + divTabellaId).removeEventListener("click", aggiungoEltoBtns);
-  // DEVO CONTROLLARE CHE IL NUOVO NOME NON MATCHI QUELLO DI UN'ALTRA TABELLA
-  // RACCOLGO NOMI TABELLE
-  let arrTablesNames = [];
 
-  // recupero tutte le tabelle e i loro nomi
-  let arrTables = Array.from(divContenitoreTabelle.querySelectorAll(".tables"));
-  arrTables.forEach(table => {
-    arrTablesNames.push(table.id)
-  });
 
-  console.log("HAI CLICKATO IL TASTO: editTableNameBtn");
-  console.log("TEST SARR TABLES", arrTablesNames);
 
-  // NEW TABLE NAME FROM USER INPUT
-  let userInput = prompt("edit your name here");
-  let userInputWithoutSpaces = userInput.replace(/[^a-zA-Z0-9-_]/g, '');
+function removeCard(tabellaDiv, colonnaSide, cardNameDiv, cardDiv) {
+  // RECUPERO SPAN H3 colonnaSide
+  let h3SpanSide = Number(tabellaDiv.querySelector("#" + colonnaSide).querySelector("h3").querySelector("span").textContent);
+  // RECUPERO SPAN cardNameDiv
+  let cardSpan = Number(cardNameDiv.querySelector("span").textContent);
 
-  if (arrTablesNames.includes(userInputWithoutSpaces)) {
-    alert("Esiste già una tabella con questo nome!");
-    return;
+  // rimuovo bordo da cardDiv
+  cardDiv.classList.remove("greenBorder");
+
+  // RIDUCO DI 1 IL CONTATORE COLONNA
+  tabellaDiv.querySelector("#" + colonnaSide).querySelector("h3").querySelector("span").innerHTML = h3SpanSide - 1 + " ";
+
+  if (cardSpan > 1) {
+    // RIDUCO DI 1 SPAN CARD
+    tabellaDiv.querySelector("." + cardNameNoSpecialCharacters).querySelector("span").innerHTML = cardSpan - 1 + " ";
   } else {
-    alert("Nuovo nome accettato!");
-
-    // Remove existing event listeners (assuming it's a click event)
-    document.querySelector("#" + divTabellaId).removeEventListener("click", aggiungoEltoBtns);
-
-    let renamedTable = document.querySelector("#" + divTabellaId);
-
-    // AGGIORNO ID TABLE
-    renamedTable.setAttribute("id", userInputWithoutSpaces);
-    let renamedTableId = renamedTable.id;
-    console.log("test id tabella AGGIORNATO", renamedTableId);
-
-    // AGGIORNO TESTO H2
-    renamedTable.querySelector("h2").textContent = `Siding VS: ${userInput}`;
-
-
-
-    // RICOLLEGO EVENT LISTENERS 
-    aggiungoEltoBtns(renamedTableId)
-
-    // RIPOPOLO I DIV CON MAIN/SIDE/EXTRA in modo che gli event listener delle card si resettino dato che sto proprio creando nuovi Carddiv da zero)
-    popoloSubdecks();
-
-    // AGGIUNGO EL ALLE CARTE DI QUESTA TABELLA
-    addEventListenerToCards(renamedTableId, mainDeckDiv, "sideOut", "main");
-    addEventListenerToCards(renamedTableId, sideDeckDiv, "sideIn", "side");
-    addEventListenerToCards(renamedTableId, extraDeckDiv, "sideIn", "extra");
-
-
-      // REMOVE EVENT LISTENER from card Divs (NOT WORKING WITH ANONYMOYS FUNCTION + ARGUMENTS PASSED DOWN TO INNER FUNCTION)
-// function removeEventListenerFromCardDvis(subDeckDiv) {
-//   // controllo se le carD Div hanno es collegati
-//   let arrCardDivs = Array.from(subDeckDiv.querySelectorAll(".cardDiv"))
-//   arrCardDivs.forEach(cardDiv => {
-//     if (cardDiv.classList.contains("listener-attached")) {
-//       cardDiv.removeEventListener("click", funzioneCardDivEventListener);
-//       cardDiv.classList.remove("listener-attached");
-//       console.log("Event listeners removed.");
-//     }
-//   });
-// }
+    // RIMUOVO cardNameDiv
+    tabellaDiv.querySelector("#" + colonnaSide).querySelector("#" + cardTypeDiv).removeChild(cardNameDiv);
+  }
+}

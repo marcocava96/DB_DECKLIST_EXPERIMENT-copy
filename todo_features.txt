@@ -2,12 +2,12 @@ features i want to implement:
 
 ✅ 1. sort tables alphabetically
 🟡 2. create a button to print all tables
-3. connect the tables you create to the current deck in use so that when you switch back to it you still have all the tables previously created
-4. highlight selected cardDiv
+🔴 3. connect the tables you create to the current deck in use so that when you switch back to it you still have all the tables previously created
+🔴 4. highlight selected cardDiv
 ✅ 5. create a button to delete a certain Table
 ✅ 6. create a button to delete all TABLES
 ✅ 7. sort cards alphabetically
-❓ 7a. sort cards alphabetically AND by quantity (?)
-🟡 9. Duplica tabella
-🟡 10. Edita nome tabella
-11. going first, going second
+🔴 7a. sort cards alphabetically AND by quantity (?)
+✅ 9. Duplica tabella
+✅ 10. Edita nome tabella
+🔴 11. going first, going second

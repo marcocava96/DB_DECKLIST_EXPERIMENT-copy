@@ -147,6 +147,7 @@ function popoloSubdecks() {
   populateSubDeckDiv(matchedDeckObject, "extra", extraDeckDiv);
 }
 
+// TEST (ok!)
 function populateSubDeckDiv(matchedDeckObject, subDeckName, deckDiv) {
   // PULISCO DIV
   deckDiv.innerHTML = "";
@@ -161,8 +162,10 @@ function populateSubDeckDiv(matchedDeckObject, subDeckName, deckDiv) {
       let cardDiv = document.createElement("div");
       cardDiv.setAttribute("class", "cardDiv");
       cardDiv.innerHTML = `<img src=${card.img} alt="">`;
-      cardDiv.setAttribute("data-card-name", card.name);
-      cardDiv.setAttribute("data-card-type", card.type);
+
+      // trasporto name e type con dataset nel div per recuperarli dopo
+      cardDiv.dataset.name = card.name;
+      cardDiv.dataset.type = card.type;
 
       // APPEND CARD
       deckDiv.append(cardDiv);
@@ -189,8 +192,8 @@ function populateSubDeckDiv(matchedDeckObject, subDeckName, deckDiv) {
           let cardDiv = document.createElement("div");
           cardDiv.setAttribute("class", "cardDiv");
           cardDiv.innerHTML = `<img src=${mainDeck[j].img} alt="">`;
-          cardDiv.setAttribute("data-card-name", mainDeck[i].name);
-          cardDiv.setAttribute("data-card-type", mainDeck[i].type);
+          cardDiv.dataset.name = mainDeck[j].name;
+          cardDiv.dataset.type = mainDeck[j].type;
 
           // APPEND CARD
           divRiga.append(cardDiv);
@@ -281,6 +284,7 @@ function creaDivTabella(userInputObject) {
   return divTabellaId;
 }
 
+//TEST (ok!)
 function addEventListenerToCardDivs(divTabellaId, subDeckDiv, colonnaSide, subDeck) {
 
   // recupero tutte le cardDiv da subDeckDiv
@@ -300,93 +304,74 @@ function addEventListenerToCardDivs(divTabellaId, subDeckDiv, colonnaSide, subDe
       });
 
       //FUNZIONE CHE PARTE AL CLICK
-      let cardDivImgUrl = cardDiv.querySelector("img").getAttribute("src");
-      let cardDivName = cardDiv.getAttribute("data-card-name");
-      inseriscoCardinColonna(divTabellaId, colonnaSide, subDeck, cardDivImgUrl, cardDiv, cardDivName)
+      inseriscoCardinColonna(divTabellaId, colonnaSide, cardDiv)
     })
   })
 }
 
-function inseriscoCardinColonna(divTabellaId, colonnaSide, subDeck, cardDivImgUrl, cardDiv, cardDivName) {
-  // RECUPERO MATCHED DECK DA LOCAL STORAGE
-  let matchedDeck = JSON.parse(localStorage.getItem("matchedDeckObject"));
-  let matchedDeckSubDeck = matchedDeck[subDeck];
+
+//TEST
+function inseriscoCardinColonna(divTabellaId, colonnaSide, cardDiv) {
+
+  // RECUPERO NOME, TIPO di cardDiv
+  let cardDivName = cardDiv.dataset.name;
+  console.log("log card Div name dataset", cardDivName);
+  let cardDivType = cardDiv.dataset.type;
+  console.log("log card Div type dataset", cardDivType);
 
   // RECUPERO TABELLA
   let tabellaDiv = document.getElementById(divTabellaId)
-  console.log("test tabella div inner function", tabellaDiv);
 
-  // RECUPERO SPAN H3 colonnaSide
+  // RECUPERO SPAN H3 colonnaSide di tabellaDiv
   let h3SpanSide = Number(tabellaDiv.querySelector("#" + colonnaSide).querySelector("h3").querySelector("span").textContent);
-
-  // CARD INFO
-  let cardInfoObject = {
-    quantity: 0,
-    name: "",
-    nameNoSpecialCharacters: "",
-    type: "",
-    // test id
-    id: ""
-  }
-
-  for (let i = 0; i < matchedDeckSubDeck.length; i++) {
-    if (cardDivImgUrl == matchedDeckSubDeck[i].img) {
-      cardInfoObject.quantity++;
-      cardInfoObject.name = matchedDeckSubDeck[i].name;
-      cardInfoObject.nameNoSpecialCharacters = cardInfoObject.name.replace(/[^a-zA-Z0-9-_]/g, '');
-      cardInfoObject.type = matchedDeckSubDeck[i].type;
-      cardInfoObject.id = cardInfoObject.nameNoSpecialCharacters + "_" + cardInfoObject.quality;
-    }
-  }
-
-  // console.log("test cardName", cardName);
-  // console.log("test cardName", cardNameNoSpecialCharacters);
 
   const QUANTITA_MAX_CARTE_SIDEABILI = 15;
   if (h3SpanSide < QUANTITA_MAX_CARTE_SIDEABILI) {
-    // SE CARD DIV CON classe "cardName" ESISTE, LA AGGIORNO
-    if (tabellaDiv.querySelector("." + cardInfoObject.nameNoSpecialCharacters)) {
+
+    // SE DIV NOME CARTA CON DATA ATTRIBUTE == "cardName" ESISTE, LA AGGIORNO
+    if (tabellaDiv.querySelector(".cardNameDiv").dataset.cardName == cardDivName) {
       console.log("card aggiornata");
-      let cardSpan = Number(tabellaDiv.querySelector("." + cardInfoObject.nameNoSpecialCharacters).querySelector("span").textContent)
-      if (cardSpan < cardInfoObject.quantity) {
-        console.log("card aggiornata");
-        // AGGIORNO SPAN HEADER
-        tabellaDiv.querySelector("#" + colonnaSide).querySelector("h3").querySelector("span").innerHTML = h3SpanSide + 1 + " ";
-        // AGGIORNO SPAN CARD
-        tabellaDiv.querySelector("." + cardInfoObject.nameNoSpecialCharacters).querySelector("span").innerHTML = cardSpan + 1 + " ";
-      }
-    } else {// SE CARD DIV CON classe "cardInfoObject.nameNoSpecialCharacters" NON ESISTE LO CREO E INSERISCO
+      let cardSpan = Number(tabellaDiv.querySelector(".cardNameDiv").querySelector("span").textContent)
+      // ! da fixare, problema con la QUANTITà DELLA CARTA!
+      // if (cardSpan < cardInfoObject.quantity) {
+      //   console.log("card aggiornata");
+      //   // AGGIORNO SPAN HEADER
+      //   tabellaDiv.querySelector("#" + colonnaSide).querySelector("h3").querySelector("span").innerHTML = h3SpanSide + 1 + " ";
+      //   // AGGIORNO SPAN CARD
+      //   tabellaDiv.querySelector("." + cardInfoObject.nameNoSpecialCharacters).querySelector("span").innerHTML = cardSpan + 1 + " ";
+      // }
+    } else {// SE CARD DIV CON CON DATA ATTRIBUTE == "cardName" NON ESISTE LO CREO E INSERISCO
+
       console.log("card creata");
 
       // AGGIORNO SPAN HEADER
       tabellaDiv.querySelector("#" + colonnaSide).querySelector("h3").querySelector("span").innerHTML = h3SpanSide + 1 + " ";
 
-      // CREO CARTA
+      // CREO DIV NOME CARTA
       let cardNameDiv = document.createElement("div");
-      cardNameDiv.setAttribute("id", cardInfoObject.id)
-      cardNameDiv.setAttribute("class", cardInfoObject.nameNoSpecialCharacters)
+      cardNameDiv.dataset.cardName = cardDivName
       cardNameDiv.classList.add("tableCard");
       cardNameDiv.classList.add("cardNameDiv");
-      cardNameDiv.innerHTML = `<div class="nomiCarte"><button class="btnMinus">-</button><span>1 </span><p>${cardInfoObject.name}</p></div>`;
+      cardNameDiv.innerHTML = `<div class="nomiCarte"><button class="btnMinus">-</button><span>1 </span><p>${cardDivName}</p></div>`;
 
       // DIV TIPO DI CARTA (MONSTERS, SPELLS, TRAPS)
       let cardTypeDiv = "";
-      if (cardInfoObject.type == "Effect Monster" || cardInfoObject.type == "Normal Monster" || cardInfoObject.type == "Tuner Monster" || cardInfoObject.type == "Ritual Monster") {
+      if (cardDivType == "Effect Monster" || cardDivType == "Normal Monster" || cardDivType == "Tuner Monster" || cardDivType == "Ritual Monster") {
         cardTypeDiv = "monsters";
         cardNameDiv.classList.add("orangeBackground");
-      } else if (cardInfoObject.type == "Spell Card") {
+      } else if (cardDivType == "Spell Card") {
         cardTypeDiv = "spells";
         cardNameDiv.classList.add("greenBackground");
-      } else if (cardInfoObject.type == "Trap Card") {
+      } else if (cardDivType == "Trap Card") {
         cardTypeDiv = "traps";
         cardNameDiv.classList.add("purpleBackground")
-      } else if (cardInfoObject.type == "Fusion Monster") {
+      } else if (cardDivType == "Fusion Monster") {
         cardTypeDiv = "extra_fusion";
         cardNameDiv.classList.add("darkPurpleBackground")
-      } else if (cardInfoObject.type == "Synchro Monster" || cardInfoObject.type == "Synchro Tuner Monster") {
+      } else if (cardDivType == "Synchro Monster" || cardDivType == "Synchro Tuner Monster") {
         cardTypeDiv = "extra_synchro";
         cardNameDiv.classList.add("whiteBackground")
-      } else if (cardInfoObject.type == "XYZ Monster") {
+      } else if (cardDivType == "XYZ Monster") {
         cardTypeDiv = "extra_xyz";
         cardNameDiv.classList.add("blackBackground")
       }
@@ -399,7 +384,7 @@ function inseriscoCardinColonna(divTabellaId, colonnaSide, subDeck, cardDivImgUr
         removeCard(tabellaDiv, colonnaSide, cardNameDiv, cardInfoObject.nameNoSpecialCharacters, cardTypeDiv, cardDiv, cardDivName)
       });
 
-      // ORDINO CARTE IN ORDINE ALFABETICO
+      // ORDINO DIV NOMI CARTE IN ORDINE ALFABETICO
       ordinaNomiCarteNellaTabella(tabellaDiv, colonnaSide, cardTypeDiv)
     }
   }
@@ -435,14 +420,15 @@ function ordinaNomiCarteNellaTabella(tabellaDiv, colonnaSide, cardTypeDiv) {
   }
 }
 
-function removeCard(tabellaDiv, colonnaSide, cardNameDiv, cardNameNoSpecialCharacters, cardTypeDiv, cardDiv, cardDivName) {
+//TEST
+function removeCard(tabellaDiv, colonnaSide, cardNameDiv, cardDiv) {
   // RECUPERO SPAN H3 colonnaSide
   let h3SpanSide = Number(tabellaDiv.querySelector("#" + colonnaSide).querySelector("h3").querySelector("span").textContent);
   // RECUPERO SPAN cardNameDiv
   let cardSpan = Number(cardNameDiv.querySelector("span").textContent);
 
-  // rimuovo bordo dalla carta
-  document.querySelector(`[data-card-name="${cardDivName}"]`).classList.remove("greenBorder");
+  // rimuovo bordo da cardDiv
+  cardDiv.classList.remove("greenBorder");
 
   // RIDUCO DI 1 IL CONTATORE COLONNA
   tabellaDiv.querySelector("#" + colonnaSide).querySelector("h3").querySelector("span").innerHTML = h3SpanSide - 1 + " ";
@@ -451,7 +437,7 @@ function removeCard(tabellaDiv, colonnaSide, cardNameDiv, cardNameNoSpecialChara
     // RIDUCO DI 1 SPAN CARD
     tabellaDiv.querySelector("." + cardNameNoSpecialCharacters).querySelector("span").innerHTML = cardSpan - 1 + " ";
   } else {
-    // RIMUOVO CARD DIV
+    // RIMUOVO cardNameDiv
     tabellaDiv.querySelector("#" + colonnaSide).querySelector("#" + cardTypeDiv).removeChild(cardNameDiv);
   }
 }

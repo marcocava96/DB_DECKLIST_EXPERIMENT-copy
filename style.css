@@ -199,3 +199,7 @@ img {
 #btnContainer {
     display: block;
 }
+
+.greenBorder {
+    border: solid greenyellow 2px;
+}
