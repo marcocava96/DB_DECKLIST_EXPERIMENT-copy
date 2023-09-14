@@ -12,6 +12,8 @@ let generatePdfButton = document.querySelector("#generatePdfButton")
 
 
 
+
+
 // SELECT DINAMICA
 decksSelect.addEventListener("click", async () => {
   // FETCH DECKS SALVATI SU DB
@@ -71,21 +73,22 @@ decksSelect.addEventListener("change", async () => {
 // createSideBtn (CREO DIV TABELLA con ID UNICO BASED ON USER INPUT)
 createSideBtn.addEventListener("click", () => {
 
+  // RISCARICO IL DECK PER "RESETTARE" LE CARTE DAI VARI EVENT LISTENERS
+  popoloSubdecks();
+
   // CONTROLLO USER INPUT
-  let userInput = controlloUserInputVsNomiTabelle(".tables");
+  let userInputObject = controlloUserInputVsNomiTabelle(".tables");
 
   // CREAZIONE TABELLA
-  let divTabellaId = creaDivTabella(userInput);
-
-  // SCOLLEGO EVENT LISTENER SE PRESENTI
-  removeEventListenerFromCardDvis(mainDeckDiv);
-  removeEventListenerFromCardDvis(sideDeckDiv);
-  removeEventListenerFromCardDvis(extraDeckDiv);
+  let divTabellaId = creaDivTabella(userInputObject);
 
   // COLLEGGO EVENT LISTENER A TUTTE LE CARTE 
   addEventListenerToCardDivs(divTabellaId, mainDeckDiv, "sideOut", "main");
   addEventListenerToCardDivs(divTabellaId, sideDeckDiv, "sideIn", "side");
   addEventListenerToCardDivs(divTabellaId, extraDeckDiv, "sideOut", "extra");
+
+  // AGGIUNGTO EVENT LISTENERS AI BOTTONI
+  aggiungoEltoBtns(divTabellaId)
 
   // ORDINO TABELLE IN ALFABETICO
   ordinoTabelleInAlfabetico();
@@ -111,6 +114,8 @@ generatePdfButton.addEventListener("click", () => {
   // New Promise-based usage:
   html2pdf().set(opt).from(element).save();
 })
+
+
 
 
 
@@ -193,7 +198,7 @@ function populateSubDeckDiv(matchedDeckObject, subDeckName, deckDiv) {
 
 
 
-// CREATESIDE TBN EVENT LISTENER
+// CREATESIDE BTN EVENT LISTENER
 function controlloUserInputVsNomiTabelle(tablesClassName) {
   // DEVO CONTROLLARE CHE IL NUOVO NOME NON MATCHI QUELLO DI UN'ALTRA TABELLA
   // RACCOLGO NOMI TABELLE
@@ -271,6 +276,7 @@ function creaDivTabella(userInputObject) {
 }
 
 function addEventListenerToCardDivs(divTabellaId, subDeckDiv, colonnaSide, subDeck) {
+
   // recupero tutte le cardDiv da subDeckDiv
   let arrSubDeckCards = Array.from(subDeckDiv.querySelectorAll(".cardDiv"))
   // aggiungo event listener a ogni cardDiv
@@ -279,16 +285,13 @@ function addEventListenerToCardDivs(divTabellaId, subDeckDiv, colonnaSide, subDe
 
       // scroll into view feature
       document.getElementById(divTabellaId).scrollIntoView({
-        behavior: "smooth", // You can use "auto" for instant scrolling
-        block: "start", // "start" will align the top of the table with the top of the viewport
+        behavior: "smooth",
+        block: "start",
       });
 
       //FUNZIONE CHE PARTE AL CLICK
       let cardDivImgUrl = cardDiv.querySelector("img").getAttribute("src");
       inseriscoCardinColonna(divTabellaId, colonnaSide, subDeck, cardDivImgUrl, cardDiv)
-
-      // SETTO classe listenerAttached DA CONTROLLARE DOPO
-      cardDiv.classList.add("listener-attached");
     })
   })
 }
@@ -460,28 +463,95 @@ function ordinoTabelleInAlfabetico() {
 
 
 
+// BOTTONI TABELLA
+function aggiungoEltoBtns(divTabellaId) {
 
+  // EDIT TABLE NAME
+  aggiungoEltoEditTableNameBtn(divTabellaId);
 
+  // EDIT TABLE
+  aggiungoEltoEditTableBtn(divTabellaId);
 
+  // DUPLICATE TABLE
+  // aggiungoEltoDuplicateTableBtn(divTabellaId)
 
-
-
-
-
-
-
-
-// REMOVE EVENT LISTENER from card Divs
-function removeEventListenerFromCardDvis(subDeckDiv) {
-  // controllo se le carD Div hanno es collegati
-  let arrCardDivs = Array.from(subDeckDiv.querySelectorAll(".cardDiv"))
-  arrCardDivs.forEach(cardDiv => {
-    if (cardDiv.classList.contains("listener-attached")) {
-      cardDiv.removeEventListener("click", inseriscoCardinColonna);
-      cardDiv.classList.remove("listener-attached");
-      console.log("Event listeners removed.");
-    }
-  });
+  // DELETE TABLE
+  aggiungoEltoDeleteTableBtn(divTabellaId)
 }
 
-// Inspect Element Attributes: You can inspect the elements with the class "cardDiv" in your browser's developer tools to see if they have the "listener-attached" class and whether the event listeners are correctly attached and removed.
+// EDIT TABLE NAME
+function aggiungoEltoEditTableNameBtn(divTabellaId) {
+  document.querySelector("#" + divTabellaId).querySelector(".editTableNameBtn").addEventListener("click", () => {
+
+    // recupero tabella con id
+    let originalTable = document.getElementById(divTabellaId);
+
+    // chiedo e controllo USER INPUT per nuovo nome e id tabella
+    let userInputObject = controlloUserInputVsNomiTabelle(".tables");
+    let userInputObjectNoSpaces = userInputObject.noSpaces;
+
+    // clono tabella
+    let clonedTable = originalTable.cloneNode(true);
+    clonedTable.id = userInputObjectNoSpaces
+
+    // console.log("test id", clonedTable.id);
+
+    // cambio testo h2 della tabella
+    clonedTable.querySelector("h2").textContent = `Siding VS: ${userInputObject.asInput}`
+
+    // SOSTITUISCO NEL DOM!!! IMPORTANTISSIMO!!!
+    originalTable.replaceWith(clonedTable)
+
+    // DOPO (!!!) AVER CAMBIATO ID E INSERITO NEL DOM LA TABELLA CLONATA FACCIO LE SEGUENTI COSE:
+
+    // AGGIUNGTO EVENT LISTENERS AI BOTTONI
+    aggiungoEltoBtns(clonedTable.id)
+
+    // RISCARICO IL DECK PER "RESETTARE" LE CARTE DAI VARI EVENT LISTENERS
+    popoloSubdecks();
+
+    // COLLEGGO EVENT LISTENER A TUTTE LE CARTE 
+    addEventListenerToCardDivs(clonedTable.id, mainDeckDiv, "sideOut", "main");
+    addEventListenerToCardDivs(clonedTable.id, sideDeckDiv, "sideIn", "side");
+    addEventListenerToCardDivs(clonedTable.id, extraDeckDiv, "sideOut", "extra");
+
+    // ORDINO TABELLE IN ALFABETICO
+    ordinoTabelleInAlfabetico();
+  }
+  )
+}
+
+// EDIT TABLE
+function aggiungoEltoEditTableBtn(divTabellaId) {
+  document.querySelector("#" + divTabellaId).querySelector(".editTableBtn").addEventListener("click", () => {
+    console.log("HAI CLICKATO IL TASTO: editTableBtn");
+    // RIPOPOLO I DIV CON MAIN/SIDE/EXTRA in modo che gli event listener delle card si resettino dato che sto proprio creando nuovi Carddiv da zero)
+    popoloSubdecks();
+    // AGGIUNGO EL ALLE CARTE DI QUESTA TABELLA
+    // COLLEGGO EVENT LISTENER A TUTTE LE CARTE 
+    addEventListenerToCardDivs(divTabellaId, mainDeckDiv, "sideOut", "main");
+    addEventListenerToCardDivs(divTabellaId, sideDeckDiv, "sideIn", "side");
+    addEventListenerToCardDivs(divTabellaId, extraDeckDiv, "sideOut", "extra");
+  })
+}
+
+// DELETE TABLE
+function aggiungoEltoDeleteTableBtn(divTabellaId) {
+  // EVENT LISTENER TASTO DELETE
+  document.querySelector("#" + divTabellaId).querySelector(".deleteTableBtn").addEventListener("click", () => {
+    console.log("HAI CLICKATO IL TASTO: deleteTableBtn");
+    let tableToBeDeleted = document.querySelector("#" + divTabellaId)
+    divContenitoreTabelle.removeChild(tableToBeDeleted);
+  })
+}
+
+
+
+
+
+
+
+
+
+
+
