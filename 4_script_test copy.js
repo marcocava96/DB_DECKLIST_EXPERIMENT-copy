@@ -290,8 +290,8 @@ function addEventListenerToCardDivs(divTabellaId, subDeckDiv, colonnaSide, subDe
   arrSubDeckCards.forEach(cardDiv => {
     cardDiv.addEventListener("click", () => {
 
-      // aggiungo bordo dalla carta
-      cardDiv.classList.add("greenBorder")
+      // // aggiungo bordo dalla carta
+      // cardDiv.classList.add("greenBorder")
 
       // scroll into view feature
       document.getElementById(divTabellaId).scrollIntoView({

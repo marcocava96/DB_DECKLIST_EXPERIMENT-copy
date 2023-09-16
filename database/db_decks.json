@@ -4084,6 +4084,506 @@
           "name": "Thought Ruler Archfiend"
         }
       ]
+    },
+    {
+      "id": 10,
+      "deckName": "201109 TP LS CHAOS 22).ydk",
+      "main": [
+        {
+          "card_id": "72989439",
+          "img": "https://images.ygoprodeck.com/images/cards_small/72989439.jpg",
+          "type": "Effect Monster",
+          "desc": "Cannot be Normal Summoned/Set. Must first be Special Summoned (from your hand) by banishing 1 LIGHT and 1 DARK monster from your GY. Once per turn, you can activate 1 of these effects.\r\n● Target 1 monster on the field; banish it. This card cannot attack the turn this effect is activated.\r\n● If this attacking card destroys an opponent's monster by battle: It can make a second attack in a row.",
+          "name": "Black Luster Soldier - Envoy of the Beginning"
+        },
+        {
+          "card_id": "57774843",
+          "img": "https://images.ygoprodeck.com/images/cards_small/57774843.jpg",
+          "type": "Effect Monster",
+          "desc": "Cannot be Normal Summoned/Set. Must be Special Summoned (from your hand) by having 4 or more \"Lightsworn\" monsters with different names in your GY. You can pay 1000 LP; destroy all other cards on the field. Once per turn, during your End Phase: Send the top 4 cards of your Deck to the GY.",
+          "name": "Judgment Dragon"
+        },
+        {
+          "card_id": "57774843",
+          "img": "https://images.ygoprodeck.com/images/cards_small/57774843.jpg",
+          "type": "Effect Monster",
+          "desc": "Cannot be Normal Summoned/Set. Must be Special Summoned (from your hand) by having 4 or more \"Lightsworn\" monsters with different names in your GY. You can pay 1000 LP; destroy all other cards on the field. Once per turn, during your End Phase: Send the top 4 cards of your Deck to the GY.",
+          "name": "Judgment Dragon"
+        },
+        {
+          "card_id": "57774843",
+          "img": "https://images.ygoprodeck.com/images/cards_small/57774843.jpg",
+          "type": "Effect Monster",
+          "desc": "Cannot be Normal Summoned/Set. Must be Special Summoned (from your hand) by having 4 or more \"Lightsworn\" monsters with different names in your GY. You can pay 1000 LP; destroy all other cards on the field. Once per turn, during your End Phase: Send the top 4 cards of your Deck to the GY.",
+          "name": "Judgment Dragon"
+        },
+        {
+          "card_id": "09596126",
+          "img": "https://images.ygoprodeck.com/images/cards_small/9596126.jpg",
+          "type": "Effect Monster",
+          "desc": "Cannot be Normal Summoned/Set. Must first be Special Summoned (from your hand) by banishing 1 LIGHT and 1 DARK monster from your GY. Once per turn: You can target 1 face-up monster on the field; banish that target. This card cannot attack the turn you activate this effect.",
+          "name": "Chaos Sorcerer"
+        },
+        {
+          "card_id": "09596126",
+          "img": "https://images.ygoprodeck.com/images/cards_small/9596126.jpg",
+          "type": "Effect Monster",
+          "desc": "Cannot be Normal Summoned/Set. Must first be Special Summoned (from your hand) by banishing 1 LIGHT and 1 DARK monster from your GY. Once per turn: You can target 1 face-up monster on the field; banish that target. This card cannot attack the turn you activate this effect.",
+          "name": "Chaos Sorcerer"
+        },
+        {
+          "card_id": "09596126",
+          "img": "https://images.ygoprodeck.com/images/cards_small/9596126.jpg",
+          "type": "Effect Monster",
+          "desc": "Cannot be Normal Summoned/Set. Must first be Special Summoned (from your hand) by banishing 1 LIGHT and 1 DARK monster from your GY. Once per turn: You can target 1 face-up monster on the field; banish that target. This card cannot attack the turn you activate this effect.",
+          "name": "Chaos Sorcerer"
+        },
+        {
+          "card_id": "44330098",
+          "img": "https://images.ygoprodeck.com/images/cards_small/44330098.jpg",
+          "type": "Effect Monster",
+          "desc": "When you take damage from a card in your opponent's possession: You can Special Summon this card from your hand. You must control no cards to activate and to resolve this effect. If Summoned this way, activate the appropriate effect, based on the type of damage:\r\n● Battle damage: Special Summon 1 \"Emissary of Darkness Token\" (Fairy-Type/LIGHT/Level 7/ATK ?/DEF ?). Its ATK and DEF are each equal to the amount of battle damage you took.\r\n● Effect damage: Inflict damage to your opponent equal to the amount of damage you took.",
+          "name": "Gorz the Emissary of Darkness"
+        },
+        {
+          "card_id": "98777036",
+          "img": "https://images.ygoprodeck.com/images/cards_small/98777036.jpg",
+          "type": "Effect Monster",
+          "desc": "When you take battle damage: You can Special Summon this card from your hand. Gains 600 ATK/DEF for each card in your hand. Once per turn: You can send 1 monster from your hand to the GY, then target 1 face-up monster your opponent controls with the same Level the sent monster had in the hand; take control of that face-up monster. Once per turn: You can target 1 monster in your GY; this card's Level becomes the same as that target's, until the end of this turn.",
+          "name": "Tragoedia"
+        },
+        {
+          "card_id": "98777036",
+          "img": "https://images.ygoprodeck.com/images/cards_small/98777036.jpg",
+          "type": "Effect Monster",
+          "desc": "When you take battle damage: You can Special Summon this card from your hand. Gains 600 ATK/DEF for each card in your hand. Once per turn: You can send 1 monster from your hand to the GY, then target 1 face-up monster your opponent controls with the same Level the sent monster had in the hand; take control of that face-up monster. Once per turn: You can target 1 monster in your GY; this card's Level becomes the same as that target's, until the end of this turn.",
+          "name": "Tragoedia"
+        },
+        {
+          "card_id": "10802915",
+          "img": "https://images.ygoprodeck.com/images/cards_small/10802915.jpg",
+          "type": "Effect Monster",
+          "desc": "When this card is Normal Summoned: You can Special Summon 1 Level 3 Fiend monster from your hand or Deck, but negate its effects, also it cannot be used as Synchro Material.",
+          "name": "Tour Guide From the Underworld"
+        },
+        {
+          "card_id": "10802915",
+          "img": "https://images.ygoprodeck.com/images/cards_small/10802915.jpg",
+          "type": "Effect Monster",
+          "desc": "When this card is Normal Summoned: You can Special Summon 1 Level 3 Fiend monster from your hand or Deck, but negate its effects, also it cannot be used as Synchro Material.",
+          "name": "Tour Guide From the Underworld"
+        },
+        {
+          "card_id": "10802915",
+          "img": "https://images.ygoprodeck.com/images/cards_small/10802915.jpg",
+          "type": "Effect Monster",
+          "desc": "When this card is Normal Summoned: You can Special Summon 1 Level 3 Fiend monster from your hand or Deck, but negate its effects, also it cannot be used as Synchro Material.",
+          "name": "Tour Guide From the Underworld"
+        },
+        {
+          "card_id": "26202165",
+          "img": "https://images.ygoprodeck.com/images/cards_small/26202165.jpg",
+          "type": "Effect Monster",
+          "desc": "If this card is sent from the field to the GY: Add 1 monster with 1500 or less ATK from your Deck to your hand, but you cannot activate cards, or the effects of cards, with that name for the rest of this turn. You can only use this effect of \"Sangan\" once per turn.",
+          "name": "Sangan"
+        },
+        {
+          "card_id": "58996430",
+          "img": "https://images.ygoprodeck.com/images/cards_small/58996430.jpg",
+          "type": "Effect Monster",
+          "desc": "Cannot be Normal Summoned/Set. Must be Special Summoned by a card effect. If this card is sent from your Deck to the GY: Special Summon it.",
+          "name": "Wulf, Lightsworn Beast"
+        },
+        {
+          "card_id": "58996430",
+          "img": "https://images.ygoprodeck.com/images/cards_small/58996430.jpg",
+          "type": "Effect Monster",
+          "desc": "Cannot be Normal Summoned/Set. Must be Special Summoned by a card effect. If this card is sent from your Deck to the GY: Special Summon it.",
+          "name": "Wulf, Lightsworn Beast"
+        },
+        {
+          "card_id": "22624373",
+          "img": "https://images.ygoprodeck.com/images/cards_small/22624373.jpg",
+          "type": "Effect Monster",
+          "desc": "You can target 1 Spell/Trap your opponent controls; this card's battle position cannot be changed until the end of your next turn, also change this card you control from face-up Attack Position to face-up Defense Position, and if you do, destroy that target. Once per turn, during your End Phase: Send the top 3 cards of your Deck to the GY.",
+          "name": "Lyla, Lightsworn Sorceress"
+        },
+        {
+          "card_id": "22624373",
+          "img": "https://images.ygoprodeck.com/images/cards_small/22624373.jpg",
+          "type": "Effect Monster",
+          "desc": "You can target 1 Spell/Trap your opponent controls; this card's battle position cannot be changed until the end of your next turn, also change this card you control from face-up Attack Position to face-up Defense Position, and if you do, destroy that target. Once per turn, during your End Phase: Send the top 3 cards of your Deck to the GY.",
+          "name": "Lyla, Lightsworn Sorceress"
+        },
+        {
+          "card_id": "59019082",
+          "img": "https://images.ygoprodeck.com/images/cards_small/59019082.jpg",
+          "type": "Effect Monster",
+          "desc": "Each time a card(s) is sent from your Deck to the GY by the effect of a \"Lightsworn\" monster you control, except \"Garoth, Lightsworn Warrior\": Send the top 2 cards of your Deck to the GY, then draw 1 card for each \"Lightsworn\" monster sent to the GY by this effect.",
+          "name": "Garoth, Lightsworn Warrior"
+        },
+        {
+          "card_id": "96235275",
+          "img": "https://images.ygoprodeck.com/images/cards_small/96235275.jpg",
+          "type": "Effect Monster",
+          "desc": "If this card attacks an opponent's monster, it gains 300 ATK during the Damage Step only. Once per turn, during your End Phase: Send the top 2 cards of your Deck to the Graveyard.",
+          "name": "Jain, Lightsworn Paladin"
+        },
+        {
+          "card_id": "44178886",
+          "img": "https://images.ygoprodeck.com/images/cards_small/44178886.jpg",
+          "type": "Effect Monster",
+          "desc": "If this card attacks a Defense Position monster, before damage calculation: Shuffle that monster into the Deck. Once per turn, during your End Phase: Send the top 3 cards of your Deck to the Graveyard.",
+          "name": "Ehren, Lightsworn Monk"
+        },
+        {
+          "card_id": "07183277",
+          "img": "https://images.ygoprodeck.com/images/cards_small/7183277.jpg",
+          "type": "Effect Monster",
+          "desc": "Neither player can target \"Lightsworn\" monsters (anywhere) with card effects. During each of your End Phases: Send the top 2 cards of your Deck to the Graveyard.",
+          "name": "Aurkus, Lightsworn Druid"
+        },
+        {
+          "card_id": "95503687",
+          "img": "https://images.ygoprodeck.com/images/cards_small/95503687.jpg",
+          "type": "Effect Monster",
+          "desc": "Once per turn: You can discard 1 card, then target 1 Level 4 or lower \"Lightsworn\" monster in your GY; Special Summon that target. Once per turn, during your End Phase: Send the top 3 cards of your Deck to the GY.",
+          "name": "Lumina, Lightsworn Summoner"
+        },
+        {
+          "card_id": "21502796",
+          "img": "https://images.ygoprodeck.com/images/cards_small/21502796.jpg",
+          "type": "Flip Effect Monster",
+          "desc": "FLIP: Apply these effects (simultaneously).\r\n● You can destroy 1 card on the field.\r\n● Send the top 3 cards of your Deck to the GY.",
+          "name": "Ryko, Lightsworn Hunter"
+        },
+        {
+          "card_id": "85087012",
+          "img": "https://images.ygoprodeck.com/images/cards_small/85087012.jpg",
+          "type": "Effect Monster",
+          "desc": "Once per turn: You can choose a number from 1 to 3, then send that many cards from the top of your Deck to the GY; this card gains 500 ATK for each card sent to the GY this way, until the end of this turn. If this card you control is destroyed and sent to your GY: Draw 1 card.",
+          "name": "Card Trooper"
+        },
+        {
+          "card_id": "85087012",
+          "img": "https://images.ygoprodeck.com/images/cards_small/85087012.jpg",
+          "type": "Effect Monster",
+          "desc": "Once per turn: You can choose a number from 1 to 3, then send that many cards from the top of your Deck to the GY; this card gains 500 ATK for each card sent to the GY this way, until the end of this turn. If this card you control is destroyed and sent to your GY: Draw 1 card.",
+          "name": "Card Trooper"
+        },
+        {
+          "card_id": "23434538",
+          "img": "https://images.ygoprodeck.com/images/cards_small/23434538.jpg",
+          "type": "Effect Monster",
+          "desc": "During either player's turn: You can send this card from your hand to the Graveyard; this turn, each time your opponent Special Summons a monster(s), immediately draw 1 card. You can only use 1 \"Maxx \"C\"\" per turn.",
+          "name": "Maxx \"C\""
+        },
+        {
+          "card_id": "23434538",
+          "img": "https://images.ygoprodeck.com/images/cards_small/23434538.jpg",
+          "type": "Effect Monster",
+          "desc": "During either player's turn: You can send this card from your hand to the Graveyard; this turn, each time your opponent Special Summons a monster(s), immediately draw 1 card. You can only use 1 \"Maxx \"C\"\" per turn.",
+          "name": "Maxx \"C\""
+        },
+        {
+          "card_id": "23434538",
+          "img": "https://images.ygoprodeck.com/images/cards_small/23434538.jpg",
+          "type": "Effect Monster",
+          "desc": "During either player's turn: You can send this card from your hand to the Graveyard; this turn, each time your opponent Special Summons a monster(s), immediately draw 1 card. You can only use 1 \"Maxx \"C\"\" per turn.",
+          "name": "Maxx \"C\""
+        },
+        {
+          "card_id": "33420078",
+          "img": "https://images.ygoprodeck.com/images/cards_small/33420078.jpg",
+          "type": "Tuner Monster",
+          "desc": "If this card is in your GY: You can place 1 card from your hand on the top of the Deck; Special Summon this card, but banish it when it leaves the field.",
+          "name": "Plaguespreader Zombie"
+        },
+        {
+          "card_id": "67441435",
+          "img": "https://images.ygoprodeck.com/images/cards_small/67441435.jpg",
+          "type": "Tuner Monster",
+          "desc": "If this card is in your GY: You can send the top card of your Deck to the GY, and if you do, Special Summon this card. You can only use this effect of \"Glow-Up Bulb\" once per Duel.",
+          "name": "Glow-Up Bulb"
+        },
+        {
+          "card_id": "83764719",
+          "img": "https://images.ygoprodeck.com/images/cards_small/83764719.jpg",
+          "type": "Spell Card",
+          "desc": "Target 1 monster in either GY; Special Summon it.",
+          "name": "Monster Reborn"
+        },
+        {
+          "card_id": "53129443",
+          "img": "https://images.ygoprodeck.com/images/cards_small/53129443.jpg",
+          "type": "Spell Card",
+          "desc": "Destroy all monsters on the field.",
+          "name": "Dark Hole"
+        },
+        {
+          "card_id": "19613556",
+          "img": "https://images.ygoprodeck.com/images/cards_small/19613556.jpg",
+          "type": "Spell Card",
+          "desc": "Destroy all Spell and Trap Cards on the field.",
+          "name": "Heavy Storm"
+        },
+        {
+          "card_id": "81439173",
+          "img": "https://images.ygoprodeck.com/images/cards_small/81439173.jpg",
+          "type": "Spell Card",
+          "desc": "Send 1 monster from your Deck to the GY.",
+          "name": "Foolish Burial"
+        },
+        {
+          "card_id": "67169062",
+          "img": "https://images.ygoprodeck.com/images/cards_small/67169062.jpg",
+          "type": "Spell Card",
+          "desc": "Target 5 monsters in your GY; shuffle all 5 into the Deck, then draw 2 cards.",
+          "name": "Pot of Avarice"
+        },
+        {
+          "card_id": "94886282",
+          "img": "https://images.ygoprodeck.com/images/cards_small/94886282.jpg",
+          "type": "Spell Card",
+          "desc": "Send the top 3 cards of your Deck to the Graveyard; add 1 Level 4 or lower \"Lightsworn\" monster from your Deck to your hand.",
+          "name": "Charge of the Light Brigade"
+        },
+        {
+          "card_id": "0691925",
+          "img": "https://images.ygoprodeck.com/images/cards_small/691925.jpg",
+          "type": "Spell Card",
+          "desc": "Discard 1 \"Lightsworn\" monster; draw 2 cards, then send the top 2 cards of your Deck to the GY.",
+          "name": "Solar Recharge"
+        },
+        {
+          "card_id": "0691925",
+          "img": "https://images.ygoprodeck.com/images/cards_small/691925.jpg",
+          "type": "Spell Card",
+          "desc": "Discard 1 \"Lightsworn\" monster; draw 2 cards, then send the top 2 cards of your Deck to the GY.",
+          "name": "Solar Recharge"
+        },
+        {
+          "card_id": "0691925",
+          "img": "https://images.ygoprodeck.com/images/cards_small/691925.jpg",
+          "type": "Spell Card",
+          "desc": "Discard 1 \"Lightsworn\" monster; draw 2 cards, then send the top 2 cards of your Deck to the GY.",
+          "name": "Solar Recharge"
+        }
+      ],
+      "side": [
+        {
+          "card_id": "97268402",
+          "img": "https://images.ygoprodeck.com/images/cards_small/97268402.jpg",
+          "type": "Tuner Monster",
+          "desc": "During your opponent's Main Phase (Quick Effect): You can send this card from your hand to the GY, then target 1 Effect Monster your opponent controls; negate the effects of that face-up monster your opponent controls, until the end of this turn.",
+          "name": "Effect Veiler"
+        },
+        {
+          "card_id": "97268402",
+          "img": "https://images.ygoprodeck.com/images/cards_small/97268402.jpg",
+          "type": "Tuner Monster",
+          "desc": "During your opponent's Main Phase (Quick Effect): You can send this card from your hand to the GY, then target 1 Effect Monster your opponent controls; negate the effects of that face-up monster your opponent controls, until the end of this turn.",
+          "name": "Effect Veiler"
+        },
+        {
+          "card_id": "97268402",
+          "img": "https://images.ygoprodeck.com/images/cards_small/97268402.jpg",
+          "type": "Tuner Monster",
+          "desc": "During your opponent's Main Phase (Quick Effect): You can send this card from your hand to the GY, then target 1 Effect Monster your opponent controls; negate the effects of that face-up monster your opponent controls, until the end of this turn.",
+          "name": "Effect Veiler"
+        },
+        {
+          "card_id": "21502796",
+          "img": "https://images.ygoprodeck.com/images/cards_small/21502796.jpg",
+          "type": "Flip Effect Monster",
+          "desc": "FLIP: Apply these effects (simultaneously).\r\n● You can destroy 1 card on the field.\r\n● Send the top 3 cards of your Deck to the GY.",
+          "name": "Ryko, Lightsworn Hunter"
+        },
+        {
+          "card_id": "21502796",
+          "img": "https://images.ygoprodeck.com/images/cards_small/21502796.jpg",
+          "type": "Flip Effect Monster",
+          "desc": "FLIP: Apply these effects (simultaneously).\r\n● You can destroy 1 card on the field.\r\n● Send the top 3 cards of your Deck to the GY.",
+          "name": "Ryko, Lightsworn Hunter"
+        },
+        {
+          "card_id": "22624373",
+          "img": "https://images.ygoprodeck.com/images/cards_small/22624373.jpg",
+          "type": "Effect Monster",
+          "desc": "You can target 1 Spell/Trap your opponent controls; this card's battle position cannot be changed until the end of your next turn, also change this card you control from face-up Attack Position to face-up Defense Position, and if you do, destroy that target. Once per turn, during your End Phase: Send the top 3 cards of your Deck to the GY.",
+          "name": "Lyla, Lightsworn Sorceress"
+        },
+        {
+          "card_id": "81510157",
+          "img": "https://images.ygoprodeck.com/images/cards_small/81510157.jpg",
+          "type": "Spell Card",
+          "desc": "Target 1 face-up monster your opponent controls; destroy that target, then your opponent gains 1000 LP.",
+          "name": "Soul Taker"
+        },
+        {
+          "card_id": "81510157",
+          "img": "https://images.ygoprodeck.com/images/cards_small/81510157.jpg",
+          "type": "Spell Card",
+          "desc": "Target 1 face-up monster your opponent controls; destroy that target, then your opponent gains 1000 LP.",
+          "name": "Soul Taker"
+        },
+        {
+          "card_id": "14087893",
+          "img": "https://images.ygoprodeck.com/images/cards_small/14087893.jpg",
+          "type": "Spell Card",
+          "desc": "Target 1 face-up monster on the field; change that target to face-down Defense Position.",
+          "name": "Book of Moon"
+        },
+        {
+          "card_id": "05318639",
+          "img": "https://images.ygoprodeck.com/images/cards_small/5318639.jpg",
+          "type": "Spell Card",
+          "desc": "Target 1 Spell/Trap on the field; destroy that target.",
+          "name": "Mystical Space Typhoon"
+        },
+        {
+          "card_id": "05318639",
+          "img": "https://images.ygoprodeck.com/images/cards_small/5318639.jpg",
+          "type": "Spell Card",
+          "desc": "Target 1 Spell/Trap on the field; destroy that target.",
+          "name": "Mystical Space Typhoon"
+        },
+        {
+          "card_id": "05318639",
+          "img": "https://images.ygoprodeck.com/images/cards_small/5318639.jpg",
+          "type": "Spell Card",
+          "desc": "Target 1 Spell/Trap on the field; destroy that target.",
+          "name": "Mystical Space Typhoon"
+        },
+        {
+          "card_id": "51452091",
+          "img": "https://images.ygoprodeck.com/images/cards_small/51452091.jpg",
+          "type": "Trap Card",
+          "desc": "Negate all other Trap effects on the field.",
+          "name": "Royal Decree"
+        },
+        {
+          "card_id": "51452091",
+          "img": "https://images.ygoprodeck.com/images/cards_small/51452091.jpg",
+          "type": "Trap Card",
+          "desc": "Negate all other Trap effects on the field.",
+          "name": "Royal Decree"
+        },
+        {
+          "card_id": "51452091",
+          "img": "https://images.ygoprodeck.com/images/cards_small/51452091.jpg",
+          "type": "Trap Card",
+          "desc": "Negate all other Trap effects on the field.",
+          "name": "Royal Decree"
+        }
+      ],
+      "extra": [
+        {
+          "card_id": "09888196",
+          "img": "https://images.ygoprodeck.com/images/cards_small/9888196.jpg",
+          "type": "Synchro Monster",
+          "desc": "1 Tuner + 2 or more non-Tuner monsters \n Once per turn, if your opponent controls a face-up LIGHT monster(s), you can activate 1 of these effects:\n● Select 1 Set card your opponent controls, and destroy it.\n● Send 1 card from your hand to the Graveyard to destroy all Spell/Trap Cards your opponent controls.\n● Send all cards in your hand to the Graveyard to look at your opponent's hand and send all LIGHT monsters in their hand to the Graveyard. Then, inflict damage to your opponent equal to the total ATK of the opponent's monsters sent to the Graveyard.",
+          "name": "Ally of Justice Decisive Armor"
+        },
+        {
+          "card_id": "52687916",
+          "img": "https://images.ygoprodeck.com/images/cards_small/52687916.jpg",
+          "type": "Synchro Monster",
+          "desc": "1 Tuner + 2+ non-Tuner monsters\nWhen this card is Synchro Summoned: You can banish up to 1 card each from your opponent's hand, field, and GY. (The card in the hand is chosen at random.)",
+          "name": "Trishula, Dragon of the Ice Barrier"
+        },
+        {
+          "card_id": "76774528",
+          "img": "https://images.ygoprodeck.com/images/cards_small/76774528.jpg",
+          "type": "Synchro Monster",
+          "desc": "1 Tuner + 1+ non-Tuner monsters\r\nOnce per turn: You can target 1 card you control and 1 card your opponent controls; destroy them. When this card in your possession is destroyed by your opponent's card and sent to your GY: Target 1 non-Synchro \"Scrap\" monster in your GY; Special Summon that target.",
+          "name": "Scrap Dragon"
+        },
+        {
+          "card_id": "44508094",
+          "img": "https://images.ygoprodeck.com/images/cards_small/44508094.jpg",
+          "type": "Synchro Monster",
+          "desc": "1 Tuner + 1+ non-Tuner monsters\r\nWhen a card or effect is activated that would destroy a card(s) on the field (Quick Effect): You can Tribute this card; negate the activation, and if you do, destroy it. During the End Phase, if this effect was activated this turn (and was not negated): You can Special Summon this card from your GY.",
+          "name": "Stardust Dragon"
+        },
+        {
+          "card_id": "73580471",
+          "img": "https://images.ygoprodeck.com/images/cards_small/73580471.jpg",
+          "type": "Synchro Monster",
+          "desc": "1 Tuner + 1+ non-Tuner monsters\r\nWhen this card is Synchro Summoned: You can destroy all cards on the field. Once per turn: You can banish 1 Plant monster from your GY, then target 1 Defense Position monster your opponent controls; change that target to face-up Attack Position, and if you do, its ATK becomes 0 until the end of this turn.",
+          "name": "Black Rose Dragon"
+        },
+        {
+          "card_id": "31924889",
+          "img": "https://images.ygoprodeck.com/images/cards_small/31924889.jpg",
+          "type": "Synchro Monster",
+          "desc": "1 Tuner + 1+ non-Tuner Spellcaster monsters\r\nIf this card is Synchro Summoned: Place 2 Spell Counters on it. This card gains 1000 ATK for each Spell Counter on it. You can remove 1 Spell Counter from your field, then target 1 card your opponent controls; destroy that target.",
+          "name": "Arcanite Magician"
+        },
+        {
+          "card_id": "50321796",
+          "img": "https://images.ygoprodeck.com/images/cards_small/50321796.jpg",
+          "type": "Synchro Monster",
+          "desc": "1 Tuner + 1+ non-Tuner monsters\nYou can discard any number of cards to the GY, then target the same number of cards your opponent controls; return those cards to the hand. You can only use this effect of \"Brionac, Dragon of the Ice Barrier\" once per turn.",
+          "name": "Brionac, Dragon of the Ice Barrier"
+        },
+        {
+          "card_id": "68124775",
+          "img": "https://images.ygoprodeck.com/images/cards_small/68124775.jpg",
+          "type": "Synchro Monster",
+          "desc": "1 Tuner + 1 or more non-Tuner monsters\nIf this card is Synchro Summoned: Target 1 Synchro Monster your opponent controls; banish that target.",
+          "name": "Orient Dragon"
+        },
+        {
+          "card_id": "90953320",
+          "img": "https://images.ygoprodeck.com/images/cards_small/90953320.jpg",
+          "type": "Synchro Monster",
+          "desc": "1 Tuner + 1+ non-Tuner monsters\r\nIf a monster is Synchro Summoned: Draw 1 card. This card must be face-up on the field to activate and to resolve this effect.",
+          "name": "T.G. Hyper Librarian"
+        },
+        {
+          "card_id": "26593852",
+          "img": "https://images.ygoprodeck.com/images/cards_small/26593852.jpg",
+          "type": "Synchro Monster",
+          "desc": "1 Tuner + 1+ non-Tuner monsters\nAt the start of the Damage Step, if this card battles a face-up non-DARK monster: Destroy that monster.",
+          "name": "Ally of Justice Catastor"
+        },
+        {
+          "card_id": "29071332",
+          "img": "https://images.ygoprodeck.com/images/cards_small/29071332.jpg",
+          "type": "Synchro Monster",
+          "desc": "1 Tuner + 1 or more non-Tuner monsters\nOnce per turn, you can either: Target 1 monster on the field; equip this card to that target, OR: Unequip this card and Special Summon it in Attack Position. While equipped by this effect, that target gains 1000 ATK. If that target destroys a monster by battle and sends it to the Graveyard: Inflict damage to your opponent equal to the ATK of the destroyed monster in the Graveyard.",
+          "name": "Armory Arm"
+        },
+        {
+          "card_id": "95992081",
+          "img": "https://images.ygoprodeck.com/images/cards_small/95992081.jpg",
+          "type": "XYZ Monster",
+          "desc": "2 Level 3 monsters\r\nOnce per turn: You can detach 1 material from this card, then target 1 banished Level 4 or lower monster; Special Summon that target to your field.",
+          "name": "Leviair the Sea Dragon"
+        },
+        {
+          "card_id": "69610924",
+          "img": "https://images.ygoprodeck.com/images/cards_small/69610924.jpg",
+          "type": "XYZ Monster",
+          "desc": "2 Level 3 monsters\nOnce per turn: You can detach 1 Xyz Material from this card; this card gains 500 ATK. If this card has no Xyz Material, it cannot attack your opponent directly.",
+          "name": "Number 17: Leviathan Dragon"
+        },
+        {
+          "card_id": "84013237",
+          "img": "https://images.ygoprodeck.com/images/cards_small/84013237.jpg",
+          "type": "XYZ Monster",
+          "desc": "2 Level 4 monsters\r\nWhen a monster declares an attack: You can detach 1 material from this card; negate the attack. If this card is targeted for an attack, while it has no material: Destroy this card.",
+          "name": "Number 39: Utopia"
+        },
+        {
+          "card_id": "37926346",
+          "img": "https://images.ygoprodeck.com/images/cards_small/37926346.jpg",
+          "type": "XYZ Monster",
+          "desc": "2 Level 4 monsters\nDuring either player's turn, when a Level 5 or higher monster would be Special Summoned: You can detach 1 Xyz Material from this card; negate the Special Summon, and if you do, destroy it.",
+          "name": "Steelswarm Roach"
+        }
+      ]
     }
   ]
 }
