@@ -74,7 +74,7 @@ decksSelect.addEventListener("change", async () => {
 // createSideBtn (CREO DIV TABELLA con ID UNICO BASED ON USER INPUT)
 createSideBtn.addEventListener("click", () => {
 
-  // // RISCARICO IL DECK PER "RESETTARE" LE CARTE DAI VARI EVENT LISTENERS
+  // RISCARICO IL DECK PER "RESETTARE" LE CARTE DAI VARI EVENT LISTENERS
   popoloSubdecks();
 
   // CONTROLLO USER INPUT
@@ -148,7 +148,6 @@ function popoloSubdecks() {
   populateSubDeckDiv(matchedDeckObject, "extra", extraDeckDiv);
 }
 
-// TEST (ok!)
 function populateSubDeckDiv(matchedDeckObject, subDeckName, deckDiv) {
   // PULISCO DIV
   deckDiv.innerHTML = "";
@@ -288,7 +287,6 @@ function creaDivTabella(userInputObject) {
   return divTabellaId;
 }
 
-//TEST (ok!)
 function addEventListenerToCardDivs(divTabellaId, subDeckDiv, colonnaSide) {
 
   // recupero tutte le cardDiv da subDeckDiv
@@ -304,16 +302,13 @@ function addEventListenerToCardDivs(divTabellaId, subDeckDiv, colonnaSide) {
         block: "start",
       });
 
-      //FUNZIONE CHE PARTE AL CLICK
-      inseriscoCardinColonna(divTabellaId, colonnaSide, cardDiv)
+      //INSERISCO NOME CARD IN COLONNA TABELLA SE CLICKATA
+      inseriscoCardinColonna(divTabellaId, colonnaSide, cardDiv, subDeckDiv)
     })
   })
 }
 
-//! da fixare!!!
-function inseriscoCardinColonna(divTabellaId, colonnaSide, cardDiv) {
-
-  console.log("TEST CARD DIV", cardDiv);
+function inseriscoCardinColonna(divTabellaId, colonnaSide, cardDiv, subDeckDiv) {
 
   // RECUPERO NOME, TIPO di cardDiv
   let cardDivName = cardDiv.dataset.name;
@@ -325,15 +320,17 @@ function inseriscoCardinColonna(divTabellaId, colonnaSide, cardDiv) {
 
   if (h3SpanSide < QUANTITA_MAX_CARTE_SIDEABILI) {
 
-    // SE DIV NOME CARTA CON DATA ATTRIBUTE == "cardName" E senza greenBorder Class ESISTE, LA AGGIORNO
+    // SE DIV NOME CARTA CON DATA ATTRIBUTE == "cardName" MA senza greenBorder Class ESISTE, LA AGGIORNO
     if (tabellaDiv.querySelector(`.cardNameDiv[data-card-name="${cardDivName}"]`) && !cardDiv.classList.contains("greenBorder")) {
 
-      console.log("PRIMO IF");
+      console.log("nome carta tabella aggiornata");
+
       // aggiungo bordo alla carta
       cardDiv.classList.add("greenBorder")
 
-      console.log("nome carta tabella aggiornata");
-      let cardSpan = Number(tabellaDiv.querySelector(".cardNameDiv").querySelector("span").innerHTML)
+      // recupero card span
+      let cardSpan = Number(tabellaDiv.querySelector(`.cardNameDiv[data-card-name="${cardDivName}"]`).querySelector("span").innerHTML);
+      console.log("log card span", cardSpan);
 
       if (cardSpan < QUANTITA_MAX_CARTA_SINGOLA) {
         // AGGIORNO SPAN HEADER
@@ -344,15 +341,14 @@ function inseriscoCardinColonna(divTabellaId, colonnaSide, cardDiv) {
       // SE DIV NOME CARTA CON DATA ATTRIBUTE == "cardName" E con greenBorder Class ESISTE, LA AGGIORNO
     } else if (tabellaDiv.querySelector(`.cardNameDiv[data-card-name="${cardDivName}"]`) && cardDiv.classList.contains("greenBorder")) {
 
-      console.log("ELSE IF");
       console.log("hai già clickato questa carta");
+
     } else {// SE CARDnameDIV NON ESISTE LO CREO E INSERISCO
 
-      console.log("ELSE FINALE");
+      console.log("nome carta tabella creata");
+
       // aggiungo bordo alla carta
       cardDiv.classList.add("greenBorder")
-
-      console.log("nome carta tabella creata");
 
       // AGGIORNO SPAN HEADER
       tabellaDiv.querySelector("#" + colonnaSide).querySelector("h3").querySelector("span").innerHTML = h3SpanSide + 1 + " ";
@@ -368,7 +364,7 @@ function inseriscoCardinColonna(divTabellaId, colonnaSide, cardDiv) {
 
       // EVENT LISTENER
       cardNameDiv.addEventListener("click", () => {
-        removeCard(tabellaDiv, colonnaSide, cardNameDiv, cardDivName, cardTypeDiv)
+        removeCard(tabellaDiv, colonnaSide, cardNameDiv, cardDivName, cardTypeDiv, subDeckDiv)
       });
 
       // ORDINO DIV NOMI CARTE IN ORDINE ALFABETICO
@@ -384,7 +380,7 @@ function creoDivNomeCarta(cardDivName) {
   cardNameDiv.dataset.cardName = cardDivName;
   cardNameDiv.setAttribute("class", "tableCard");
   cardNameDiv.classList.add("cardNameDiv");
-  cardNameDiv.innerHTML = `<div class="nomiCarte"><button class="btnMinus">-</button><span>1 </span><p>${cardDivName}</p></div>`;
+  cardNameDiv.innerHTML = `<div class="nomiCarte"><button class="btnMinus">-</button><span>1</span><p>${cardDivName}</p></div>`;
 
   return cardNameDiv;
 }
@@ -446,10 +442,10 @@ function ordinaNomiCarteNellaTabella(tabellaDiv, colonnaSide, cardTypeDiv) {
 }
 
 //TEST (ok, I think)
-function removeCard(tabellaDiv, colonnaSide, cardNameDiv, cardDivName, cardTypeDiv) {
+function removeCard(tabellaDiv, colonnaSide, cardNameDiv, cardDivName, cardTypeDiv, subDeckDiv) {
 
   // recupero tutte le cardDiv da subDeckDiv
-  let arrSubDeckCards = Array.from(mainDeckDiv.querySelectorAll(".cardDiv"))
+  let arrSubDeckCards = Array.from(subDeckDiv.querySelectorAll(".cardDiv"))
 
   for (let i = 0; i < arrSubDeckCards.length; i++) {
     if (arrSubDeckCards[i].classList.contains("greenBorder") && arrSubDeckCards[i].dataset.name == cardDivName) {
@@ -524,7 +520,7 @@ function aggiungoEltoBtns(divTabellaId) {
   aggiungoEltoDeleteTableBtn(divTabellaId)
 }
 
-// EDIT TABLE NAME
+// EDIT TABLE NAME btn
 function aggiungoEltoEditTableNameBtn(divTabellaId) {
   document.querySelector("#" + divTabellaId).querySelector(".editTableNameBtn").addEventListener("click", () => {
 
@@ -539,8 +535,6 @@ function aggiungoEltoEditTableNameBtn(divTabellaId) {
     let clonedTable = originalTable.cloneNode(true);
     clonedTable.id = userInputObjectNoSpaces
 
-    // console.log("test id", clonedTable.id);
-
     // cambio testo h2 della tabella
     clonedTable.querySelector("h2").textContent = `Siding VS: ${userInputObject.asInput}`
 
@@ -548,7 +542,6 @@ function aggiungoEltoEditTableNameBtn(divTabellaId) {
     originalTable.replaceWith(clonedTable)
 
     // DOPO (!!!) AVER CAMBIATO ID E INSERITO NEL DOM LA TABELLA CLONATA FACCIO LE SEGUENTI COSE:
-
     // AGGIUNGTO EVENT LISTENERS AI BOTTONI
     aggiungoEltoBtns(clonedTable.id)
 
@@ -562,14 +555,11 @@ function aggiungoEltoEditTableNameBtn(divTabellaId) {
 
     // ORDINO TABELLE IN ALFABETICO
     ordinoTabelleInAlfabetico();
-
-    // attacco alle carte della vecchia tabella event listener per rimuoverle
-    removeCardNameDivforCLonedTable(clonedTable)
   }
   )
 }
 
-// EDIT TABLE
+// EDIT TABLE btn
 function aggiungoEltoEditTableBtn(divTabellaId) {
   document.querySelector("#" + divTabellaId).querySelector(".editTableBtn").addEventListener("click", () => {
     console.log("HAI CLICKATO IL TASTO: editTableBtn");
@@ -583,7 +573,7 @@ function aggiungoEltoEditTableBtn(divTabellaId) {
   })
 }
 
-// DUPLICATE TABLE
+// DUPLICATE TABLE btn
 function aggiungoEltoDuplicateTableBtn(divTabellaId) {
   document.querySelector("#" + divTabellaId).querySelector(".duplicateTableBtn").addEventListener("click", () => {
 
@@ -628,7 +618,7 @@ function aggiungoEltoDuplicateTableBtn(divTabellaId) {
   )
 }
 
-// DELETE TABLE
+// DELETE TABLE btn
 function aggiungoEltoDeleteTableBtn(divTabellaId) {
   // EVENT LISTENER TASTO DELETE
   document.querySelector("#" + divTabellaId).querySelector(".deleteTableBtn").addEventListener("click", () => {
@@ -636,35 +626,5 @@ function aggiungoEltoDeleteTableBtn(divTabellaId) {
     let tableToBeDeleted = document.querySelector("#" + divTabellaId)
     divContenitoreTabelle.removeChild(tableToBeDeleted);
   })
-}
-
-// simile a removeCard, assegna event listener alle carte della tabella clonata per rimuoverle
-function removeCardNameDivforCLonedTable(tabellaDiv) {
-
-  arrCardNameDivs = Array.from(tabellaDiv.querySelectorAll(".cardNameDiv"));
-  console.log("test array cardivname", arrCardNameDivs);
-
-  arrCardNameDivs.forEach(cardNameDiv => {
-
-    cardNameDiv.addEventListener("click", () => {
-
-      // RECUPERO SPAN H3 colonnaSide
-      let h3SpanSide = Number(tabellaDiv.querySelector("h3").querySelector("span").textContent);
-      // RECUPERO SPAN cardNameDiv
-      let cardSpan = Number(cardNameDiv.querySelector("span").textContent);
-
-      // RIDUCO DI 1 IL CONTATORE COLONNA
-      tabellaDiv.querySelector("h3").querySelector("span").innerHTML = h3SpanSide - 1 + " ";
-
-      if (cardSpan > 1) {
-        // RIDUCO DI 1 SPAN CARD
-        cardNameDiv.querySelector("span").innerHTML = cardSpan - 1 + " ";
-      } else {
-        // RIMUOVO CARD DIV
-        cardNameDiv.parentElement.removeChild(cardNameDiv);
-      }
-    })
-
-  });
 }
 
