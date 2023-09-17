@@ -520,6 +520,7 @@ function aggiungoEltoBtns(divTabellaId) {
   aggiungoEltoDeleteTableBtn(divTabellaId)
 }
 
+//! da fixare ma ci siamo quasi!
 // EDIT TABLE NAME btn
 function aggiungoEltoEditTableNameBtn(divTabellaId) {
   document.querySelector("#" + divTabellaId).querySelector(".editTableNameBtn").addEventListener("click", () => {
@@ -552,6 +553,31 @@ function aggiungoEltoEditTableNameBtn(divTabellaId) {
     addEventListenerToCardDivs(clonedTable.id, mainDeckDiv, "sideOut", "main");
     addEventListenerToCardDivs(clonedTable.id, sideDeckDiv, "sideIn", "side");
     addEventListenerToCardDivs(clonedTable.id, extraDeckDiv, "sideOut", "extra");
+
+    // recupero nomi presenti nella tabella clonata 
+    let arrCardNameDivs = Array.from(clonedTable.querySelectorAll(".cardNameDiv[data-card-name]"))
+      .map(element => element.dataset.cardName);
+
+    console.log("log arr nomi in colonna", arrCardNameDivs);
+
+    // recupero tutte le cardDiv da subDeckDiv
+    let arrSubDeckCards = Array.from(mainDeckDiv.querySelectorAll(".cardDiv"))
+
+    // aggiungo green border alle card presenti in tabella e inserite in arrCardNameDivs
+    for (let i = 0; i < arrCardNameDivs.length; i++) {
+      for (let j = 0; j < arrSubDeckCards.length; j++) {
+        if (arrSubDeckCards[j].dataset.name == arrCardNameDivs[i]) {
+          arrSubDeckCards[j].classList.add("greenBorder")
+          console.log("card colorata");
+          break;
+        }
+      }
+    }
+
+    //DEVO DARE AI NOMI GIA IN TABELLA EVENT LISTENER PER RIMUOVERLI!!!!
+    // attacco alle carte della vecchia tabella event listener per rimuoverle
+    removeCardNameDivforCLonedTable(clonedTable)
+
 
     // ORDINO TABELLE IN ALFABETICO
     ordinoTabelleInAlfabetico();
@@ -628,3 +654,33 @@ function aggiungoEltoDeleteTableBtn(divTabellaId) {
   })
 }
 
+
+//! da fixare ma ci siamo quasi
+// simile a removeCard, assegna event listener alle carte della tabella clonata per rimuoverle
+function removeCardNameDivforCLonedTable(tabellaDiv) {
+
+  arrCardNameDivs = Array.from(tabellaDiv.querySelectorAll(".cardNameDiv"));
+  console.log("test array cardivname", arrCardNameDivs);
+
+  arrCardNameDivs.forEach(cardNameDiv => {
+
+    cardNameDiv.addEventListener("click", () => {
+
+      // RECUPERO SPAN H3 colonnaSide
+      let h3SpanSide = Number(tabellaDiv.querySelector("h3").querySelector("span").textContent);
+      // RECUPERO SPAN cardNameDiv
+      let cardSpan = Number(cardNameDiv.querySelector("span").textContent);
+
+      // RIDUCO DI 1 IL CONTATORE COLONNA
+      tabellaDiv.querySelector("h3").querySelector("span").innerHTML = h3SpanSide - 1 + " ";
+
+      if (cardSpan > 1) {
+        // RIDUCO DI 1 SPAN CARD
+        cardNameDiv.querySelector("span").innerHTML = cardSpan - 1 + " ";
+      } else {
+        // RIMUOVO CARD DIV
+        cardNameDiv.parentElement.removeChild(cardNameDiv);
+      }
+    })
+  });
+}
