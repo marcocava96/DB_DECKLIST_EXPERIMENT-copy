@@ -3,11 +3,11 @@ features i want to implement:
 ✅ 1. sort tables alphabetically
 🟡 2. create a button to print all tables
 🔴 3. connect the tables you create to the current deck in use so that when you switch back to it you still have all the tables previously created
-🟡 4. highlight selected cardDiv ( avolte funziona a volte no, non riesco a capire perché)
+✅ 4. highlight selected cardDiv ( avolte funziona a volte no, non riesco a capire perché)
 ✅ 5. create a button to delete a certain Table
 ✅ 6. create a button to delete all TABLES
 ✅ 7. sort cards alphabetically
-🟡  9. Duplica tabella (da fixare, quando duplico voglio che nel deck vengono evidenziate le carte già in colonna)
-🟡  10. Edita nome tabella (da fixare, quando edito voglio che nel deck vengono evidenziate le carte già in colonna)
+✅ 9. Duplica tabella (da fixare, quando duplico voglio che nel deck vengono evidenziate le carte già in colonna)
+✅  10. Edita nome tabella (da fixare, quando edito voglio che nel deck vengono evidenziate le carte già in colonna)
 🔴 11. going first, going second
 🔴 12. share your side decks tables with someone else so that they can upload them on their client and edit them directly
