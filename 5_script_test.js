@@ -15,6 +15,7 @@ const QUANTITA_MAX_CARTA_SINGOLA = 3;
 
 
 
+
 // SELECT DINAMICA
 decksSelect.addEventListener("click", async () => {
   // FETCH DECKS SALVATI SU DB
@@ -354,7 +355,7 @@ function inseriscoCardinColonna(divTabellaId, colonnaSide, cardDiv, subDeckDiv) 
       tabellaDiv.querySelector("#" + colonnaSide).querySelector("h3").querySelector("span").innerHTML = h3SpanSide + 1 + " ";
 
       // CREO DIV NOME CARTA
-      let cardNameDiv = creoDivNomeCarta(cardDivName);
+      let cardNameDiv = creoNomiPerTabella(cardDivName);
 
       // DIV TIPO DI CARTA (MONSTERS, SPELLS, TRAPS)
       let cardTypeDiv = assegnoTipoCartaADivTipo(cardDivType, cardNameDiv);
@@ -373,7 +374,7 @@ function inseriscoCardinColonna(divTabellaId, colonnaSide, cardDiv, subDeckDiv) 
   }
 }
 
-function creoDivNomeCarta(cardDivName) {
+function creoNomiPerTabella(cardDivName) {
   // CREO DIV NOME CARTA
   let cardNameDiv = document.createElement("div");
   // cardNameDiv.setAttribute("id", cardDiv.id)
@@ -441,7 +442,6 @@ function ordinaNomiCarteNellaTabella(tabellaDiv, colonnaSide, cardTypeDiv) {
   }
 }
 
-//TEST (ok, I think)
 function removeCard(tabellaDiv, colonnaSide, cardNameDiv, cardDivName, cardTypeDiv, subDeckDiv) {
 
   console.log("REMOVE CARD 1111");
@@ -505,14 +505,13 @@ function ordinoTabelleInAlfabetico() {
 
 
 
-//! da fixare
 // BOTTONI TABELLA
 function aggiungoEltoBtns(divTabellaId) {
 
   // EDIT TABLE NAME
   aggiungoEltoEditTableNameBtn(divTabellaId);
 
-  // EDIT TABLE
+  // // EDIT TABLE
   aggiungoEltoEditTableBtn(divTabellaId);
 
   // DUPLICATE TABLE
@@ -522,7 +521,6 @@ function aggiungoEltoBtns(divTabellaId) {
   aggiungoEltoDeleteTableBtn(divTabellaId)
 }
 
-// TEST (ok, I think) aggiungere side ed extra
 // EDIT TABLE NAME btn
 function aggiungoEltoEditTableNameBtn(divTabellaId) {
   document.querySelector("#" + divTabellaId).querySelector(".editTableNameBtn").addEventListener("click", () => {
@@ -562,10 +560,10 @@ function aggiungoEltoEditTableNameBtn(divTabellaId) {
     aggiungoGreenBorderACardDiv(clonedTable, extraDeckDiv)
 
     // attacco alle carte della vecchia tabella event listener per rimuoverle
-    removeCardNameDivforCLonedTable(clonedTable, "sideOut", mainDeckDiv)
-    removeCardNameDivforCLonedTable(clonedTable, "sideIn", sideDeckDiv)
-    // removeCardNameDivforCLonedTable(clonedTable, "sideOut", extraDeckDiv)
-    //! DA PROBLEMI AVERE 2 VOLTE SIDEOUT NON CAPISCO BENE PERCHE MA è LO STESSO PROBLEMA CHE AVEVO CON FUNZIONE PER GREENBORDER
+    // COLLEGO EVENT LISTENER A TUTTI I NOMI NELLA TABELLA
+    removeCardNameDivforCLonedTable(clonedTable, mainDeckDiv, "sideOut");
+    removeCardNameDivforCLonedTable(clonedTable, sideDeckDiv, "sideIn");
+    removeCardNameDivforCLonedTable(clonedTable, extraDeckDiv, "sideOut");
 
     // ORDINO TABELLE IN ALFABETICO
     ordinoTabelleInAlfabetico();
@@ -579,9 +577,10 @@ function aggiungoEltoEditTableBtn(divTabellaId) {
 
     let currentTable = document.querySelector("#" + divTabellaId);
     console.log("HAI CLICKATO IL TASTO: editTableBtn");
+
     // RIPOPOLO I DIV CON MAIN/SIDE/EXTRA in modo che gli event listener delle card si resettino dato che sto proprio creando nuovi Carddiv da zero)
     popoloSubdecks();
-    // AGGIUNGO EL ALLE CARTE DI QUESTA TABELLA
+
     // COLLEGGO EVENT LISTENER A TUTTE LE CARTE 
     addEventListenerToCardDivs(divTabellaId, mainDeckDiv, "sideOut", "main");
     addEventListenerToCardDivs(divTabellaId, sideDeckDiv, "sideIn", "side");
@@ -591,16 +590,10 @@ function aggiungoEltoEditTableBtn(divTabellaId) {
     aggiungoGreenBorderACardDiv(currentTable, mainDeckDiv)
     aggiungoGreenBorderACardDiv(currentTable, sideDeckDiv)
     aggiungoGreenBorderACardDiv(currentTable, extraDeckDiv)
-
-    // attacco alle carte della vecchia tabella event listener per rimuoverle
-    removeCardNameDivforCLonedTable(currentTable, "sideOut", mainDeckDiv)
-    removeCardNameDivforCLonedTable(currentTable, "sideIn", sideDeckDiv)
-    // removeCardNameDivforCLonedTable(clonedTable, "sideOut", extraDeckDiv)
-    //! DA PROBLEMI AVERE 2 VOLTE SIDEOUT NON CAPISCO BENE PERCHE MA è LO STESSO PROBLEMA CHE AVEVO CON FUNZIONE PER GREENBORDER
   })
 }
 
-// TEST (ok, I think) aggiungere side ed extra
+// DUPLICATE TABLE btn
 // DUPLICATE TABLE btn
 function aggiungoEltoDuplicateTableBtn(divTabellaId) {
   document.querySelector("#" + divTabellaId).querySelector(".duplicateTableBtn").addEventListener("click", () => {
@@ -640,10 +633,10 @@ function aggiungoEltoDuplicateTableBtn(divTabellaId) {
     aggiungoGreenBorderACardDiv(clonedTable, extraDeckDiv)
 
     // attacco alle carte della vecchia tabella event listener per rimuoverle
-    removeCardNameDivforCLonedTable(clonedTable, "sideOut", mainDeckDiv)
-    removeCardNameDivforCLonedTable(clonedTable, "sideIn", sideDeckDiv)
-    // removeCardNameDivforCLonedTable(clonedTable, "sideOut", extraDeckDiv)
-    //! DA PROBLEMI AVERE 2 VOLTE SIDEOUT NON CAPISCO BENE PERCHE MA è LO STESSO PROBLEMA CHE AVEVO CON FUNZIONE PER GREENBORDER
+    // COLLEGO EVENT LISTENER A TUTTI I NOMI NELLA TABELLA
+    removeCardNameDivforCLonedTable(clonedTable, mainDeckDiv, "sideOut");
+    removeCardNameDivforCLonedTable(clonedTable, sideDeckDiv, "sideIn");
+    removeCardNameDivforCLonedTable(clonedTable, extraDeckDiv, "sideOut");
 
     // ORDINO TABELLE IN ALFABETICO
     ordinoTabelleInAlfabetico();
@@ -655,17 +648,28 @@ function aggiungoEltoDuplicateTableBtn(divTabellaId) {
 function aggiungoEltoDeleteTableBtn(divTabellaId) {
   // EVENT LISTENER TASTO DELETE
   document.querySelector("#" + divTabellaId).querySelector(".deleteTableBtn").addEventListener("click", () => {
+
     console.log("HAI CLICKATO IL TASTO: deleteTableBtn");
+
     let tableToBeDeleted = document.querySelector("#" + divTabellaId)
+
     divContenitoreTabelle.removeChild(tableToBeDeleted);
+
+    //rimuovo bordi verdi dal main deck
+    let NodeListCardsinSubdeck = divUserDeck.querySelectorAll(".cardDiv");
+
+    for (let j = 0; j < NodeListCardsinSubdeck.length; j++) {
+      if (NodeListCardsinSubdeck[j].classList.contains("greenBorder")) {
+        NodeListCardsinSubdeck[j].classList.remove("greenBorder");
+      }
+    }
   })
 }
 
-// !ALMOST FIXED
 // simile a removeCard, assegna event listener alle carte della tabella clonata per rimuoverle
-function removeCardNameDivforCLonedTable(tabellaDiv, colonnaSide, subDeckDiv) {
+function removeCardNameDivforCLonedTable(tabellaDiv, subDeckDiv, colonnaSide) {
 
-  // recupero nomi nella tabella clonata 
+  // recupero nomi dalla tabella clonata 
   let arrCardNameDivs = Array.from(tabellaDiv.querySelector("#" + colonnaSide).querySelectorAll(".tableCard"));
 
   arrCardNameDivs.forEach(boxNome => {
@@ -673,7 +677,6 @@ function removeCardNameDivforCLonedTable(tabellaDiv, colonnaSide, subDeckDiv) {
     boxNome.addEventListener("click", () => {
 
       console.log("REMOVE CARD 222222");
-      console.log(boxNome);
 
       // RECUPERO SPAN H3 colonnaSide
       let h3SpanSide = Number(tabellaDiv.querySelector("#" + colonnaSide).querySelector("h3").querySelector("span").textContent);
@@ -681,44 +684,33 @@ function removeCardNameDivforCLonedTable(tabellaDiv, colonnaSide, subDeckDiv) {
       // RECUPERO SPAN cardNameDiv
       let cardSpan = Number(boxNome.querySelector("span").textContent);
 
-      if (cardSpan > 1) {
-        // RIDUCO DI 1 IL CONTATORE COLONNA
-        tabellaDiv.querySelector("#" + colonnaSide).querySelector("h3").querySelector("span").innerHTML = h3SpanSide - 1 + " ";
-        // RIDUCO DI 1 SPAN CARD
-        boxNome.querySelector("span").innerHTML = cardSpan - 1 + " ";
+      //creo arrai di boxCarta dal subDeck
+      let NodeListCardsinSubdeck = subDeckDiv.querySelectorAll(`[data-name="${boxNome.dataset.cardName}"]`);
 
-        //creo arrai di boxCarta dal subDeck
-        let NodeListCardsinSubdeck = subDeckDiv.querySelectorAll(`[data-name="${boxNome.dataset.cardName}"]`);
-
-        for (let j = 0; j < NodeListCardsinSubdeck.length; j++) {
-          console.log("greenborder aggiunto");
-          if (subDeckDiv.contains(NodeListCardsinSubdeck[j]) && NodeListCardsinSubdeck[j].classList.contains("greenBorder")) {
+      for (let j = 0; j < NodeListCardsinSubdeck.length; j++) {
+        console.log("greenborder rimosso");
+        if (subDeckDiv.contains(NodeListCardsinSubdeck[j]) && NodeListCardsinSubdeck[j].classList.contains("greenBorder")) {
+          if (cardSpan > 1) {
+            // RIDUCO DI 1 IL CONTATORE COLONNA
+            tabellaDiv.querySelector("#" + colonnaSide).querySelector("h3").querySelector("span").innerHTML = h3SpanSide - 1 + " ";
+            // RIDUCO DI 1 SPAN CARD
+            boxNome.querySelector("span").innerHTML = cardSpan - 1 + " ";
             NodeListCardsinSubdeck[j].classList.remove("greenBorder");
+            break;
+          } else {
+            // RIDUCO DI 1 IL CONTATORE COLONNA
+            tabellaDiv.querySelector("#" + colonnaSide).querySelector("h3").querySelector("span").innerHTML = h3SpanSide - 1 + " ";
+            // RIMUOVO CARD DIV
+            NodeListCardsinSubdeck[j].classList.remove("greenBorder");
+            boxNome.remove();
             break;
           }
         }
-      } else {
-        // RIDUCO DI 1 IL CONTATORE COLONNA
-        tabellaDiv.querySelector("#" + colonnaSide).querySelector("h3").querySelector("span").innerHTML = h3SpanSide - 1 + " ";
-
-        //creo arrai di boxCarta dal subDeck
-        let NodeListCardsinSubdeck = subDeckDiv.querySelectorAll(`[data-name="${boxNome.dataset.cardName}"]`);
-
-        for (let j = 0; j < NodeListCardsinSubdeck.length; j++) {
-          console.log("greenborder aggiunto");
-          if (subDeckDiv.contains(NodeListCardsinSubdeck[j]) && NodeListCardsinSubdeck[j].classList.contains("greenBorder")) {
-            NodeListCardsinSubdeck[j].classList.remove("greenBorder");
-            break;
-          }
-        }
-        // RIMUOVO CARD DIV
-        boxNome.remove();
       }
     })
   });
 }
 
-// should be ok now
 function aggiungoGreenBorderACardDiv(clonedTable, subDeckDiv) {
 
   // recupero nome e quantità carta presenti nella tabella clonata 
@@ -749,7 +741,6 @@ function aggiungoGreenBorderACardDiv(clonedTable, subDeckDiv) {
     }
   }
 }
-
 
 
 
