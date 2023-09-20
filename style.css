@@ -203,3 +203,12 @@ img {
 .greenBorder {
     border: solid greenyellow 2px;
 }
+
+
+.stacked-div1 {
+    z-index: 1;
+}
+
+.stacked-div2 {
+    z-index: 2;
+}
