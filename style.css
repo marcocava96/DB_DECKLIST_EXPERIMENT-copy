@@ -3,7 +3,6 @@ body {
     margin: 0 auto;
 }
 
-
 #formDiv {
     border: red solid 3px;
     display: flex;
@@ -61,10 +60,8 @@ img {
 #sideDeck {
     /* border: rgb(0, 255, 21) solid 4px; */
     width: 50%;
-    /* border: red solid 3px; */
     display: flex;
     flex-direction: column;
-
 }
 
 #buttons {
@@ -86,25 +83,61 @@ img {
 .tables {
     border: blue solid 3px;
     border-radius: 10px;
-    width: 100%;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
     margin-top: 20px;
 }
 
-#inline-elements {
-    /* border: green dotted 5px; */
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
+.container {
+    /* border: rgb(0, 149, 255) solid 5px; */
+    max-width: 100%;
 }
 
-#inline-buttons {
-    /* border: green solid 5px; */
+.nav {
+    /* border: solid green 10px; */
     display: flex;
+    align-content: center;
+}
+
+.goingFirst {
+    display: flex;
+    flex-direction: row;
+}
+
+.inline-elements {
+    /* border: red dotted 5px; */
+    display: flex;
+    flex-direction: row;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
+}
+
+.inline-buttons {
+    /* border: rgb(140, 171, 28) solid 5px; */
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+}
+
+.upperBtns {
+    /* border: solid red 2px; */
+    display: flex;
+    justify-content: space-between;
+}
+
+.lowerBtns {
+    /* border: solid red 2px; */
+    display: flex;
+}
+
+.custom-margin {
+    margin: 2px;
+    border-radius: 5px;
+    border-style: ridge;
+    flex: 1;
+    font-size: small;
+}
+
+.deleteTableBtn {
+background-color: rgba(255, 0, 0, 0.521);
 }
 
 .colonne {
@@ -116,8 +149,8 @@ img {
     width: 100%;
 }
 
-#sideIn,
-#sideOut {
+.sideIn,
+.sideOut {
     align-items: center;
     /* border: black solid 5px; */
     border-radius: 10px;
@@ -129,12 +162,12 @@ img {
     height: 100%;
 }
 
-#monsters,
-#spells,
-#traps,
-#extra_fusion,
-#extra_synchro,
-#extra_xyz {
+.monsters,
+.spells,
+.traps,
+.extra_fusion,
+.extra_synchro,
+.extra_xyz {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -150,7 +183,6 @@ img {
 .nomiCarte span {
     padding-right: 10px;
 }
-
 
 .orangeBackground {
     background-color: rgba(255, 217, 0, 0.805);
@@ -189,26 +221,11 @@ img {
     border-radius: 30px;
 }
 
-
 .btnMinus {
     width: 10%;
     margin-right: 10px;
-    /* Add spacing between button and paragraph */
-}
-
-#btnContainer {
-    display: block;
 }
 
 .greenBorder {
     border: solid greenyellow 2px;
-}
-
-
-.stacked-div1 {
-    z-index: 1;
-}
-
-.stacked-div2 {
-    z-index: 2;
 }

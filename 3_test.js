@@ -248,74 +248,94 @@ function creaDivTabella(userInputObject) {
   divTabella.setAttribute("class", "tables table")
   divTabella.setAttribute("id", userInputObject.noSpaces)
   divTabella.innerHTML = `
-                            <div class="going_first "stacked-div1">
-                              <h2 id="deckSidingVs">Siding VS: ${userInputObject.asInput}</h2>
-                              <h3>Going First</h3>
-                              <div id="inline-buttons">
-                                <button class="editTableNameBtn">Edit Table Name</button>
-                                <button class="editTableBtn">Edit Table</button>
-                                <button class="duplicateTableBtn">Duplicate Table</button>
-                                <button class="deleteTableBtn">Delete Table</button>
+                            <div class="container">
+
+                            <ul class="nav nav-tabs">
+                              <li class="active"><a data-toggle="tab" href="#goingFirst">Going 1st</a></li>
+                              <li><a data-toggle="tab" href="#goingSecond">Going 2nd</a></li>
+                            </ul>
+
+                            <div class="tab-content">
+
+                              <div id="goingFirst" class="tab-pane fade in active goingFirst">
+                                <div class="inline-elements">
+                                  <h4 id="deckSidingVs">Siding VS: ${userInputObject.asInput}</h4>
+                                  <div class="inline-buttons">
+                                    <div class="upperBtns">
+                                      <button class="editTableNameBtn custom-margin">Edit Name</button>
+                                      <button class="editTableBtn custom-margin">Edit Table</button>
+                                    </div>
+                                    <div class="lowerBtns">
+                                      <button class="duplicateTableBtn custom-margin">Duplicate</button>
+                                      <button class="deleteTableBtn custom-margin">Delete</button>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="colonne">
+                                  <div class="sideOut">
+                                    <h4 class="head3Out"><span></span>SIDE OUT:</h4>
+                                    <div class="monsters"><span></span></div>
+                                    <div class="spells"><span></span></div>
+                                    <div class="traps"><span></span></div>
+                                    <div class="extra_fusion"><span></span></div>
+                                    <div class="extra_synchro"><span></span></div>
+                                    <div class="extra_xyz"><span></span></div>
+                                  </div>
+
+                                  <div class="sideIn">
+                                    <h4 class="head3In"><span></span>SIDE IN:</h4>
+                                    <div class="monsters"><span></span></div>
+                                    <div class="spells"><span></span></div>
+                                    <div class="traps"><span></span></div>
+                                    <div class="extra_fusion"><span></span></div>
+                                    <div class="extra_synchro"><span></span></div>
+                                    <div class="extra_xyz"><span></span></div>
+                                  </div>
+                                </div>
                               </div>
-                            </div>
-  
-                            <div class="colonne">
-                              <div id="sideOut">
-                                <h3 id="head3Out"><span></span>SIDE OUT:</h3>
-                                <div id="monsters"><span></span></div>
-                                <div id="spells"><span></span></div>
-                                <div id="traps"><span></span></div>
-                                <div id="extra_fusion"><span></span></div>
-                                <div id="extra_synchro"><span></span></div>
-                                <div id="extra_xyz"><span></span></div>
+
+                              <div id="goingSecond" class="tab-pane fade goingSecond">
+                                <div class="inline-elements">
+                                  <h4 id="deckSidingVs">Siding VS: ${userInputObject.asInput}</h4>
+                                  <div class="inline-buttons">
+                                    <div class="upperBtns">
+                                      <button class="editTableNameBtn custom-margin">Edit Name</button>
+                                      <button class="editTableBtn custom-margin">Edit Table</button>
+                                    </div>
+                                    <div class="lowerBtns">
+                                      <button class="duplicateTableBtn custom-margin">Duplicate</button>
+                                      <button class="deleteTableBtn custom-margin">Delete</button>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="colonne">
+                                  <div class="sideOut">
+                                    <h4 class="head3Out"><span></span>SIDE OUT:</h4>
+                                    <div class="monsters"><span></span></div>
+                                    <div class="spells"><span></span></div>
+                                    <div class="traps"><span></span></div>
+                                    <div class="extra_fusion"><span></span></div>
+                                    <div class="extra_synchro"><span></span></div>
+                                    <div class="extra_xyz"><span></span></div>
+                                  </div>
+
+                                  <div class="sideIn">
+                                    <h4 class="head3In"><span></span>SIDE IN:</h4>
+                                    <div class="monsters"><span></span></div>
+                                    <div class="spells"><span></span></div>
+                                    <div class="traps"><span></span></div>
+                                    <div class="extra_fusion"><span></span></div>
+                                    <div class="extra_synchro"><span></span></div>
+                                    <div class="extra_xyz"><span></span></div>
+                                  </div>
+                                </div>
                               </div>
-  
-                              <div id="sideIn">
-                                <h3 id="head3In"><span></span>SIDE IN:</h3>
-                                <div id="monsters"><span></span></div>
-                                <div id="spells"><span></span></div>
-                                <div id="traps"><span></span></div>
-                                <div id="extra_fusion"><span></span></div>
-                                <div id="extra_synchro"><span></span></div>
-                                <div id="extra_xyz"><span></span></div>
-                              </div>
+
                             </div>
 
-                            ***
-
-                            <div class="going_second "stacked-div2">
-                              <h2 id="deckSidingVs">Siding VS: ${userInputObject.asInput}</h2>
-                              <h3>Going Second</h3>
-                              <div id="inline-buttons">
-                                <button class="editTableNameBtn">Edit Table Name</button>
-                                <button class="editTableBtn">Edit Table</button>
-                                <button class="duplicateTableBtn">Duplicate Table</button>
-                                <button class="deleteTableBtn">Delete Table</button>
-                              </div>
-                            </div>
-  
-                            <div class="colonne">
-                              <div id="sideOut">
-                                <h3 id="head3Out"><span></span>SIDE OUT:</h3>
-                                <div id="monsters"><span></span></div>
-                                <div id="spells"><span></span></div>
-                                <div id="traps"><span></span></div>
-                                <div id="extra_fusion"><span></span></div>
-                                <div id="extra_synchro"><span></span></div>
-                                <div id="extra_xyz"><span></span></div>
-                              </div>
-  
-                              <div id="sideIn">
-                                <h3 id="head3In"><span></span>SIDE IN:</h3>
-                                <div id="monsters"><span></span></div>
-                                <div id="spells"><span></span></div>
-                                <div id="traps"><span></span></div>
-                                <div id="extra_fusion"><span></span></div>
-                                <div id="extra_synchro"><span></span></div>
-                                <div id="extra_xyz"><span></span></div>
-                              </div>
-                            </div>
-                          `;
+                          </div>;`;
 
   // APPENDO TABELLA A CONTENITORE TABELLE
   divContenitoreTabelle.append(divTabella)
@@ -353,7 +373,7 @@ function inseriscoCardinColonna(divTabellaId, colonnaSide, cardDiv, subDeckDiv) 
 
   // RECUPERO TABELLA e H3 colonnaSide
   let tabellaDiv = document.getElementById(divTabellaId)
-  let h3SpanSide = Number(tabellaDiv.querySelector("#" + colonnaSide).querySelector("h3").querySelector("span").textContent);
+  let h3SpanSide = Number(tabellaDiv.querySelector("." + colonnaSide).querySelector("h3").querySelector("span").textContent);
 
   if (h3SpanSide < QUANTITA_MAX_CARTE_SIDEABILI) {
 
@@ -371,7 +391,7 @@ function inseriscoCardinColonna(divTabellaId, colonnaSide, cardDiv, subDeckDiv) 
 
       if (cardSpan < QUANTITA_MAX_CARTA_SINGOLA) {
         // AGGIORNO SPAN HEADER
-        tabellaDiv.querySelector("#" + colonnaSide).querySelector("h3").querySelector("span").innerHTML = h3SpanSide + 1 + " ";
+        tabellaDiv.querySelector("." + colonnaSide).querySelector("h3").querySelector("span").innerHTML = h3SpanSide + 1 + " ";
         // AGGIORNO SPAN CARD
         tabellaDiv.querySelector(`.cardNameDiv[data-card-name="${cardDivName}"]`).querySelector("span").innerHTML = cardSpan + 1 + " ";
       }
@@ -388,7 +408,7 @@ function inseriscoCardinColonna(divTabellaId, colonnaSide, cardDiv, subDeckDiv) 
       cardDiv.classList.add("greenBorder")
 
       // AGGIORNO SPAN HEADER
-      tabellaDiv.querySelector("#" + colonnaSide).querySelector("h3").querySelector("span").innerHTML = h3SpanSide + 1 + " ";
+      tabellaDiv.querySelector("." + colonnaSide).querySelector("h3").querySelector("span").innerHTML = h3SpanSide + 1 + " ";
 
       // CREO DIV NOME CARTA
       let cardNameDiv = creoNomiPerTabella(cardDivName);
@@ -397,7 +417,7 @@ function inseriscoCardinColonna(divTabellaId, colonnaSide, cardDiv, subDeckDiv) 
       let cardTypeDiv = assegnoTipoCartaADivTipo(cardDivType, cardNameDiv);
 
       // APPEND A CARD TYPE DIV DI TABELLA
-      tabellaDiv.querySelector("#" + colonnaSide).querySelector("#" + cardTypeDiv).appendChild(cardNameDiv);
+      tabellaDiv.querySelector("." + colonnaSide).querySelector("." + cardTypeDiv).appendChild(cardNameDiv);
 
       // EVENT LISTENER
       cardNameDiv.addEventListener("click", () => {
@@ -454,7 +474,7 @@ function ordinaNomiCarteNellaTabella(tabellaDiv, colonnaSide, cardTypeDiv) {
   let arrCardNames = [];
 
   // recupero tutte le carte e i loro nomi
-  let arrCardDivs = Array.from(tabellaDiv.querySelector("#" + colonnaSide).querySelector("#" + cardTypeDiv).querySelectorAll(".tableCard"));
+  let arrCardDivs = Array.from(tabellaDiv.querySelector("." + colonnaSide).querySelector("." + cardTypeDiv).querySelectorAll(".tableCard"));
   arrCardDivs.forEach(cardElement => {
     // console.log(cardElement.querySelector("p").textContent);
     arrCardNames.push(cardElement.querySelector("p").textContent);
@@ -472,7 +492,7 @@ function ordinaNomiCarteNellaTabella(tabellaDiv, colonnaSide, cardTypeDiv) {
     // per ogni nome, cerco il suo divContenitoreTabelle e lo appendo divContenitoreTabelle
     for (let j = 0; j < arrCardDivs.length; j++) {
       if (arrCardNames[i] == arrCardDivs[j].querySelector("p").textContent) {
-        tabellaDiv.querySelector("#" + colonnaSide).querySelector("#" + cardTypeDiv).append(arrCardDivs[j]);
+        tabellaDiv.querySelector("." + colonnaSide).querySelector("." + cardTypeDiv).append(arrCardDivs[j]);
       }
     }
   }
@@ -493,9 +513,9 @@ function removeCard(tabellaDiv, colonnaSide, cardNameDiv, cardDivName, cardTypeD
   }
 
   // RECUPERO SPAN H3 colonnaSide
-  let h3SpanSide = Number(tabellaDiv.querySelector("#" + colonnaSide).querySelector("h3").querySelector("span").textContent);
+  let h3SpanSide = Number(tabellaDiv.querySelector("." + colonnaSide).querySelector("h3").querySelector("span").textContent);
   // RIDUCO DI 1 IL CONTATORE COLONNA
-  tabellaDiv.querySelector("#" + colonnaSide).querySelector("h3").querySelector("span").innerHTML = h3SpanSide - 1 + " ";
+  tabellaDiv.querySelector("." + colonnaSide).querySelector("h3").querySelector("span").innerHTML = h3SpanSide - 1 + " ";
   // RECUPERO SPAN cardNameDiv
   let cardSpan = Number(cardNameDiv.querySelector("span").textContent);
 
@@ -504,7 +524,7 @@ function removeCard(tabellaDiv, colonnaSide, cardNameDiv, cardDivName, cardTypeD
     tabellaDiv.querySelector(`.cardNameDiv[data-card-name="${cardDivName}"]`).querySelector("span").innerHTML = cardSpan - 1 + " ";
   } else {
     // RIMUOVO cardNameDiv
-    tabellaDiv.querySelector("#" + colonnaSide).querySelector("#" + cardTypeDiv).removeChild(cardNameDiv);
+    tabellaDiv.querySelector("." + colonnaSide).querySelector("." + cardTypeDiv).removeChild(cardNameDiv);
   }
 }
 
@@ -706,7 +726,7 @@ function aggiungoEltoDeleteTableBtn(divTabellaId) {
 function removeCardNameDivforCLonedTable(tabellaDiv, subDeckDiv, colonnaSide) {
 
   // recupero nomi dalla tabella clonata 
-  let arrCardNameDivs = Array.from(tabellaDiv.querySelector("#" + colonnaSide).querySelectorAll(".tableCard"));
+  let arrCardNameDivs = Array.from(tabellaDiv.querySelector("." + colonnaSide).querySelectorAll(".tableCard"));
 
   arrCardNameDivs.forEach(boxNome => {
 
@@ -715,7 +735,7 @@ function removeCardNameDivforCLonedTable(tabellaDiv, subDeckDiv, colonnaSide) {
       console.log("REMOVE CARD 222222");
 
       // RECUPERO SPAN H3 colonnaSide
-      let h3SpanSide = Number(tabellaDiv.querySelector("#" + colonnaSide).querySelector("h3").querySelector("span").textContent);
+      let h3SpanSide = Number(tabellaDiv.querySelector("." + colonnaSide).querySelector("h3").querySelector("span").textContent);
 
       // RECUPERO SPAN cardNameDiv
       let cardSpan = Number(boxNome.querySelector("span").textContent);
@@ -728,14 +748,14 @@ function removeCardNameDivforCLonedTable(tabellaDiv, subDeckDiv, colonnaSide) {
         if (subDeckDiv.contains(NodeListCardsinSubdeck[j]) && NodeListCardsinSubdeck[j].classList.contains("greenBorder")) {
           if (cardSpan > 1) {
             // RIDUCO DI 1 IL CONTATORE COLONNA
-            tabellaDiv.querySelector("#" + colonnaSide).querySelector("h3").querySelector("span").innerHTML = h3SpanSide - 1 + " ";
+            tabellaDiv.querySelector("." + colonnaSide).querySelector("h3").querySelector("span").innerHTML = h3SpanSide - 1 + " ";
             // RIDUCO DI 1 SPAN CARD
             boxNome.querySelector("span").innerHTML = cardSpan - 1 + " ";
             NodeListCardsinSubdeck[j].classList.remove("greenBorder");
             break;
           } else {
             // RIDUCO DI 1 IL CONTATORE COLONNA
-            tabellaDiv.querySelector("#" + colonnaSide).querySelector("h3").querySelector("span").innerHTML = h3SpanSide - 1 + " ";
+            tabellaDiv.querySelector("." + colonnaSide).querySelector("h3").querySelector("span").innerHTML = h3SpanSide - 1 + " ";
             // RIMUOVO CARD DIV
             NodeListCardsinSubdeck[j].classList.remove("greenBorder");
             boxNome.remove();

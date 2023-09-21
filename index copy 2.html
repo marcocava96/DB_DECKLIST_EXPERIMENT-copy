@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style copy.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+
+<body>
+
+  <div class="container col-sm-4">
+    <!-- TABS -->
+
+    <ul class="nav nav-tabs">
+      <li class="active"><a data-toggle="tab" href="#goingFirst">Going 1st</a></li>
+      <li><a data-toggle="tab" href="#goingSecond">Going 2nd</a></li>
+    </ul>
+
+    <!-- CONTENTS -->
+    <div class="tab-content">
+
+      <!-- GOING FIRST -->
+      <div id="goingFirst" class="tab-pane fade in active goingFirst">
+        <div class="inline-elements">
+          <h4 id="deckSidingVs">Siding VS: ${userInputObject.asInput}</h4>
+          <div class="inline-buttons">
+            <div class="upperBtns">
+              <button class="editTableNameBtn custom-margin">Edit Table Name</button>
+              <button class="editTableBtn custom-margin">Edit Table</button>
+            </div>
+            <div class="lowerBtns">
+              <button class="duplicateTableBtn custom-margin">Duplicate Table</button>
+              <button class="deleteTableBtn custom-margin">Delete Table</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="colonne">
+          <div class="sideOut">
+            <h4 class="head3Out"><span></span>SIDE OUT:</h4>
+            <div class="monsters"><span></span></div>
+            <div class="spells"><span></span></div>
+            <div class="traps"><span></span></div>
+            <div class="extra_fusion"><span></span></div>
+            <div class="extra_synchro"><span></span></div>
+            <div class="extra_xyz"><span></span></div>
+          </div>
+
+          <div class="sideIn">
+            <h4 class="head3In"><span></span>SIDE IN:</h4>
+            <div class="monsters"><span></span></div>
+            <div class="spells"><span></span></div>
+            <div class="traps"><span></span></div>
+            <div class="extra_fusion"><span></span></div>
+            <div class="extra_synchro"><span></span></div>
+            <div class="extra_xyz"><span></span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GOING SECOND -->
+      <div id="goingSecond" class="tab-pane fade goingSecond">
+        <div class="inline-elements">
+          <h4 id="deckSidingVs">Siding VS: ${userInputObject.asInput}</h4>
+          <div class="inline-buttons">
+            <div class="upperBtns">
+              <button class="editTableNameBtn custom-margin">Edit Table Name</button>
+              <button class="editTableBtn custom-margin">Edit Table</button>
+            </div>
+            <div class="lowerBtns">
+              <button class="duplicateTableBtn custom-margin">Duplicate Table</button>
+              <button class="deleteTableBtn custom-margin">Delete Table</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="colonne">
+          <div class="sideOut">
+            <h4 class="head3Out"><span></span>SIDE OUT:</h4>
+            <div class="monsters"><span></span></div>
+            <div class="spells"><span></span></div>
+            <div class="traps"><span></span></div>
+            <div class="extra_fusion"><span></span></div>
+            <div class="extra_synchro"><span></span></div>
+            <div class="extra_xyz"><span></span></div>
+          </div>
+
+          <div class="sideIn">
+            <h4 class="head3In"><span></span>SIDE IN:</h4>
+            <div class="monsters"><span></span></div>
+            <div class="spells"><span></span></div>
+            <div class="traps"><span></span></div>
+            <div class="extra_fusion"><span></span></div>
+            <div class="extra_synchro"><span></span></div>
+            <div class="extra_xyz"><span></span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>;
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</body>
+
+</html>
