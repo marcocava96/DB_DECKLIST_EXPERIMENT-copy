@@ -9,6 +9,8 @@ let deleteAllTablesBtn = document.querySelector("#deleteAllTablesBtn");
 let divContenitoreTabelle = document.querySelector("#divContenitoreTabelle");
 let URL = "http://localhost:3000/decks";
 let generatePdfButton = document.querySelector("#generatePdfButton")
+
+// CONSTANTS
 const QUANTITA_MAX_CARTE_SIDEABILI = 15;
 const QUANTITA_MAX_CARTA_SINGOLA = 3;
 const arrSudDecksObj = [
@@ -102,21 +104,18 @@ createSideBtn.addEventListener("click", () => {
   // COLLEGGO EVENT LISTENER A TUTTE LE CARTE 
   addEventListenerToCardDivs(divTabellaId);
 
+  //! QUI C'è QUALCOSA CHE NON TORNA
+  // COLLEGO EVENT LISTENERS AI BOTTONI DELLA TABELLA
+  aggiungoEltoBtns(divTabellaId)
+
   // COLLEGO EVENT LISTENER AI TABS DI QUESTA TABELLA!!!
   let nodeListTabs = thisTable.querySelectorAll('.nav-tabs li')
   nodeListTabs.forEach(tab => {
-
     // RECUPERO ID TAB
     let tabContentId = tab.querySelector("a").getAttribute('href').slice(1);
 
-    // COLLEGO EVENT LISTENERS AI BOTTONI della tabella di questo tab
-    aggiungoEltoBtns(divTabellaId, tabContentId)
-
     tab.addEventListener("click", () => {
-
-      console.log("tab clicked");
       removeGreenBorder();
-
       aggiungoGreenBorderACardDiv(thisTable, tabContentId);
     })
   })
@@ -606,10 +605,10 @@ function ordinoTabelleInAlfabetico() {
 
 
 // BOTTONI TABELLA
-function aggiungoEltoBtns(divTabellaId, tabContentId) {
+function aggiungoEltoBtns(divTabellaId) {
 
   // EDIT TABLE NAME
-  aggiungoEltoEditTableNameBtn(divTabellaId, tabContentId);
+  aggiungoEltoEditTableNameBtn(divTabellaId);
 
   // // EDIT TABLE
   aggiungoEltoEditTableBtn(divTabellaId);
@@ -622,51 +621,63 @@ function aggiungoEltoBtns(divTabellaId, tabContentId) {
 }
 
 // EDIT TABLE NAME btn
-function aggiungoEltoEditTableNameBtn(divTabellaId, tabContentId) {
-  document.querySelector("#" + divTabellaId).querySelector("#" + tabContentId).querySelector(".editTableNameBtn").addEventListener("click", () => {
+function aggiungoEltoEditTableNameBtn(divTabellaId) {
 
-    console.log("clicked aggiungoEltoEditTableNameBtn");
+  //! RECUPERO I 2 BTN
+  let nodeListBtns = document.querySelector("#" + divTabellaId).querySelectorAll(".editTableNameBtn")
+  nodeListBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
 
-    // recupero tabella con id
-    let originalTable = document.getElementById(divTabellaId);
+      console.log("you clicked the button");
 
-    // chiedo e controllo USER INPUT per nuovo nome e id tabella
-    let userInputObject = controlloUserInputVsNomiTabelle(".tables");
-    let userInputObjectNoSpaces = userInputObject.noSpaces;
+      // recupero tabella con id
+      let originalTable = document.getElementById(divTabellaId);
 
-    // clono tabella
-    let clonedTable = originalTable.cloneNode(true);
-    clonedTable.id = userInputObjectNoSpaces
+      // chiedo e controllo USER INPUT per nuovo nome e id tabella
+      let userInputObject = controlloUserInputVsNomiTabelle(".tables");
+      let userInputObjectNoSpaces = userInputObject.noSpaces;
 
-    // cambio testo h4 della tabella
-    clonedTable.querySelector("#" + tabContentId).querySelector("h4").textContent = `Siding VS: ${userInputObject.asInput}`
+      // clono tabella
+      let clonedTable = originalTable.cloneNode(true);
+      clonedTable.id = userInputObjectNoSpaces
 
-    // SOSTITUISCO NEL DOM!
-    originalTable.replaceWith(clonedTable)
+      // SOSTITUISCO NEL DOM!
+      originalTable.replaceWith(clonedTable)
 
-    // DOPO AVER CAMBIATO ID E INSERITO NEL DOM LA TABELLA CLONATA FACCIO LE SEGUENTI COSE:
-    // AGGIUNGTO EVENT LISTENERS AI BOTTONI
-    aggiungoEltoBtns(clonedTable.id, tabContentId)
+      // RISCARICO IL DECK PER "RESETTARE" LE CARTE DAI VARI EVENT LISTENERS
+      popoloSubdecks();
 
-    // RISCARICO IL DECK PER "RESETTARE" LE CARTE DAI VARI EVENT LISTENERS
-    popoloSubdecks();
+      // COLLEGGO EVENT LISTENER A TUTTE LE CARTE 
+      addEventListenerToCardDivs(clonedTable.id);
 
-    // COLLEGGO EVENT LISTENER A TUTTE LE CARTE 
-    addEventListenerToCardDivs(clonedTable.id)
+      // ORDINO TABELLE IN ALFABETICO
+      ordinoTabelleInAlfabetico();
 
-    // AGGIUNGO GREEN BORDER A CARTE GIA PRESENTI
-    aggiungoGreenBorderACardDiv(clonedTable, tabContentId)
+      //! RECUPERO I content dei TABS
+      let nodeListTabs = document.querySelector("#" + clonedTable.id).querySelectorAll('.nav-tabs li')
+      nodeListTabs.forEach(tab => {
 
-    // attacco alle carte della vecchia tabella event listener per rimuoverle
-    // COLLEGO EVENT LISTENER A TUTTI I NOMI NELLA TABELLA
-    removeCardNameDivforCLonedTable(clonedTable, mainDeckDiv, "sideOut");
-    removeCardNameDivforCLonedTable(clonedTable, sideDeckDiv, "sideIn");
-    removeCardNameDivforCLonedTable(clonedTable, extraDeckDiv, "sideOut");
+        let tabContentId = tab.querySelector("a").getAttribute('href').slice(1);
 
-    // ORDINO TABELLE IN ALFABETICO
-    ordinoTabelleInAlfabetico();
-  }
-  )
+        // cambio testo h4 della tabella
+        clonedTable.querySelector("#" + tabContentId).querySelector("h4").textContent = `Siding VS: ${userInputObject.asInput}`
+
+        // COLLEGO EVENT LISTENERS AI BOTTONI della tabella di questo tab
+        aggiungoEltoBtns(divTabellaId)
+
+        tab.addEventListener("click", () => {
+          removeGreenBorder();
+          aggiungoGreenBorderACardDiv(clonedTable, tabContentId);
+        })
+        // attacco alle carte della vecchia tabella event listener per rimuoverle
+        // COLLEGO EVENT LISTENER A TUTTI I NOMI NELLA TABELLA
+        removeCardNameDivforCLonedTable(clonedTable, mainDeckDiv, "sideOut");
+        removeCardNameDivforCLonedTable(clonedTable, sideDeckDiv, "sideIn");
+        removeCardNameDivforCLonedTable(clonedTable, extraDeckDiv, "sideOut");
+      })
+
+    })
+  });
 }
 
 // EDIT TABLE btn
@@ -690,71 +701,33 @@ function aggiungoEltoEditTableBtn(divTabellaId) {
 
 // DUPLICATE TABLE btn
 function aggiungoEltoDuplicateTableBtn(divTabellaId) {
-  document.querySelector("#" + divTabellaId).querySelector(".duplicateTableBtn").addEventListener("click", () => {
 
-    console.log("HAI CLICKATO IL TASTO: duplicate table");
-
-    // recupero tabella con id
-    let originalTable = document.getElementById(divTabellaId);
-
-    // chiedo e controllo USER INPUT per nuovo nome e id tabella
-    let userInputObject = controlloUserInputVsNomiTabelle(".tables");
-    let userInputObjectNoSpaces = userInputObject.noSpaces;
-
-    // clono tabella
-    let clonedTable = originalTable.cloneNode(true);
-    clonedTable.id = userInputObjectNoSpaces
-
-    // cambio testo h4 della tabella
-    clonedTable.querySelector("h4").textContent = `Siding VS: ${userInputObject.asInput}`
-
-    // SOSTITUISCO NEL DOM!!! IMPORTANTISSIMO!!!
-    divContenitoreTabelle.appendChild(clonedTable)
-
-    // DOPO (!!!) AVER CAMBIATO ID E INSERITO NEL DOM LA TABELLA CLONATA FACCIO LE SEGUENTI COSE:
-    // AGGIUNGTO EVENT LISTENERS AI BOTTONI
-    aggiungoEltoBtns(clonedTable.id)
-
-    // RISCARICO IL DECK PER "RESETTARE" LE CARTE DAI VARI EVENT LISTENERS
-    popoloSubdecks();
-
-    // COLLEGGO EVENT LISTENER A TUTTE LE CARTE 
-    addEventListenerToCardDivs(clonedTable.id)
-
-    // AGGIUNGO GREEN BORDER A CARTE GIA PRESENTI
-    aggiungoGreenBorderACardDiv(clonedTable, tabContentId)
-
-    // attacco alle carte della vecchia tabella event listener per rimuoverle
-    // COLLEGO EVENT LISTENER A TUTTI I NOMI NELLA TABELLA
-    removeCardNameDivforCLonedTable(clonedTable, mainDeckDiv, "sideOut");
-    removeCardNameDivforCLonedTable(clonedTable, sideDeckDiv, "sideIn");
-    removeCardNameDivforCLonedTable(clonedTable, extraDeckDiv, "sideOut");
-
-    // ORDINO TABELLE IN ALFABETICO
-    ordinoTabelleInAlfabetico();
-  }
-  )
 }
 
 // DELETE TABLE btn
 function aggiungoEltoDeleteTableBtn(divTabellaId) {
-  // EVENT LISTENER TASTO DELETE
-  document.querySelector("#" + divTabellaId).querySelector(".deleteTableBtn").addEventListener("click", () => {
 
-    console.log("HAI CLICKATO IL TASTO: deleteTableBtn");
+  // RECUPERO I DUE BTN
+  let nodeListBtns = document.querySelector("#" + divTabellaId).querySelectorAll(".deleteTableBtn")
+  nodeListBtns.forEach(btn => {
+    // EVENT LISTENER TASTO DELETE
+    btn.addEventListener("click", () => {
 
-    let tableToBeDeleted = document.querySelector("#" + divTabellaId)
+      console.log("HAI CLICKATO IL TASTO: deleteTableBtn");
 
-    divContenitoreTabelle.removeChild(tableToBeDeleted);
+      let tableToBeDeleted = document.querySelector("#" + divTabellaId)
 
-    //rimuovo bordi verdi dal main deck
-    let NodeListCardsinSubdeck = divUserDeck.querySelectorAll(".cardDiv");
+      divContenitoreTabelle.removeChild(tableToBeDeleted);
 
-    for (let j = 0; j < NodeListCardsinSubdeck.length; j++) {
-      if (NodeListCardsinSubdeck[j].classList.contains("greenBorder")) {
-        NodeListCardsinSubdeck[j].classList.remove("greenBorder");
+      //rimuovo bordi verdi dal main deck
+      let NodeListCardsinSubdeck = divUserDeck.querySelectorAll(".cardDiv");
+
+      for (let j = 0; j < NodeListCardsinSubdeck.length; j++) {
+        if (NodeListCardsinSubdeck[j].classList.contains("greenBorder")) {
+          NodeListCardsinSubdeck[j].classList.remove("greenBorder");
+        }
       }
-    }
+    })
   })
 }
 
