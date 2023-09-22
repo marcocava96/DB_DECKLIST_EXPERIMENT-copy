@@ -83,6 +83,7 @@ createSideBtn.addEventListener("click", () => {
 
   // CREAZIONE TABELLA
   let divTabellaId = creaDivTabella(userInputObject);
+  let thisTable = document.querySelector("#" + divTabellaId)
 
   // COLLEGGO EVENT LISTENER A TUTTE LE CARTE 
   addEventListenerToCardDivs(divTabellaId, mainDeckDiv, "sideOut");
@@ -91,6 +92,30 @@ createSideBtn.addEventListener("click", () => {
 
   // AGGIUNGTO EVENT LISTENERS AI BOTTONI di questa tabella
   aggiungoEltoBtns(divTabellaId)
+
+
+  //! DEVO COLLEGARE EVENT LISTENER AI TABS DI QUESTA TABELLA!!!
+  let nodeListTabs = thisTable.querySelectorAll('.nav-tabs li')
+  nodeListTabs.forEach(tab => {
+
+    tab.addEventListener("click", () => {
+
+      console.log("tab clicked");
+      removeGreenBorder(mainDeckDiv)
+      removeGreenBorder(sideDeckDiv)
+      removeGreenBorder(extraDeckDiv)
+
+      // RECUPERO ID TAB
+      let tabContentId = tab.querySelector("a").getAttribute('href').slice(1);
+
+      aggiungoGreenBorderACardDiv(thisTable, tabContentId, mainDeckDiv)
+      aggiungoGreenBorderACardDiv(thisTable, tabContentId, sideDeckDiv)
+      aggiungoGreenBorderACardDiv(thisTable, tabContentId, extraDeckDiv)
+    })
+  })
+
+
+
 
   // ORDINO TABELLE IN ALFABETICO
   ordinoTabelleInAlfabetico();
@@ -251,13 +276,13 @@ function creaDivTabella(userInputObject) {
                             <div class="container">
 
                             <ul class="nav nav-tabs">
-                              <li class="active"><a data-toggle="tab" href="#goingFirst">Going 1st</a></li>
-                              <li><a data-toggle="tab" href="#goingSecond">Going 2nd</a></li>
+                              <li class="active"><a data-toggle="tab" href="#${userInputObject.asInput}goingFirst">Going 1st</a></li>
+                              <li><a data-toggle="tab" href="#${userInputObject.asInput}goingSecond">Going 2nd</a></li>
                             </ul>
 
                             <div class="tab-content">
 
-                              <div id="goingFirst" class="tab-pane fade in active goingFirst">
+                              <div id="${userInputObject.asInput}goingFirst" class="tab-pane fade in active goingFirst">
                                 <div class="inline-elements">
                                   <h4 id="deckSidingVs">Siding VS: ${userInputObject.asInput}</h4>
                                   <div class="inline-buttons">
@@ -295,7 +320,7 @@ function creaDivTabella(userInputObject) {
                                 </div>
                               </div>
 
-                              <div id="goingSecond" class="tab-pane fade goingSecond">
+                              <div id="${userInputObject.asInput}goingSecond" class="tab-pane fade goingSecond">
                                 <div class="inline-elements">
                                   <h4 id="deckSidingVs">Siding VS: ${userInputObject.asInput}</h4>
                                   <div class="inline-buttons">
@@ -359,26 +384,34 @@ function addEventListenerToCardDivs(divTabellaId, subDeckDiv, colonnaSide) {
         block: "start",
       });
 
+      // RECUPERO TAB ATTIVA
+      let activeTab = getActiveTab(divTabellaId);
+
+      // RECUPERO ID TAB
+      let tabContentId = activeTab.querySelector("a").getAttribute('href').slice(1);
+
+      console.log("tab content id", tabContentId);
       //INSERISCO NOME CARD IN COLONNA TABELLA SE CLICKATA
-      inseriscoCardinColonna(divTabellaId, colonnaSide, cardDiv, subDeckDiv)
+      inseriscoCardinColonna(divTabellaId, tabContentId, colonnaSide, cardDiv, subDeckDiv)
     })
   })
 }
 
-function inseriscoCardinColonna(divTabellaId, colonnaSide, cardDiv, subDeckDiv) {
+function inseriscoCardinColonna(divTabellaId, tabContentId, colonnaSide, cardDiv, subDeckDiv) {
 
   // RECUPERO NOME, TIPO di cardDiv
   let cardDivName = cardDiv.dataset.name;
   let cardDivType = cardDiv.dataset.type;
 
-  // RECUPERO TABELLA e H3 colonnaSide
+  // RECUPERO TABELLA e h4 colonnaSide
   let tabellaDiv = document.getElementById(divTabellaId)
-  let h3SpanSide = Number(tabellaDiv.querySelector("." + colonnaSide).querySelector("h3").querySelector("span").textContent);
+  // let h4SpanSide = Number(tabellaDiv.querySelector("." + colonnaSide).querySelector("h4").querySelector("span").textContent);
+  let h4SpanSide = Number(tabellaDiv.querySelector("#" + tabContentId).querySelector("." + colonnaSide).querySelector("h4").querySelector("span").innerHTML)
 
-  if (h3SpanSide < QUANTITA_MAX_CARTE_SIDEABILI) {
+  if (h4SpanSide < QUANTITA_MAX_CARTE_SIDEABILI) {
 
     // SE DIV NOME CARTA CON DATA ATTRIBUTE == "cardName" MA senza greenBorder Class ESISTE, LA AGGIORNO
-    if (tabellaDiv.querySelector(`.cardNameDiv[data-card-name="${cardDivName}"]`) && !cardDiv.classList.contains("greenBorder")) {
+    if (tabellaDiv.querySelector("#" + tabContentId).querySelector(`.cardNameDiv[data-card-name="${cardDivName}"]`) && !cardDiv.classList.contains("greenBorder")) {
 
       console.log("nome carta tabella aggiornata");
 
@@ -386,17 +419,17 @@ function inseriscoCardinColonna(divTabellaId, colonnaSide, cardDiv, subDeckDiv) 
       cardDiv.classList.add("greenBorder")
 
       // recupero card span
-      let cardSpan = Number(tabellaDiv.querySelector(`.cardNameDiv[data-card-name="${cardDivName}"]`).querySelector("span").innerHTML);
+      let cardSpan = Number(tabellaDiv.querySelector("#" + tabContentId).querySelector(`.cardNameDiv[data-card-name="${cardDivName}"]`).querySelector("span").innerHTML);
       console.log("log card span", cardSpan);
 
       if (cardSpan < QUANTITA_MAX_CARTA_SINGOLA) {
         // AGGIORNO SPAN HEADER
-        tabellaDiv.querySelector("." + colonnaSide).querySelector("h3").querySelector("span").innerHTML = h3SpanSide + 1 + " ";
+        tabellaDiv.querySelector("#" + tabContentId).querySelector("." + colonnaSide).querySelector("h4").querySelector("span").innerHTML = h4SpanSide + 1 + " ";
         // AGGIORNO SPAN CARD
-        tabellaDiv.querySelector(`.cardNameDiv[data-card-name="${cardDivName}"]`).querySelector("span").innerHTML = cardSpan + 1 + " ";
+        tabellaDiv.querySelector("#" + tabContentId).querySelector(`.cardNameDiv[data-card-name="${cardDivName}"]`).querySelector("span").innerHTML = cardSpan + 1 + " ";
       }
       // SE DIV NOME CARTA CON DATA ATTRIBUTE == "cardName" E con greenBorder Class ESISTE, LA AGGIORNO
-    } else if (tabellaDiv.querySelector(`.cardNameDiv[data-card-name="${cardDivName}"]`) && cardDiv.classList.contains("greenBorder")) {
+    } else if (tabellaDiv.querySelector("#" + tabContentId).querySelector(`.cardNameDiv[data-card-name="${cardDivName}"]`) && cardDiv.classList.contains("greenBorder")) {
 
       console.log("hai già clickato questa carta");
 
@@ -408,7 +441,7 @@ function inseriscoCardinColonna(divTabellaId, colonnaSide, cardDiv, subDeckDiv) 
       cardDiv.classList.add("greenBorder")
 
       // AGGIORNO SPAN HEADER
-      tabellaDiv.querySelector("." + colonnaSide).querySelector("h3").querySelector("span").innerHTML = h3SpanSide + 1 + " ";
+      tabellaDiv.querySelector("#" + tabContentId).querySelector("." + colonnaSide).querySelector("h4").querySelector("span").innerHTML = h4SpanSide + 1 + " ";
 
       // CREO DIV NOME CARTA
       let cardNameDiv = creoNomiPerTabella(cardDivName);
@@ -417,11 +450,11 @@ function inseriscoCardinColonna(divTabellaId, colonnaSide, cardDiv, subDeckDiv) 
       let cardTypeDiv = assegnoTipoCartaADivTipo(cardDivType, cardNameDiv);
 
       // APPEND A CARD TYPE DIV DI TABELLA
-      tabellaDiv.querySelector("." + colonnaSide).querySelector("." + cardTypeDiv).appendChild(cardNameDiv);
+      tabellaDiv.querySelector("#" + tabContentId).querySelector("." + colonnaSide).querySelector("." + cardTypeDiv).appendChild(cardNameDiv);
 
       // EVENT LISTENER
       cardNameDiv.addEventListener("click", () => {
-        removeCard(tabellaDiv, colonnaSide, cardNameDiv, cardDivName, cardTypeDiv, subDeckDiv)
+        removeCard(tabellaDiv, tabContentId, colonnaSide, cardNameDiv, cardDivName, cardTypeDiv, subDeckDiv)
       });
 
       // ORDINO DIV NOMI CARTE IN ORDINE ALFABETICO
@@ -498,7 +531,7 @@ function ordinaNomiCarteNellaTabella(tabellaDiv, colonnaSide, cardTypeDiv) {
   }
 }
 
-function removeCard(tabellaDiv, colonnaSide, cardNameDiv, cardDivName, cardTypeDiv, subDeckDiv) {
+function removeCard(tabellaDiv, tabContentId, colonnaSide, cardNameDiv, cardDivName, cardTypeDiv, subDeckDiv) {
 
   console.log("REMOVE CARD 1111");
 
@@ -512,19 +545,19 @@ function removeCard(tabellaDiv, colonnaSide, cardNameDiv, cardDivName, cardTypeD
     }
   }
 
-  // RECUPERO SPAN H3 colonnaSide
-  let h3SpanSide = Number(tabellaDiv.querySelector("." + colonnaSide).querySelector("h3").querySelector("span").textContent);
+  // RECUPERO SPAN h4 colonnaSide
+  let h4SpanSide = Number(tabellaDiv.querySelector("#" + tabContentId).querySelector("." + colonnaSide).querySelector("h4").querySelector("span").textContent);
   // RIDUCO DI 1 IL CONTATORE COLONNA
-  tabellaDiv.querySelector("." + colonnaSide).querySelector("h3").querySelector("span").innerHTML = h3SpanSide - 1 + " ";
+  tabellaDiv.querySelector("#" + tabContentId).querySelector("." + colonnaSide).querySelector("h4").querySelector("span").innerHTML = h4SpanSide - 1 + " ";
   // RECUPERO SPAN cardNameDiv
   let cardSpan = Number(cardNameDiv.querySelector("span").textContent);
 
   if (cardSpan > 1) {
     // RIDUCO DI 1 SPAN CARD
-    tabellaDiv.querySelector(`.cardNameDiv[data-card-name="${cardDivName}"]`).querySelector("span").innerHTML = cardSpan - 1 + " ";
+    tabellaDiv.querySelector("#" + tabContentId).querySelector(`.cardNameDiv[data-card-name="${cardDivName}"]`).querySelector("span").innerHTML = cardSpan - 1 + " ";
   } else {
     // RIMUOVO cardNameDiv
-    tabellaDiv.querySelector("." + colonnaSide).querySelector("." + cardTypeDiv).removeChild(cardNameDiv);
+    tabellaDiv.querySelector("#" + tabContentId).querySelector("." + colonnaSide).querySelector("." + cardTypeDiv).removeChild(cardNameDiv);
   }
 }
 
@@ -592,8 +625,8 @@ function aggiungoEltoEditTableNameBtn(divTabellaId) {
     let clonedTable = originalTable.cloneNode(true);
     clonedTable.id = userInputObjectNoSpaces
 
-    // cambio testo h2 della tabella
-    clonedTable.querySelector("h2").textContent = `Siding VS: ${userInputObject.asInput}`
+    // cambio testo h4 della tabella
+    clonedTable.querySelector("h4").textContent = `Siding VS: ${userInputObject.asInput}`
 
     // SOSTITUISCO NEL DOM!
     originalTable.replaceWith(clonedTable)
@@ -650,7 +683,6 @@ function aggiungoEltoEditTableBtn(divTabellaId) {
 }
 
 // DUPLICATE TABLE btn
-// DUPLICATE TABLE btn
 function aggiungoEltoDuplicateTableBtn(divTabellaId) {
   document.querySelector("#" + divTabellaId).querySelector(".duplicateTableBtn").addEventListener("click", () => {
 
@@ -665,8 +697,8 @@ function aggiungoEltoDuplicateTableBtn(divTabellaId) {
     let clonedTable = originalTable.cloneNode(true);
     clonedTable.id = userInputObjectNoSpaces
 
-    // cambio testo h2 della tabella
-    clonedTable.querySelector("h2").textContent = `Siding VS: ${userInputObject.asInput}`
+    // cambio testo h4 della tabella
+    clonedTable.querySelector("h4").textContent = `Siding VS: ${userInputObject.asInput}`
 
     // SOSTITUISCO NEL DOM!!! IMPORTANTISSIMO!!!
     divContenitoreTabelle.appendChild(clonedTable)
@@ -734,8 +766,8 @@ function removeCardNameDivforCLonedTable(tabellaDiv, subDeckDiv, colonnaSide) {
 
       console.log("REMOVE CARD 222222");
 
-      // RECUPERO SPAN H3 colonnaSide
-      let h3SpanSide = Number(tabellaDiv.querySelector("." + colonnaSide).querySelector("h3").querySelector("span").textContent);
+      // RECUPERO SPAN h4 colonnaSide
+      let h4SpanSide = Number(tabellaDiv.querySelector("." + colonnaSide).querySelector("h4").querySelector("span").textContent);
 
       // RECUPERO SPAN cardNameDiv
       let cardSpan = Number(boxNome.querySelector("span").textContent);
@@ -748,14 +780,14 @@ function removeCardNameDivforCLonedTable(tabellaDiv, subDeckDiv, colonnaSide) {
         if (subDeckDiv.contains(NodeListCardsinSubdeck[j]) && NodeListCardsinSubdeck[j].classList.contains("greenBorder")) {
           if (cardSpan > 1) {
             // RIDUCO DI 1 IL CONTATORE COLONNA
-            tabellaDiv.querySelector("." + colonnaSide).querySelector("h3").querySelector("span").innerHTML = h3SpanSide - 1 + " ";
+            tabellaDiv.querySelector("." + colonnaSide).querySelector("h4").querySelector("span").innerHTML = h4SpanSide - 1 + " ";
             // RIDUCO DI 1 SPAN CARD
             boxNome.querySelector("span").innerHTML = cardSpan - 1 + " ";
             NodeListCardsinSubdeck[j].classList.remove("greenBorder");
             break;
           } else {
             // RIDUCO DI 1 IL CONTATORE COLONNA
-            tabellaDiv.querySelector("." + colonnaSide).querySelector("h3").querySelector("span").innerHTML = h3SpanSide - 1 + " ";
+            tabellaDiv.querySelector("." + colonnaSide).querySelector("h4").querySelector("span").innerHTML = h4SpanSide - 1 + " ";
             // RIMUOVO CARD DIV
             NodeListCardsinSubdeck[j].classList.remove("greenBorder");
             boxNome.remove();
@@ -767,10 +799,10 @@ function removeCardNameDivforCLonedTable(tabellaDiv, subDeckDiv, colonnaSide) {
   });
 }
 
-function aggiungoGreenBorderACardDiv(clonedTable, subDeckDiv) {
+function aggiungoGreenBorderACardDiv(clonedTable, tabContentId, subDeckDiv) {
 
   // recupero nome e quantità carta presenti nella tabella clonata 
-  let arrCardNameDivs = Array.from(clonedTable.querySelectorAll(".tableCard"))
+  let arrCardNameDivs = Array.from(clonedTable.querySelector("#" + tabContentId).querySelectorAll(".tableCard"))
     .map(element => {
       let name = element.dataset.cardName;
       let quantity = Number(element.querySelector("span").innerHTML);
@@ -798,10 +830,38 @@ function aggiungoGreenBorderACardDiv(clonedTable, subDeckDiv) {
   }
 }
 
+function removeGreenBorder(subDeckDiv) {
+
+  //creo arrai di boxCarta dal subDeck
+  let NodeListCardsinSubdeck = subDeckDiv.querySelectorAll(".cardDiv");
+  console.log(NodeListCardsinSubdeck);
+
+  for (let i = 0; i < NodeListCardsinSubdeck.length; i++) {
+    console.log("greenborder rimosso");
+    if (NodeListCardsinSubdeck[i].classList.contains("greenBorder")) {
+      NodeListCardsinSubdeck[i].classList.remove("greenBorder");
+    }
+  }
+}
 
 
 
 
+
+function getActiveTab(divTabellaId) {
+
+  let activeTable = document.querySelector("#" + divTabellaId);
+
+  // Recupero tabs di questa tabella
+  var tabs = activeTable.querySelectorAll('.nav-tabs li');
+
+  // ritorno il tab attivo
+  for (let i = 0; i < tabs.length; i++) {
+    if (tabs[i].classList.contains('active')) {
+      return tabs[i];
+    }
+  }
+}
 
 
 
