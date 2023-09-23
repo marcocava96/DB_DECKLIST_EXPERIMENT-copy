@@ -229,3 +229,7 @@ background-color: rgba(255, 0, 0, 0.521);
 .greenBorder {
     border: solid greenyellow 2px;
 }
+
+.greenBackground {
+    box-shadow: green;
+}
