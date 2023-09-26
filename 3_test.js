@@ -793,6 +793,7 @@ function aggiungoEltoBtns(divTabellaId) {
   aggiungoEltoDeleteTableBtn(divTabellaId)
 }
 
+// fixed, I think
 function aggiungoEltoEditTableNameBtn(divTabellaId) {
 
   //RECUPERO I 2 BTN
@@ -816,47 +817,43 @@ function aggiungoEltoEditTableNameBtn(divTabellaId) {
       // SOSTITUISCO NEL DOM!
       originalTable.replaceWith(clonedTable)
 
-      createTable(clonedTable.id)
-
-      // // RECUPERO I content dei TABS
-      // let nodeListTabs = document.querySelector("#" + clonedTable.id).querySelectorAll('.nav-tabs li')
-      // nodeListTabs.forEach(tab => {
-
-      //   // RECUPERO ID TAB content
-      //   let tabContentId = tab.querySelector("a").getAttribute('href').slice(1);
-
-      //   // cambio testo h4 della tabella
-      //   clonedTable.querySelector("#" + tabContentId).querySelector("h4").textContent = `Siding VS: ${userInputObject.asInput}`
-      // })
-
-      // RECUPERO I TABS
-      let nodeListTabs = document.querySelector("#" + clonedTable.id).querySelectorAll('.nav-tabs li')
+      // RECUPERO I TABS TABELLA
+      let nodeListTabs = clonedTable.querySelectorAll('.nav-tabs li')
       nodeListTabs.forEach(tabLi => {
 
-        if (tabLi.href == originalTable.id + "goingFirst") {
-          // cambio href tabLi
-          tabLi.querySelector('a').setAttribute('href', clonedTable.id + "goingFirst");
-          let tabContentId = tabLi.querySelector("a").getAttribute('href').slice(1);
+        console.log("log tabli", tabLi);
 
-          // cambio id content
-          const associatedContent = document.querySelector(tabLi.querySelector('a').getAttribute('href'));
-          associatedContent.id = clonedTable.id + "goingFirst"
+        if (tabLi.querySelector("a").getAttribute("href") == "#" + originalTable.id + "goingFirst") {
+
+          // cambio href tabLi
+          tabLi.querySelector('a').setAttribute('href', "#" + clonedTable.id + "goingFirst");
+          tabLiHref = tabLi.querySelector("a").getAttribute('href');
+          console.log("href", tabLiHref);
+          console.log("tabli again to check href", tabLi);
+
+          // devo recuperare tabcontent ma con il vecchio href/id!
+          let tabContent = clonedTable.querySelector("#" + divTabellaId + "goingFirst");
+          tabContent.id = tabLiHref.slice(1);
 
           // cambio testo h4 della tabella
-          clonedTable.querySelector("#" + tabContentId).querySelector("h4").textContent = `Siding VS: ${userInputObject.asInput}`
+          clonedTable.querySelector("#" + tabContent.id).querySelector("h4").textContent = `Siding VS: ${userInputObject.asInput}`
         } else {
           // cambio href tabLi
-          tabLi.querySelector('a').setAttribute('href', clonedTable.id + "goingSecond");
-          let tabContentId = tabLi.querySelector("a").getAttribute('href').slice(1);
+          tabLi.querySelector('a').setAttribute('href', "#" + clonedTable.id + "goingSecond");
+          tabLiHref = tabLi.querySelector("a").getAttribute('href');
+          console.log("href", tabLiHref);
+          console.log("tabli again to check href", tabLi);
 
-          // cambio id content
-          const associatedContent = document.querySelector(tabLi.querySelector('a').getAttribute('href'));
-          associatedContent.id = clonedTable.id + "goingSecond"
+          // devo recuperare tabcontent ma con il vecchio href/id!
+          let tabContent = clonedTable.querySelector("#" + divTabellaId + "goingSecond");
+          tabContent.id = tabLiHref.slice(1);
 
           // cambio testo h4 della tabella
-          clonedTable.querySelector("#" + tabContentId).querySelector("h4").textContent = `Siding VS: ${userInputObject.asInput}`
+          clonedTable.querySelector("#" + tabContent.id).querySelector("h4").textContent = `Siding VS: ${userInputObject.asInput}`
         }
       })
+
+      createTable(clonedTable.id)
     })
   });
 }
@@ -874,30 +871,30 @@ function aggiungoEltoEditTableBtn(divTabellaId) {
 
       console.log("HAI CLICKATO IL TASTO: editTableBtn");
 
-      createTable(divTabellaId, currentTable);
+      createTable(divTabellaId)
 
-      // RECUPERO I content dei TABS
-      let nodeListTabs = document.querySelector("#" + currentTable.id).querySelectorAll('.nav-tabs li')
-      nodeListTabs.forEach(tab => {
+      // // RECUPERO I content dei TABS
+      // let nodeListTabs = document.querySelector("#" + currentTable.id).querySelectorAll('.nav-tabs li')
+      // nodeListTabs.forEach(tab => {
 
-        // RECUPERO ID TAB content
-        let tabContentId = tab.querySelector("a").getAttribute('href').slice(1);
+      //   // RECUPERO ID TAB content
+      //   let tabContentId = tab.querySelector("a").getAttribute('href').slice(1);
 
-        removeGreenBorder();
-        // bug strano, da fixare
-        // aggiungoGreenBorderACardDiv(clonedTable, tabContentId);
+      //   removeGreenBorder();
+      //   // bug strano, da fixare
+      //   // aggiungoGreenBorderACardDiv(clonedTable, tabContentId);
 
-        tab.addEventListener("click", () => {
-          removeGreenBorder();
-          aggiungoGreenBorderACardDiv(currentTable, tabContentId);
-        })
-      })
+      //   tab.addEventListener("click", () => {
+      //     removeGreenBorder();
+      //     aggiungoGreenBorderACardDiv(currentTable, tabContentId);
+      //   })
+      // })
 
     })
   })
 }
 
-//! da fixare
+//fixed, I think
 function aggiungoEltoDuplicateTableBtn(divTabellaId) {
 
   //RECUPERO I 2 BTN
@@ -944,13 +941,14 @@ function aggiungoEltoDuplicateTableBtn(divTabellaId) {
           clonedTable.querySelector("#" + tabContent.id).querySelector("h4").textContent = `Siding VS: ${userInputObject.asInput}`
         } else {
           // cambio href tabLi
-          tabLi.querySelector('a').setAttribute('href', clonedTable.id + "goingSecond");
+          tabLi.querySelector('a').setAttribute('href', "#" + clonedTable.id + "goingSecond");
           tabLiHref = tabLi.querySelector("a").getAttribute('href');
           console.log("href", tabLiHref);
+          console.log("tabli again to check href", tabLi);
 
           // devo recuperare tabcontent ma con il vecchio href/id!
           let tabContent = clonedTable.querySelector("#" + divTabellaId + "goingSecond");
-          tabContent.id = tabLiHref;
+          tabContent.id = tabLiHref.slice(1);
 
           // cambio testo h4 della tabella
           clonedTable.querySelector("#" + tabContent.id).querySelector("h4").textContent = `Siding VS: ${userInputObject.asInput}`
