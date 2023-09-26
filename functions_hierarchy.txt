@@ -1,0 +1,30 @@
+1. controlloUserInputVsNomiTabelle
+
+///
+
+2. creaDivTabella
+
+///
+
+3. createTable
+  
+  3.1 setTableToActive
+
+  3.2 addEventListenerToCardDivs
+    3.2.1 inseriscoCardinColonna
+    3.2.2 creoNomiPerTabella
+    3.2.3 assegnoTipoCartaADivTipo
+    3.2.4 removeCard
+    3.2.5 ordinaNomiCarteNellaTabella
+
+  3.3 aggiungoEltoBtns
+    3.3.1 aggiungoEltoEditTableNameBtn
+    3.3.2 aggiungoEltoEditTableBtn
+    3.3.3 aggiungoEltoDuplicateTableBtn
+    3.3.4 aggiungoEltoDeleteTableBtn
+    
+  3.4 addEventListenerToTabs
+  3.5 removeOneNameAndOneCard
+  3.6 ordinoTabelleInAlfabetico
+
+  ///
