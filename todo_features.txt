@@ -12,3 +12,10 @@ features i want to implement:
 🔴 11. going first, going second
 🔴 12. share your side decks tables with someone else so that they can upload them on their client and edit them directly
 🔴 13. in caso di più tabelle, il tastino " - " vicino al nome delle carte funziona solo per una tabella, non per tutte se no crea confusione essendoci il tasto "edit table"
+
+
+
+
+
+// remove ha dei problem
+// le card nel secondo tab non rispondono

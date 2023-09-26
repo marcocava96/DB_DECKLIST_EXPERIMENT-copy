@@ -374,7 +374,7 @@ function addEventListenerToCardDivs(divTabellaId) {
 
         console.log("tab content id", tabContentId);
         //INSERISCO NOME CARD IN COLONNA TABELLA SE CLICKATA
-        inseriscoCardinColonna(divTabellaId, tabContentId, subDeck.colonnaSide, cardDiv, subDeck.divElement)
+        inseriscoCardinColonna(divTabellaId, tabContentId, subDeck, subDeck.colonnaSide, cardDiv)
       })
     })
 
@@ -382,7 +382,7 @@ function addEventListenerToCardDivs(divTabellaId) {
 
 }
 
-function inseriscoCardinColonna(divTabellaId, tabContentId, colonnaSide, cardDiv) {
+function inseriscoCardinColonna(divTabellaId, tabContentId, subDeck, colonnaSide, cardDiv) {
 
   // RECUPERO NOME, TIPO di cardDiv
   let cardDivName = cardDiv.dataset.name;
@@ -390,7 +390,6 @@ function inseriscoCardinColonna(divTabellaId, tabContentId, colonnaSide, cardDiv
 
   // RECUPERO TABELLA e h4 colonnaSide
   let tabellaDiv = document.getElementById(divTabellaId)
-  // let h4SpanSide = Number(tabellaDiv.querySelector("." + colonnaSide).querySelector("h4").querySelector("span").textContent);
   let h4SpanSide = Number(tabellaDiv.querySelector("#" + tabContentId).querySelector("." + colonnaSide).querySelector("h4").querySelector("span").innerHTML)
 
   if (h4SpanSide < QUANTITA_MAX_CARTE_SIDEABILI) {
@@ -405,7 +404,6 @@ function inseriscoCardinColonna(divTabellaId, tabContentId, colonnaSide, cardDiv
 
       // recupero card span
       let cardSpan = Number(tabellaDiv.querySelector("#" + tabContentId).querySelector(`.cardNameDiv[data-card-name="${cardDivName}"]`).querySelector("span").innerHTML);
-      console.log("log card span", cardSpan);
 
       if (cardSpan < QUANTITA_MAX_CARTA_SINGOLA) {
         // AGGIORNO SPAN HEADER
@@ -437,8 +435,10 @@ function inseriscoCardinColonna(divTabellaId, tabContentId, colonnaSide, cardDiv
       // APPEND A CARD TYPE DIV DI TABELLA
       tabellaDiv.querySelector("#" + tabContentId).querySelector("." + colonnaSide).querySelector("." + cardTypeDiv).appendChild(cardNameDiv);
 
-      // funzione che riduce/rimuove nome tabella e rimuove greenborder da carta nel deck
-      removeOneNameAndOneCard(tabellaDiv)
+      // EVENT LISTENER
+      cardNameDiv.addEventListener("click", () => {
+        removeCard(tabellaDiv, cardNameDiv, cardDivName, subDeck, tabContentId);
+      });
 
       // ORDINO DIV NOMI CARTE IN ORDINE ALFABETICO
       ordinaNomiCarteNellaTabella(tabellaDiv, colonnaSide, cardTypeDiv)
@@ -869,62 +869,87 @@ function addEventListenerToTabs(thisTable) {
   })
 }
 
-//! da fixare
-function removeOneNameAndOneCard(tabellaDiv) {
 
-  arrSudDecksObj.forEach(subDeck => {
+function removeCard(tabellaDiv, cardNameDiv, cardDivName, subDeck, tabContentId) {
 
-    // recupero nomi dalla tabella
-    let arrCardNameDivs = Array.from(tabellaDiv.querySelector("." + subDeck.colonnaSide).querySelectorAll(".tableCard"));
+  // recupero tutte le cardDiv da subDeckDiv
+  let arrSubDeckCards = Array.from(subDeck.divElement.querySelectorAll(".cardDiv"))
 
-    arrCardNameDivs.forEach(boxNome => {
+  for (let i = 0; i < arrSubDeckCards.length; i++) {
+    if (arrSubDeckCards[i].classList.contains("greenBorder") && arrSubDeckCards[i].dataset.name == cardDivName) {
+      arrSubDeckCards[i].classList.remove("greenBorder");
+      break;
+    }
+  }
 
-      boxNome.addEventListener("click", () => {
+  // RECUPERO SPAN h4 colonnaSide
+  let h4SpanSide = Number(tabellaDiv.querySelector("#" + tabContentId).querySelector("." + subDeck.colonnaSide).querySelector("h4").querySelector("span").innerHTML)
 
-        // RECUPERO SPAN h4 colonnaSide
-        let h4SpanSide = Number(tabellaDiv.querySelector("." + subDeck.colonnaSide).querySelector("h4").querySelector("span").textContent);
+  // RECUPERO SPAN cardNameDiv
+  let cardSpan = Number(tabellaDiv.querySelector("#" + tabContentId).querySelector(`.cardNameDiv[data-card-name="${cardDivName}"]`).querySelector("span").innerHTML);
 
-        // RECUPERO SPAN cardNameDiv
-        let cardSpan = Number(boxNome.querySelector("span").textContent);
+  // RIDUCO DI 1 IL CONTATORE COLONNA
+  tabellaDiv.querySelector("#" + tabContentId).querySelector("." + subDeck.colonnaSide).querySelector("h4").querySelector("span").innerHTML = h4SpanSide - 1 + " ";
 
-        //creo arrai di boxCarta dal subDeck
-        let NodeListCardsinSubdeck = subDeck.divElement.querySelectorAll(`[data-name="${boxNome.dataset.cardName}"]`);
-
-        for (let i = 0; i < NodeListCardsinSubdeck.length; i++) {
-
-          if (NodeListCardsinSubdeck[i].classList.contains("greenBorder")) {
-
-            if (cardSpan > 1) {
-
-              console.log("decreasing 1 CARD");
-
-              // RIDUCO DI 1 IL CONTATORE COLONNA
-              tabellaDiv.querySelector("." + subDeck.colonnaSide).querySelector("h4").querySelector("span").innerHTML = h4SpanSide - 1 + " ";
-
-              // RIDUCO DI 1 SPAN CARD
-              boxNome.querySelector("span").innerHTML = cardSpan - 1 + " ";
-              NodeListCardsinSubdeck[i].classList.remove("greenBorder");
-
-              break;
-
-            } else {
-
-              console.log("removing cardDiv");
-
-              // RIDUCO DI 1 IL CONTATORE COLONNA
-              tabellaDiv.querySelector("." + subDeck.colonnaSide).querySelector("h4").querySelector("span").innerHTML = h4SpanSide - 1 + " ";
-              // RIMUOVO CARD DIV
-              NodeListCardsinSubdeck[i].classList.remove("greenBorder");
-              boxNome.remove();
-
-              break;
-            }
-          }
-        }
-      })
-    });
-  });
+  if (cardSpan > 1) {
+    // RIDUCO DI 1 SPAN CARD
+    cardNameDiv.querySelector("span").innerHTML = cardSpan - 1 + " ";
+  } else {
+    // RIMUOVO cardNameDiv
+    cardNameDiv.remove()
+  }
 }
+
+// //! da fixare
+// function removeOneNameAndOneCard(tabellaDiv) {
+
+//   arrSudDecksObj.forEach(subDeck => {
+
+//     // recupero nomi dalla tabella
+//     let arrCardNameDivs = Array.from(tabellaDiv.querySelector("." + subDeck.colonnaSide).querySelectorAll(".tableCard"));
+//     arrCardNameDivs.forEach(boxNome => {
+
+//       boxNome.addEventListener("click", () => {
+
+//         // RECUPERO SPAN h4 colonnaSide
+//         let h4SpanSide = Number(tabellaDiv.querySelector("." + subDeck.colonnaSide).querySelector("h4").querySelector("span").textContent);
+
+//         // RECUPERO SPAN cardNameDiv
+//         let cardSpan = Number(boxNome.querySelector("span").textContent);
+
+//         //creo arrai di boxCarta dal subDeck
+//         let NodeListCardsinSubdeck = subDeck.divElement.querySelectorAll(`[data-name="${boxNome.dataset.cardName}"]`);
+
+//         for (let i = 0; i < NodeListCardsinSubdeck.length; i++) {
+
+//           if (NodeListCardsinSubdeck[i].classList.contains("greenBorder")) {
+//             if (cardSpan > 1) {
+//               console.log("decreasing 1 CARD");
+
+//               // RIDUCO DI 1 IL CONTATORE COLONNA
+//               tabellaDiv.querySelector("." + subDeck.colonnaSide).querySelector("h4").querySelector("span").innerHTML = h4SpanSide - 1 + " ";
+
+//               // RIDUCO DI 1 SPAN CARD
+//               boxNome.querySelector("span").innerHTML = cardSpan - 1 + " ";
+//               NodeListCardsinSubdeck[i].classList.remove("greenBorder");
+
+//               break;
+//             } else {
+//               console.log("removing cardDiv");
+
+//               // RIDUCO DI 1 IL CONTATORE COLONNA
+//               tabellaDiv.querySelector("." + subDeck.colonnaSide).querySelector("h4").querySelector("span").innerHTML = h4SpanSide - 1 + " ";
+//               // RIMUOVO CARD DIV
+//               NodeListCardsinSubdeck[i].classList.remove("greenBorder");
+//               boxNome.remove();
+//               break;
+//             }
+//           }
+//         }
+//       })
+//     });
+//   });
+// }
 
 //! da fixare
 function createTable(divTabellaId) {

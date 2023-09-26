@@ -500,7 +500,6 @@ function ordinoTabelleInAlfabetico() {
       }
     }
   }
-
 }
 
 
